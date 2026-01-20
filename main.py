@@ -76,7 +76,10 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 # Import and include routers
 from src.app.api.routes.health import router as health_router
+from src.app.api.routes.knowledge import router as knowledge_router
+
 app.include_router(health_router)
+app.include_router(knowledge_router)
 
 
 # Root endpoint
