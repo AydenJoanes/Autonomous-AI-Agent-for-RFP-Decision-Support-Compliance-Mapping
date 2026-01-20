@@ -1,145 +1,180 @@
 {
-    "strategic_preferences": {
-        "priority_industries": [
-            {
-                "industry": "Healthcare",
-                "priority": "high",
-                "reason": "Strong domain expertise, HIPAA-ready, growing market",
-                "target_project_types": [
-                    "AI Diagnostics",
-                    "Patient Data Systems",
-                    "Medical Document Processing"
-                ]
-            },
-            {
-                "industry": "Finance",
-                "priority": "high",
-                "reason": "High-value projects, existing client relationships, compliance expertise",
-                "target_project_types": [
-                    "Fraud Detection",
-                    "Risk Analytics",
-                    "Document Automation"
-                ]
-            },
-            {
-                "industry": "Public Sector",
-                "priority": "medium",
-                "reason": "Stable long-term contracts, social impact",
-                "target_project_types": [
-                    "Citizen Services",
-                    "Data Modernization",
-                    "Process Automation"
-                ]
-            },
-            {
-                "industry": "Retail",
-                "priority": "medium",
-                "reason": "Growing AI adoption, inventory and demand forecasting opportunities",
-                "target_project_types": [
-                    "Demand Forecasting",
-                    "Customer Analytics",
-                    "Chatbots"
-                ]
-            },
-            {
-                "industry": "Manufacturing",
-                "priority": "low",
-                "reason": "Limited domain expertise, requires significant ramp-up",
-                "target_project_types": [
-                    "Predictive Maintenance",
-                    "Quality Control"
-                ]
-            }
-        ],
-        "project_type_preferences": [
-            {
-                "type": "AI/ML Implementation",
-                "priority": "high",
-                "min_budget": 50000,
-                "ideal_duration_months": "3-6"
-            },
-            {
-                "type": "Document Intelligence",
-                "priority": "high",
-                "min_budget": 30000,
-                "ideal_duration_months": "2-4"
-            },
-            {
-                "type": "Cloud Migration",
-                "priority": "medium",
-                "min_budget": 40000,
-                "ideal_duration_months": "3-6"
-            },
-            {
-                "type": "Enterprise Software Development",
-                "priority": "medium",
-                "min_budget": 60000,
-                "ideal_duration_months": "4-8"
-            },
-            {
-                "type": "RPA Implementation",
-                "priority": "medium",
-                "min_budget": 25000,
-                "ideal_duration_months": "2-4"
-            },
-            {
-                "type": "Data Engineering",
-                "priority": "high",
-                "min_budget": 40000,
-                "ideal_duration_months": "3-5"
-            }
-        ],
-        "client_preferences": {
-            "preferred_client_size": [
-                "Mid-Market",
-                "Enterprise"
-            ],
-            "preferred_engagement_model": [
-                "Fixed Price",
-                "Time & Materials"
-            ],
-            "preferred_contract_length": "3-12 months",
-            "preferred_relationship": "Long-term partnership over one-off projects"
-        },
-        "bid_thresholds": {
-            "minimum_project_value": 20000,
-            "maximum_project_value": 250000,
-            "ideal_project_value_range": {
-                "min": 50000,
-                "max": 150000
-            },
-            "minimum_timeline_months": 1,
-            "maximum_timeline_months": 12,
-            "ideal_timeline_months": "3-6",
-            "maximum_team_allocation_percent": 40
-        },
-        "risk_tolerance": {
-            "accept_new_technology": true,
-            "accept_tight_deadlines": "conditional",
-            "accept_fixed_price": true,
-            "accept_penalty_clauses": "conditional",
-            "minimum_profit_margin_percent": 20
-        },
-        "geographic_preferences": {
-            "primary_regions": [
-                "North America",
-                "Europe"
-            ],
-            "secondary_regions": [
-                "APAC",
-                "India"
-            ],
-            "remote_work_capable": true,
-            "on_site_capable": [
-                "North America"
-            ]
-        }
-    },
-    "decision_weights": {
-        "strategic_alignment": 0.25,
-        "technical_fit": 0.30,
-        "financial_viability": 0.20,
-        "timeline_feasibility": 0.15,
-        "risk_assessment": 0.10
-    }
+"strategic_preferences": {
+"priority_industries": [
+{
+"industry": "Healthcare",
+"priority": "high",
+"reason": "Strong capability in healthcare analytics, data platforms, and AI-driven decision-support systems with HIPAA-aligned controls. Focus is on non-clinical analytics and operational intelligence rather than regulated clinical decision systems.",
+"target_project_types": [
+"Healthcare Data Analytics",
+"Operational Intelligence Systems",
+"Medical Document Processing",
+"Research & Reporting Platforms"
+],
+"explicit_exclusions": [
+"Clinical Decision Support Systems",
+"FDA-Regulated Medical Devices",
+"Core EHR System Development"
+]
+},
+{
+"industry": "Finance",
+"priority": "high",
+"reason": "Established expertise in compliance-heavy, data-intensive financial systems with strong demand for automation, analytics, and document intelligence.",
+"target_project_types": [
+"Fraud Detection & Monitoring",
+"Risk & Compliance Analytics",
+"Regulatory Reporting Automation",
+"Contract & Document Intelligence"
+]
+},
+{
+"industry": "Public Sector",
+"priority": "medium",
+"reason": "Technically strong fit for analytics, portals, and automation projects, but often associated with complex procurement, eligibility constraints, and long-term operational commitments.",
+"target_project_types": [
+"Citizen Service Interfaces",
+"Government Data Portals",
+"Process Automation & Analytics",
+"Reporting & Transparency Dashboards"
+],
+"requires_escalation": true
+},
+{
+"industry": "Retail",
+"priority": "medium",
+"reason": "Consistent demand for analytics, forecasting, and customer-facing AI solutions with moderate sales cycles.",
+"target_project_types": [
+"Demand Forecasting",
+"Customer Analytics",
+"Recommendation Systems",
+"Customer Support Automation"
+]
+},
+{
+"industry": "Manufacturing",
+"priority": "low",
+"reason": "Limited prior delivery experience; bids should be considered only when scope closely matches existing analytics or automation strengths.",
+"target_project_types": [
+"Operational Analytics",
+"Predictive Maintenance (Analytics-Only)"
+],
+"requires_exceptional_justification": true
+}
+],
+"project_type_preferences": [
+{
+"type": "Document Intelligence",
+"priority": "high",
+"min_budget": 30000,
+"ideal_duration_months": "2-4",
+"notes": "Core strength; strong alignment with compliance, analytics, and RFP-style workloads"
+},
+{
+"type": "Data Engineering & Analytics Platforms",
+"priority": "high",
+"min_budget": 40000,
+"ideal_duration_months": "3-6",
+"notes": "Includes data pipelines, dashboards, and reporting systems"
+},
+{
+"type": "AI/ML Implementation",
+"priority": "high",
+"min_budget": 50000,
+"ideal_duration_months": "3-6",
+"notes": "Primarily LLM-driven systems, predictive analytics, and decision-support tools"
+},
+{
+"type": "Cloud Migration & Modernization",
+"priority": "medium",
+"min_budget": 40000,
+"ideal_duration_months": "3-6",
+"notes": "Accepted when analytics or automation value is clear"
+},
+{
+"type": "Enterprise Software Development",
+"priority": "medium",
+"min_budget": 60000,
+"ideal_duration_months": "4-8",
+"notes": "Custom systems tied to data, AI, or integration use cases"
+},
+{
+"type": "RPA Implementation",
+"priority": "medium",
+"min_budget": 25000,
+"ideal_duration_months": "2-4",
+"notes": "Accepted when paired with analytics or decision-support outcomes"
+},
+{
+"type": "Training & Content Development",
+"priority": "excluded",
+"notes": "Instructional design, classroom delivery, and logistics-heavy training programs are out of scope"
+}
+],
+"client_preferences": {
+"preferred_client_size": [
+"Mid-Market",
+"Enterprise"
+],
+"preferred_engagement_model": [
+"Fixed Price",
+"Time & Materials"
+],
+"preferred_contract_length": "3-12 months",
+"preferred_relationship": "Long-term partnerships preferred over one-off or transactional engagements",
+"client_red_flags": [
+"Unclear scope with fixed price",
+"Excessive penalty clauses without flexibility",
+"Unrealistic delivery timelines"
+]
+},
+"bid_thresholds": {
+"minimum_project_value": 20000,
+"maximum_project_value": 250000,
+"ideal_project_value_range": {
+"min": 50000,
+"max": 150000
+},
+"minimum_timeline_months": 1,
+"maximum_timeline_months": 12,
+"ideal_timeline_months": "3-6",
+"maximum_team_allocation_percent": 40
+},
+"risk_tolerance": {
+"accept_new_technology": true,
+"accept_fixed_price": true,
+"accept_tight_deadlines": "conditional",
+"accept_penalty_clauses": "conditional",
+"automatic_escalation_conditions": [
+"Fixed price + penalty clauses",
+"Public sector projects with long-term on-site requirements",
+"Healthcare projects involving regulated clinical systems",
+"Budgets above ideal range with compressed timelines"
+],
+"minimum_profit_margin_percent": 20
+},
+"geographic_preferences": {
+"primary_regions": [
+"North America",
+"Europe"
+],
+"secondary_regions": [
+"APAC",
+"India"
+],
+"remote_work_capable": true,
+"on_site_capable": [
+"North America",
+"India"
+],
+"notes": "On-site delivery outside primary regions may require partners or escalation"
+}
+},
+"decision_weights": {
+"technical_fit": 0.30,
+"strategic_alignment": 0.25,
+"financial_viability": 0.20,
+"timeline_feasibility": 0.15,
+"risk_assessment": 0.10
+}
 }

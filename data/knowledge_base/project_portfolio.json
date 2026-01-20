@@ -1,447 +1,447 @@
 {
-    "projects": [
-        {
-            "id": "PROJ-001",
-            "name": "HealthCare AI Document Processor",
-            "client_industry": "Healthcare",
-            "client_type": "Enterprise",
-            "description": "Built an AI-powered system to extract and classify information from medical records, lab reports, and insurance claims using LLMs and NLP.",
-            "technologies": [
-                "Python",
-                "OpenAI APIs",
-                "LangChain",
-                "spaCy",
-                "PostgreSQL",
-                "AWS Lambda"
-            ],
-            "budget": 120000,
-            "duration_months": 5,
-            "team_size": 6,
-            "outcome": "success",
-            "outcome_details": "Reduced document processing time by 75%, achieved 94% extraction accuracy",
-            "year": 2024,
-            "certifications_required": [
-                "HIPAA",
-                "SOC 2"
-            ],
-            "key_challenges": [
-                "PHI data handling",
-                "Complex document formats"
-            ],
-            "lessons_learned": "Early involvement of compliance team is crucial for healthcare projects"
-        },
-        {
-            "id": "PROJ-002",
-            "name": "Financial Fraud Detection System",
-            "client_industry": "Finance",
-            "client_type": "Enterprise",
-            "description": "Developed a real-time fraud detection system using ML models to identify suspicious transactions and automate alerts.",
-            "technologies": [
-                "Python",
-                "Scikit-learn",
-                "PostgreSQL",
-                "Redis",
-                "AWS",
-                "FastAPI"
-            ],
-            "budget": 180000,
-            "duration_months": 6,
-            "team_size": 8,
-            "outcome": "success",
-            "outcome_details": "Detected 40% more fraud cases, reduced false positives by 60%",
-            "year": 2024,
-            "certifications_required": [
-                "SOC 2",
-                "ISO 27001"
-            ],
-            "key_challenges": [
-                "Real-time processing requirements",
-                "Model explainability"
-            ],
-            "lessons_learned": "Feature engineering is critical for financial ML models"
-        },
-        {
-            "id": "PROJ-003",
-            "name": "Government Citizen Services Chatbot",
-            "client_industry": "Public Sector",
-            "client_type": "Government",
-            "description": "Created an AI chatbot to handle citizen inquiries about government services, permits, and applications.",
-            "technologies": [
-                "Python",
-                "OpenAI APIs",
-                "LangChain",
-                "React",
-                "PostgreSQL",
-                "Azure"
-            ],
-            "budget": 95000,
-            "duration_months": 4,
-            "team_size": 5,
-            "outcome": "success",
-            "outcome_details": "Handled 70% of inquiries without human intervention, 4.5/5 user satisfaction",
-            "year": 2024,
-            "certifications_required": [
-                "ISO 27001"
-            ],
-            "key_challenges": [
-                "Accessibility requirements",
-                "Multi-language support"
-            ],
-            "lessons_learned": "Government projects require extensive stakeholder alignment"
-        },
-        {
-            "id": "PROJ-004",
-            "name": "Retail Demand Forecasting Platform",
-            "client_industry": "Retail",
-            "client_type": "Mid-Market",
-            "description": "Built a predictive analytics platform for inventory demand forecasting using historical sales data and external factors.",
-            "technologies": [
-                "Python",
-                "TensorFlow",
-                "PostgreSQL",
-                "AWS SageMaker",
-                "FastAPI"
-            ],
-            "budget": 85000,
-            "duration_months": 4,
-            "team_size": 4,
-            "outcome": "success",
-            "outcome_details": "Improved forecast accuracy by 35%, reduced overstock by 25%",
-            "year": 2023,
-            "certifications_required": [],
-            "key_challenges": [
-                "Seasonal variations",
-                "Data quality issues"
-            ],
-            "lessons_learned": "Data cleaning takes more time than initially estimated"
-        },
-        {
-            "id": "PROJ-005",
-            "name": "Insurance Claims Automation",
-            "client_industry": "Finance",
-            "client_type": "Enterprise",
-            "description": "Automated insurance claims processing using document AI to extract claim details and route to appropriate handlers.",
-            "technologies": [
-                "Python",
-                "OpenAI APIs",
-                "spaCy",
-                "AWS Textract",
-                "PostgreSQL",
-                "Docker"
-            ],
-            "budget": 140000,
-            "duration_months": 5,
-            "team_size": 6,
-            "outcome": "success",
-            "outcome_details": "Reduced claims processing time from 5 days to 4 hours for 80% of claims",
-            "year": 2024,
-            "certifications_required": [
-                "SOC 2"
-            ],
-            "key_challenges": [
-                "Handwritten document OCR",
-                "Complex claim types"
-            ],
-            "lessons_learned": "Hybrid AI+human workflow is more reliable than full automation"
-        },
-        {
-            "id": "PROJ-006",
-            "name": "Enterprise Data Lake Migration",
-            "client_industry": "Finance",
-            "client_type": "Enterprise",
-            "description": "Migrated legacy data warehouse to a modern cloud-native data lake on AWS with real-time ingestion pipelines.",
-            "technologies": [
-                "Python",
-                "AWS S3",
-                "AWS Glue",
-                "Spark",
-                "PostgreSQL",
-                "Terraform"
-            ],
-            "budget": 200000,
-            "duration_months": 8,
-            "team_size": 7,
-            "outcome": "success",
-            "outcome_details": "Reduced data processing costs by 50%, enabled real-time analytics",
-            "year": 2023,
-            "certifications_required": [
-                "ISO 27001",
-                "SOC 2"
-            ],
-            "key_challenges": [
-                "Data migration without downtime",
-                "Legacy system dependencies"
-            ],
-            "lessons_learned": "Parallel run period is essential for data migration projects"
-        },
-        {
-            "id": "PROJ-007",
-            "name": "HR Process Automation (RPA)",
-            "client_industry": "Retail",
-            "client_type": "Mid-Market",
-            "description": "Implemented RPA bots to automate repetitive HR tasks including onboarding, leave management, and payroll processing.",
-            "technologies": [
-                "Python",
-                "UiPath",
-                "PostgreSQL",
-                "REST APIs"
-            ],
-            "budget": 45000,
-            "duration_months": 3,
-            "team_size": 3,
-            "outcome": "success",
-            "outcome_details": "Automated 15 HR processes, saved 200+ hours per month",
-            "year": 2023,
-            "certifications_required": [],
-            "key_challenges": [
-                "Integration with legacy HR system",
-                "Change management"
-            ],
-            "lessons_learned": "User training is critical for RPA adoption"
-        },
-        {
-            "id": "PROJ-008",
-            "name": "Contract Analysis AI Agent",
-            "client_industry": "Finance",
-            "client_type": "Enterprise",
-            "description": "Built an AI agent to analyze legal contracts, extract key clauses, identify risks, and summarize obligations.",
-            "technologies": [
-                "Python",
-                "LangChain",
-                "OpenAI APIs",
-                "FAISS",
-                "FastAPI",
-                "PostgreSQL"
-            ],
-            "budget": 110000,
-            "duration_months": 4,
-            "team_size": 5,
-            "outcome": "success",
-            "outcome_details": "Reduced contract review time by 60%, identified 25% more risk clauses",
-            "year": 2024,
-            "certifications_required": [
-                "ISO 27001"
-            ],
-            "key_challenges": [
-                "Legal terminology variations",
-                "Multi-page document handling"
-            ],
-            "lessons_learned": "RAG with chunking strategies significantly improves accuracy"
-        },
-        {
-            "id": "PROJ-009",
-            "name": "Patient Scheduling Optimization",
-            "client_industry": "Healthcare",
-            "client_type": "Mid-Market",
-            "description": "Developed an ML-based scheduling system to optimize patient appointments and reduce wait times at a hospital network.",
-            "technologies": [
-                "Python",
-                "Scikit-learn",
-                "PostgreSQL",
-                "FastAPI",
-                "React"
-            ],
-            "budget": 75000,
-            "duration_months": 4,
-            "team_size": 4,
-            "outcome": "partial_success",
-            "outcome_details": "Reduced average wait time by 30%, but adoption was slower than expected",
-            "year": 2023,
-            "certifications_required": [
-                "HIPAA"
-            ],
-            "key_challenges": [
-                "Staff resistance to change",
-                "Integration with existing EHR"
-            ],
-            "lessons_learned": "Change management is as important as technical implementation"
-        },
-        {
-            "id": "PROJ-010",
-            "name": "Supply Chain Visibility Dashboard",
-            "client_industry": "Retail",
-            "client_type": "Enterprise",
-            "description": "Created a real-time dashboard for supply chain visibility with predictive alerts for potential disruptions.",
-            "technologies": [
-                "Python",
-                "React",
-                "PostgreSQL",
-                "Redis",
-                "AWS",
-                "Elasticsearch"
-            ],
-            "budget": 130000,
-            "duration_months": 5,
-            "team_size": 6,
-            "outcome": "success",
-            "outcome_details": "Provided 360° supply chain visibility, reduced disruption response time by 45%",
-            "year": 2024,
-            "certifications_required": [],
-            "key_challenges": [
-                "Multiple data source integration",
-                "Real-time processing at scale"
-            ],
-            "lessons_learned": "Event-driven architecture is essential for real-time systems"
-        },
-        {
-            "id": "PROJ-011",
-            "name": "Regulatory Compliance Monitoring",
-            "client_industry": "Finance",
-            "client_type": "Enterprise",
-            "description": "Built an AI system to monitor regulatory changes, assess impact, and generate compliance reports automatically.",
-            "technologies": [
-                "Python",
-                "LangChain",
-                "OpenAI APIs",
-                "PostgreSQL",
-                "AWS Lambda"
-            ],
-            "budget": 160000,
-            "duration_months": 6,
-            "team_size": 6,
-            "outcome": "success",
-            "outcome_details": "Reduced compliance monitoring effort by 70%, zero missed regulatory updates",
-            "year": 2024,
-            "certifications_required": [
-                "ISO 27001",
-                "SOC 2"
-            ],
-            "key_challenges": [
-                "Regulatory document complexity",
-                "Cross-jurisdiction variations"
-            ],
-            "lessons_learned": "Domain expert involvement is crucial for compliance projects"
-        },
-        {
-            "id": "PROJ-012",
-            "name": "Customer Support AI Assistant",
-            "client_industry": "Retail",
-            "client_type": "Enterprise",
-            "description": "Deployed an AI-powered customer support assistant capable of handling orders, returns, and product inquiries.",
-            "technologies": [
-                "Python",
-                "OpenAI APIs",
-                "LangChain",
-                "PostgreSQL",
-                "FastAPI",
-                "Redis"
-            ],
-            "budget": 90000,
-            "duration_months": 4,
-            "team_size": 5,
-            "outcome": "success",
-            "outcome_details": "Resolved 65% of queries without human intervention, improved CSAT by 15%",
-            "year": 2024,
-            "certifications_required": [],
-            "key_challenges": [
-                "Handling edge cases",
-                "Integration with order management system"
-            ],
-            "lessons_learned": "Fallback to human agents should be seamless"
-        },
-        {
-            "id": "PROJ-013",
-            "name": "Clinical Trial Data Analytics",
-            "client_industry": "Healthcare",
-            "client_type": "Enterprise",
-            "description": "Built a data analytics platform for clinical trial data management, adverse event detection, and reporting.",
-            "technologies": [
-                "Python",
-                "PostgreSQL",
-                "AWS",
-                "Scikit-learn",
-                "FastAPI",
-                "React"
-            ],
-            "budget": 175000,
-            "duration_months": 7,
-            "team_size": 7,
-            "outcome": "success",
-            "outcome_details": "Accelerated data analysis by 50%, improved adverse event detection accuracy",
-            "year": 2023,
-            "certifications_required": [
-                "HIPAA",
-                "ISO 27001"
-            ],
-            "key_challenges": [
-                "Strict regulatory requirements",
-                "Complex data formats"
-            ],
-            "lessons_learned": "Regulatory documentation should be built alongside development"
-        },
-        {
-            "id": "PROJ-014",
-            "name": "Internal Knowledge Base RAG System",
-            "client_industry": "Finance",
-            "client_type": "Enterprise",
-            "description": "Implemented a RAG-based internal knowledge base for employees to query company policies, procedures, and documentation.",
-            "technologies": [
-                "Python",
-                "LangChain",
-                "OpenAI APIs",
-                "FAISS",
-                "FastAPI",
-                "PostgreSQL"
-            ],
-            "budget": 65000,
-            "duration_months": 3,
-            "team_size": 4,
-            "outcome": "success",
-            "outcome_details": "Reduced time to find information by 80%, high employee adoption rate",
-            "year": 2024,
-            "certifications_required": [],
-            "key_challenges": [
-                "Document ingestion from multiple sources",
-                "Answer accuracy"
-            ],
-            "lessons_learned": "Iterative prompt refinement improves RAG accuracy significantly"
-        },
-        {
-            "id": "PROJ-015",
-            "name": "E-commerce Recommendation Engine",
-            "client_industry": "Retail",
-            "client_type": "Mid-Market",
-            "description": "Developed a personalized product recommendation engine using collaborative filtering and content-based approaches.",
-            "technologies": [
-                "Python",
-                "Scikit-learn",
-                "PostgreSQL",
-                "Redis",
-                "FastAPI"
-            ],
-            "budget": 55000,
-            "duration_months": 3,
-            "team_size": 3,
-            "outcome": "success",
-            "outcome_details": "Increased average order value by 18%, click-through rate up by 25%",
-            "year": 2023,
-            "certifications_required": [],
-            "key_challenges": [
-                "Cold start problem",
-                "Real-time recommendations at scale"
-            ],
-            "lessons_learned": "Hybrid recommendation approaches outperform single methods"
-        }
-    ],
-    "portfolio_summary": {
-        "total_projects": 15,
-        "success_rate": 93,
-        "industries_covered": [
-            "Healthcare",
-            "Finance",
-            "Public Sector",
-            "Retail"
-        ],
-        "average_project_budget": 115000,
-        "average_duration_months": 4.7,
-        "total_revenue": 1725000,
-        "technologies_most_used": [
-            "Python",
-            "OpenAI APIs",
-            "LangChain",
-            "PostgreSQL",
-            "AWS",
-            "FastAPI"
-        ]
-    }
+"projects": [
+{
+"id": "PROJ-001",
+"name": "Healthcare Document Analytics System",
+"client_industry": "Healthcare",
+"client_type": "Enterprise",
+"description": "Built an AI-powered document analytics system to extract and classify non-clinical information from healthcare documents such as reports, forms, and claims-related records to support reporting and operational decision-making.",
+"technologies": [
+"Python",
+"OpenAI APIs",
+"LangChain",
+"spaCy",
+"PostgreSQL",
+"AWS Lambda"
+],
+"budget": 120000,
+"duration_months": 5,
+"team_size": 6,
+"outcome": "success",
+"outcome_details": "Reduced document processing time by 75% and achieved 94% extraction accuracy for analytics-ready fields",
+"year": 2024,
+"certifications_required": [
+"HIPAA (Readiness)",
+"SOC 2 (Readiness)"
+],
+"key_challenges": [
+"Sensitive data handling",
+"Complex and inconsistent document formats"
+],
+"lessons_learned": "Early involvement of compliance stakeholders significantly reduces downstream rework"
+},
+{
+"id": "PROJ-002",
+"name": "Financial Fraud Detection System",
+"client_industry": "Finance",
+"client_type": "Enterprise",
+"description": "Developed a real-time fraud detection and alerting system using machine learning models to identify anomalous financial transactions and support investigation workflows.",
+"technologies": [
+"Python",
+"Scikit-learn",
+"PostgreSQL",
+"Redis",
+"AWS",
+"FastAPI"
+],
+"budget": 180000,
+"duration_months": 6,
+"team_size": 8,
+"outcome": "success",
+"outcome_details": "Detected 40% more fraudulent transactions while reducing false positives by 60%",
+"year": 2024,
+"certifications_required": [
+"SOC 2 (Readiness)",
+"ISO 27001"
+],
+"key_challenges": [
+"Low-latency processing requirements",
+"Model explainability for audit teams"
+],
+"lessons_learned": "Feature engineering and transparent model outputs are critical in regulated domains"
+},
+{
+"id": "PROJ-003",
+"name": "Government Citizen Services AI Assistant",
+"client_industry": "Public Sector",
+"client_type": "Government",
+"description": "Implemented an AI-based citizen service assistant integrated with existing government portals to handle inquiries related to services, permits, and applications while meeting accessibility and governance requirements.",
+"technologies": [
+"Python",
+"OpenAI APIs",
+"LangChain",
+"React",
+"PostgreSQL",
+"Azure"
+],
+"budget": 95000,
+"duration_months": 4,
+"team_size": 5,
+"outcome": "success",
+"outcome_details": "Automated responses for 70% of inquiries and achieved a 4.5/5 user satisfaction score",
+"year": 2024,
+"certifications_required": [
+"ISO 27001"
+],
+"key_challenges": [
+"Accessibility compliance",
+"Multi-language and stakeholder alignment"
+],
+"lessons_learned": "Public sector projects require early alignment across multiple stakeholder groups"
+},
+{
+"id": "PROJ-004",
+"name": "Retail Demand Forecasting Platform",
+"client_industry": "Retail",
+"client_type": "Mid-Market",
+"description": "Built a predictive analytics platform to forecast retail demand using historical sales data and external signals, enabling inventory planning and decision support.",
+"technologies": [
+"Python",
+"TensorFlow",
+"PostgreSQL",
+"AWS SageMaker",
+"FastAPI"
+],
+"budget": 85000,
+"duration_months": 4,
+"team_size": 4,
+"outcome": "success",
+"outcome_details": "Improved forecast accuracy by 35% and reduced overstock by 25%",
+"year": 2023,
+"certifications_required": [],
+"key_challenges": [
+"Seasonality effects",
+"Data quality inconsistencies"
+],
+"lessons_learned": "Data preparation often dominates model development timelines"
+},
+{
+"id": "PROJ-005",
+"name": "Insurance Claims Pre-Processing Automation",
+"client_industry": "Finance",
+"client_type": "Enterprise",
+"description": "Automated insurance claims pre-processing by extracting structured information from submitted documents and routing cases to appropriate downstream handlers for review and adjudication.",
+"technologies": [
+"Python",
+"OpenAI APIs",
+"spaCy",
+"AWS Textract",
+"PostgreSQL",
+"Docker"
+],
+"budget": 140000,
+"duration_months": 5,
+"team_size": 6,
+"outcome": "success",
+"outcome_details": "Reduced average claims handling time from multiple days to under 4 hours for the majority of cases",
+"year": 2024,
+"certifications_required": [
+"SOC 2 (Readiness)"
+],
+"key_challenges": [
+"Handwritten and low-quality document OCR",
+"High variability in claim formats"
+],
+"lessons_learned": "Hybrid AI and human review workflows outperform fully automated pipelines"
+},
+{
+"id": "PROJ-006",
+"name": "Enterprise Data Lake Migration",
+"client_industry": "Finance",
+"client_type": "Enterprise",
+"description": "Migrated a legacy on-premise data warehouse to a cloud-native data lake with batch and near-real-time ingestion pipelines to support analytics and reporting.",
+"technologies": [
+"Python",
+"AWS S3",
+"AWS Glue",
+"Spark",
+"PostgreSQL",
+"Terraform"
+],
+"budget": 200000,
+"duration_months": 8,
+"team_size": 7,
+"outcome": "success",
+"outcome_details": "Cut data processing costs by 50% and enabled near-real-time analytics use cases",
+"year": 2023,
+"certifications_required": [
+"ISO 27001",
+"SOC 2 (Readiness)"
+],
+"key_challenges": [
+"Zero-downtime migration",
+"Legacy system dependencies"
+],
+"lessons_learned": "Parallel run strategies significantly reduce migration risk"
+},
+{
+"id": "PROJ-007",
+"name": "HR Process Automation (RPA)",
+"client_industry": "Retail",
+"client_type": "Mid-Market",
+"description": "Implemented RPA bots to automate repetitive HR workflows such as onboarding, leave management, and payroll data synchronization.",
+"technologies": [
+"Python",
+"UiPath",
+"PostgreSQL",
+"REST APIs"
+],
+"budget": 45000,
+"duration_months": 3,
+"team_size": 3,
+"outcome": "success",
+"outcome_details": "Automated 15 HR workflows and saved over 200 hours per month",
+"year": 2023,
+"certifications_required": [],
+"key_challenges": [
+"Legacy system integration",
+"User adoption and change management"
+],
+"lessons_learned": "User enablement is critical for sustained automation benefits"
+},
+{
+"id": "PROJ-008",
+"name": "Contract Analysis AI Agent",
+"client_industry": "Finance",
+"client_type": "Enterprise",
+"description": "Built an AI-powered contract analysis agent to extract key clauses, identify risk indicators, and summarize contractual obligations for legal and compliance teams.",
+"technologies": [
+"Python",
+"LangChain",
+"OpenAI APIs",
+"FAISS",
+"FastAPI",
+"PostgreSQL"
+],
+"budget": 110000,
+"duration_months": 4,
+"team_size": 5,
+"outcome": "success",
+"outcome_details": "Reduced contract review time by 60% and increased early risk identification",
+"year": 2024,
+"certifications_required": [
+"ISO 27001"
+],
+"key_challenges": [
+"Legal language variability",
+"Long and unstructured documents"
+],
+"lessons_learned": "Chunking and retrieval strategies significantly affect RAG accuracy"
+},
+{
+"id": "PROJ-009",
+"name": "Patient Scheduling Optimization System",
+"client_industry": "Healthcare",
+"client_type": "Mid-Market",
+"description": "Developed an analytics-driven scheduling optimization system to improve appointment planning and reduce patient wait times without modifying core clinical systems.",
+"technologies": [
+"Python",
+"Scikit-learn",
+"PostgreSQL",
+"FastAPI",
+"React"
+],
+"budget": 75000,
+"duration_months": 4,
+"team_size": 4,
+"outcome": "partial_success",
+"outcome_details": "Reduced average wait times by 30%, though organizational adoption progressed slower than expected",
+"year": 2023,
+"certifications_required": [
+"HIPAA (Readiness)"
+],
+"key_challenges": [
+"Operational change resistance",
+"Integration with existing scheduling systems"
+],
+"lessons_learned": "Operational readiness is as important as technical performance"
+},
+{
+"id": "PROJ-010",
+"name": "Supply Chain Visibility Dashboard",
+"client_industry": "Retail",
+"client_type": "Enterprise",
+"description": "Delivered a real-time analytics dashboard providing end-to-end supply chain visibility with predictive alerts for disruption risks.",
+"technologies": [
+"Python",
+"React",
+"PostgreSQL",
+"Redis",
+"AWS",
+"Elasticsearch"
+],
+"budget": 130000,
+"duration_months": 5,
+"team_size": 6,
+"outcome": "success",
+"outcome_details": "Reduced disruption response time by 45% through improved situational awareness",
+"year": 2024,
+"certifications_required": [],
+"key_challenges": [
+"Multi-source data integration",
+"Low-latency data processing"
+],
+"lessons_learned": "Event-driven architectures enable scalable real-time analytics"
+},
+{
+"id": "PROJ-011",
+"name": "Regulatory Compliance Monitoring System",
+"client_industry": "Finance",
+"client_type": "Enterprise",
+"description": "Built an AI-enabled monitoring system to track regulatory updates, assess potential impact, and generate compliance reports for internal stakeholders.",
+"technologies": [
+"Python",
+"LangChain",
+"OpenAI APIs",
+"PostgreSQL",
+"AWS Lambda"
+],
+"budget": 160000,
+"duration_months": 6,
+"team_size": 6,
+"outcome": "success",
+"outcome_details": "Reduced compliance monitoring effort by 70% with no missed regulatory updates",
+"year": 2024,
+"certifications_required": [
+"ISO 27001",
+"SOC 2 (Readiness)"
+],
+"key_challenges": [
+"Regulatory text complexity",
+"Cross-jurisdiction interpretation"
+],
+"lessons_learned": "Ongoing domain expert review improves compliance accuracy"
+},
+{
+"id": "PROJ-012",
+"name": "Customer Support AI Assistant",
+"client_industry": "Retail",
+"client_type": "Enterprise",
+"description": "Deployed an AI-powered customer support assistant to handle common service requests and product inquiries with seamless escalation to human agents.",
+"technologies": [
+"Python",
+"OpenAI APIs",
+"LangChain",
+"PostgreSQL",
+"FastAPI",
+"Redis"
+],
+"budget": 90000,
+"duration_months": 4,
+"team_size": 5,
+"outcome": "success",
+"outcome_details": "Resolved 65% of customer queries automatically and improved CSAT by 15%",
+"year": 2024,
+"certifications_required": [],
+"key_challenges": [
+"Edge case handling",
+"Order management system integration"
+],
+"lessons_learned": "Well-designed fallback mechanisms are essential for trust"
+},
+{
+"id": "PROJ-013",
+"name": "Clinical Research Data Analytics Platform",
+"client_industry": "Healthcare",
+"client_type": "Enterprise",
+"description": "Built a data analytics platform to support clinical research and trial reporting workflows, focusing on data aggregation, analysis, and regulatory reporting support rather than clinical decision-making.",
+"technologies": [
+"Python",
+"PostgreSQL",
+"AWS",
+"Scikit-learn",
+"FastAPI",
+"React"
+],
+"budget": 175000,
+"duration_months": 7,
+"team_size": 7,
+"outcome": "success",
+"outcome_details": "Accelerated analytics workflows by 50% and improved detection of reporting anomalies",
+"year": 2023,
+"certifications_required": [
+"HIPAA (Readiness)",
+"ISO 27001"
+],
+"key_challenges": [
+"Strict regulatory documentation requirements",
+"Heterogeneous data sources"
+],
+"lessons_learned": "Regulatory documentation should evolve alongside system development"
+},
+{
+"id": "PROJ-014",
+"name": "Internal Knowledge Base RAG System",
+"client_industry": "Finance",
+"client_type": "Enterprise",
+"description": "Implemented a RAG-based internal knowledge system enabling employees to query policies, procedures, and documentation using natural language.",
+"technologies": [
+"Python",
+"LangChain",
+"OpenAI APIs",
+"FAISS",
+"FastAPI",
+"PostgreSQL"
+],
+"budget": 65000,
+"duration_months": 3,
+"team_size": 4,
+"outcome": "success",
+"outcome_details": "Reduced information retrieval time by 80% with high internal adoption",
+"year": 2024,
+"certifications_required": [],
+"key_challenges": [
+"Multi-source document ingestion",
+"Answer grounding and accuracy"
+],
+"lessons_learned": "Incremental prompt and retrieval tuning improves system reliability"
+},
+{
+"id": "PROJ-015",
+"name": "E-commerce Recommendation Engine",
+"client_industry": "Retail",
+"client_type": "Mid-Market",
+"description": "Developed a recommendation engine using collaborative filtering and content-based methods to personalize product discovery experiences.",
+"technologies": [
+"Python",
+"Scikit-learn",
+"PostgreSQL",
+"Redis",
+"FastAPI"
+],
+"budget": 55000,
+"duration_months": 3,
+"team_size": 3,
+"outcome": "success",
+"outcome_details": "Increased average order value by 18% and improved click-through rates by 25%",
+"year": 2023,
+"certifications_required": [],
+"key_challenges": [
+"Cold-start scenarios",
+"Low-latency recommendation delivery"
+],
+"lessons_learned": "Hybrid recommendation strategies outperform single-model approaches"
+}
+],
+"portfolio_summary": {
+"total_projects": 15,
+"success_rate": 93,
+"industries_covered": [
+"Healthcare",
+"Finance",
+"Public Sector",
+"Retail"
+],
+"average_project_budget": 115000,
+"average_duration_months": 4.7,
+"total_revenue": 1725000,
+"technologies_most_used": [
+"Python",
+"OpenAI APIs",
+"LangChain",
+"PostgreSQL",
+"AWS",
+"FastAPI"
+]
+}
 }
