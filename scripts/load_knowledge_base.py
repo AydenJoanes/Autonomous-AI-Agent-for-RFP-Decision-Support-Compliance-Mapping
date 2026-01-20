@@ -120,6 +120,10 @@ def load_tech_stack(db, kb_path: Path) -> int:
     
     data = load_json_file(filepath)
     
+    # Unwrap 'tech_stack' if present
+    if "tech_stack" in data:
+        data = data["tech_stack"]
+
     count = 0
     # Handle different possible structures
     if "categories" in data:
@@ -132,7 +136,7 @@ def load_tech_stack(db, kb_path: Path) -> int:
             add_tech(db, tech)
             count += 1
     else:
-        # Flat structure - iterate over all values that are lists
+        # Flat or categorize structure - iterate over all values that are lists
         for key, value in data.items():
             if isinstance(value, list):
                 for tech in value:
@@ -147,11 +151,16 @@ def load_tech_stack(db, kb_path: Path) -> int:
 
 def add_tech(db, tech_data: dict):
     """Add a single technology to the database."""
+    # Check if exists first to avoid dupes if running multiple times (though we shouldn't)
+    name = tech_data.get("name", tech_data.get("technology", ""))
+    if not name:
+        return
+
     tech = TechStack(
-        technology=tech_data.get("name", tech_data.get("technology", "")),
+        technology=name,
         proficiency=tech_data.get("proficiency", "intermediate"),
         years_experience=tech_data.get("years_experience", tech_data.get("years", 0)),
-        team_size=tech_data.get("team_size", 0)
+        team_size=tech_data.get("team_members", tech_data.get("team_size", 0))
     )
     db.add(tech)
 
@@ -166,40 +175,71 @@ def load_strategic_preferences(db, kb_path: Path) -> int:
         return 0
     
     data = load_json_file(filepath)
+    if "strategic_preferences" in data:
+        data = data["strategic_preferences"]
     
     count = 0
     
-    # Handle different preference types
-    preference_mappings = [
-        ("preferred_industries", "industry"),
-        ("preferred_project_types", "project_type"),
-        ("preferred_client_profiles", "client"),
-        ("geographic_preferences", "geographic"),
-        ("strategic_priorities", "priority")
-    ]
-    
-    for json_key, pref_type in preference_mappings:
-        items = data.get(json_key, [])
-        if isinstance(items, list):
-            for i, item in enumerate(items):
-                if isinstance(item, dict):
-                    value = item.get("name", item.get("type", str(item)))
-                    priority = item.get("priority", 10 - i)
-                    notes = item.get("notes", item.get("description", ""))
-                else:
-                    value = str(item)
-                    priority = 10 - i
-                    notes = ""
+    # helper to process a list of items
+    def process_list(items, pref_type, default_priority_func=lambda i: 10-i):
+        nonlocal count
+        if not isinstance(items, list):
+            return
+        
+        for i, item in enumerate(items):
+            if isinstance(item, dict):
+                value = item.get("industry", item.get("type", item.get("name", str(item))))
+                # For string items in mixed lists, or dicts without specific value keys
+                if isinstance(value, dict): # safeguard
+                    value = str(value)
                 
-                pref = StrategicPreference(
-                    preference_type=pref_type,
-                    value=value,
-                    priority=priority,
-                    notes=notes
-                )
-                db.add(pref)
-                count += 1
+                # Check for priority mapping
+                priority_val = item.get("priority")
+                if isinstance(priority_val, str):
+                    priority_map = {"high": 10, "medium": 7, "low": 4, "excluded": 1}
+                    priority = priority_map.get(priority_val.lower(), 5)
+                elif isinstance(priority_val, int):
+                    priority = priority_val
+                else:
+                    priority = default_priority_func(i)
+
+                notes = item.get("reason", item.get("notes", ""))
+            else:
+                value = str(item)
+                priority = default_priority_func(i)
+                notes = ""
+            
+            # safeguard value
+            if not isinstance(value, str):
+                value = str(value)
+
+            pref = StrategicPreference(
+                preference_type=pref_type,
+                value=value,
+                priority=priority,
+                notes=notes
+            )
+            db.add(pref)
+            count += 1
+
+    # 1. Industries
+    process_list(data.get("priority_industries", []), "industry")
+
+    # 2. Project Types
+    process_list(data.get("project_type_preferences", []), "project_type")
+
+    # 3. Client Preferences - flattened
+    client_prefs = data.get("client_preferences", {})
+    if isinstance(client_prefs, dict):
+        process_list(client_prefs.get("preferred_client_size", []), "client_size")
+        process_list(client_prefs.get("preferred_engagement_model", []), "engagement_model")
     
+    # 4. Geographic - flattened
+    geo_prefs = data.get("geographic_preferences", {})
+    if isinstance(geo_prefs, dict):
+        process_list(geo_prefs.get("primary_regions", []), "geographic_primary")
+        process_list(geo_prefs.get("secondary_regions", []), "geographic_secondary")
+
     db.commit()
     logger.success(f"Loaded {count} strategic preferences")
     return count
