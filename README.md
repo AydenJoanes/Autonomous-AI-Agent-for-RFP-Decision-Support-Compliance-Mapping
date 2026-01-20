@@ -102,9 +102,42 @@ isort src/ tests/
 mypy src/
 ```
 
-## Configuration
+## Configuration & Setup
 
-See `.env.example` for all available configuration options.
+### 1. Environment Variables
+Copy the example configuration file:
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and configure the following **required credentials**:
+
+| Variable | Description | Example / Default |
+|----------|-------------|-------------------|
+| `OPENAI_API_KEY` | **Required**. Your OpenAI API Key for LLM & Embeddings. | `sk-proj-...` |
+| `DATABASE_URL` | **Required**. PostgreSQL connection string. | `postgresql+psycopg2://rfp_user:2310@localhost:5432/rfp_bid_db` |
+| `ENV` | Environment mode (development/production) | `development` |
+| `LOG_LEVEL` | Logging verbosity | `INFO` or `DEBUG` |
+
+### 2. Database Initialization
+This project uses **PostgreSQL 14+** with the **pgvector** extension.
+
+**Option A: Automated Setup (Recommended)**
+We provide a script to automatically create the user, database, and enable extensions (bypassing the need for manual `psql` commands).
+```bash
+# 1. Initialize Database & User (rfp_user / rfp_bid_db)
+python scripts/init_db.py
+
+# 2. Create Schema & Indexes
+python scripts/setup_database.py
+```
+
+**Option B: Manual Setup**
+If you prefer to set up PostgreSQL manually:
+1. Create user `rfp_user` with password `2310`.
+2. Create database `rfp_bid_db` owned by `rfp_user`.
+3. Enable `vector` extension in `rfp_bid_db`.
+4. Run `python scripts/setup_database.py` to create tables.
 
 ## Contributing
 
