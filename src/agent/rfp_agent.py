@@ -24,7 +24,7 @@ class RFPAgent:
         
         # Configure logging
         logging.basicConfig(
-            level=settings.log_level,
+            level=settings.LOG_LEVEL,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
     

@@ -2,34 +2,60 @@
 Configuration management for RFP Bid Agent
 """
 
-from typing import Optional
-
-from pydantic_settings import BaseSettings
+import os
+from typing import List, Literal, Optional, Any
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, field_validator
 
 
 class Settings(BaseSettings):
-    """Application settings loaded from environment variables."""
-    
-    # API Configuration
-    openai_api_key: Optional[str] = None
-    azure_api_key: Optional[str] = None
-    
-    # Application Settings
-    debug: bool = False
-    log_level: str = "INFO"
-    max_workers: int = 4
-    
-    # Database
-    database_url: str = "sqlite:///./data/rfp_agent.db"
-    
-    # Model Configuration
-    model_name: str = "gpt-4"
-    temperature: float = 0.7
-    
-    # Paths
-    knowledge_base_path: str = "./data/knowledge_base"
-    sample_rfps_path: str = "./data/sample_rfps"
-    
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    """
+    Application settings loaded from environment variables.
+    """
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=True,
+        extra="ignore"
+    )
+
+    # --- Environment ---
+    ENV: Literal["development", "staging", "production"] = "development"
+
+    # --- Database ---
+    DATABASE_URL: str = Field(..., description="PostgreSQL connection string")
+
+    # --- OpenAI Configuration ---
+    OPENAI_API_KEY: str = Field(..., min_length=1, description="OpenAI API Key")
+    LLM_MODEL: str = "gpt-4o-mini"
+    EMBEDDING_MODEL: str = "text-embedding-3-small"
+
+    # --- Application Settings ---
+    MAX_UPLOAD_SIZE_MB: int = 25
+    ALLOWED_EXTENSIONS: Any = ["pdf", "docx"]
+
+    @field_validator("ALLOWED_EXTENSIONS", mode="before")
+    @classmethod
+    def parse_allowed_extensions(cls, v: Any) -> List[str]:
+        if isinstance(v, str):
+            return [ext.strip().lower() for ext in v.split(",") if ext.strip()]
+        if isinstance(v, list):
+            return v
+        return ["pdf", "docx"]
+
+    # --- Logging ---
+    LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
+    LOG_DIR: str = "logs"
+    LOG_RETENTION_DAYS: int = 30
+
+    # --- Paths ---
+    KNOWLEDGE_BASE_PATH: str = "./data/knowledge_base"
+    SAMPLE_RFPS_PATH: str = "./data/sample_rfps"
+
+    @property
+    def is_production(self) -> bool:
+        return self.ENV == "production"
+
+
+# Singleton instance
+settings = Settings()
