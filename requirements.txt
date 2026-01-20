@@ -20,8 +20,8 @@ python-dotenv>=1.0.0          # Load environment variables
 # ------------------------------------------------------------------------------
 # Database (Optional - can start with JSON files)
 # ------------------------------------------------------------------------------
-# psycopg2-binary>=2.9.9      # Uncomment if using PostgreSQL
-# pgvector>=0.2.4             # Uncomment if using vector search
+psycopg2-binary>=2.9.9      # PostgreSQL driver
+pgvector>=0.2.4             # Vector search support
 sqlalchemy>=2.0.0,<3.0.0      # SQL toolkit and ORM
 
 # ------------------------------------------------------------------------------
