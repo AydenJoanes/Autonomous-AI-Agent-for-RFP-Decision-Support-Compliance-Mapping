@@ -1,0 +1,97 @@
+{
+    "certifications": [
+        {
+            "name": "ISO 27001",
+            "full_name": "ISO/IEC 27001:2022 Information Security Management",
+            "status": "active",
+            "issued_date": "2022-03-15",
+            "valid_until": "2025-03-14",
+            "issuing_body": "BSI Group",
+            "scope": "Information security management for software development and cloud services",
+            "certificate_number": "IS-2022-78432"
+        },
+        {
+            "name": "SOC 2",
+            "full_name": "SOC 2 Type II - Security, Availability, Confidentiality",
+            "status": "ready",
+            "issued_date": null,
+            "valid_until": null,
+            "issuing_body": null,
+            "scope": "Cloud-based software services and data processing - audit preparation complete",
+            "certificate_number": null,
+            "notes": "SOC 2 Type II audit preparation complete. Ready for formal certification upon client requirement."
+        },
+        {
+            "name": "AWS Partner",
+            "full_name": "AWS Select Technology Partner",
+            "status": "active",
+            "issued_date": "2021-09-01",
+            "valid_until": "2025-08-31",
+            "issuing_body": "Amazon Web Services",
+            "scope": "Cloud solutions and migrations",
+            "certificate_number": "AWS-PN-2021-8934"
+        },
+        {
+            "name": "Microsoft Azure",
+            "full_name": "Microsoft Gold Partner - Cloud Platform",
+            "status": "active",
+            "issued_date": "2022-01-15",
+            "valid_until": "2025-01-14",
+            "issuing_body": "Microsoft",
+            "scope": "Azure cloud solutions and application development",
+            "certificate_number": "MS-GOLD-2022-3421"
+        },
+        {
+            "name": "GDPR Compliance",
+            "full_name": "GDPR Data Protection Compliance Certification",
+            "status": "active",
+            "issued_date": "2023-01-10",
+            "valid_until": "2026-01-09",
+            "issuing_body": "TrustArc",
+            "scope": "Data processing and privacy practices for EU clients",
+            "certificate_number": "GDPR-TA-2023-1102"
+        },
+        {
+            "name": "ISO 9001",
+            "full_name": "ISO 9001:2015 Quality Management System",
+            "status": "active",
+            "issued_date": "2021-06-20",
+            "valid_until": "2024-06-19",
+            "issuing_body": "Bureau Veritas",
+            "scope": "Quality management for software development lifecycle",
+            "certificate_number": "QMS-2021-45623"
+        },
+        {
+            "name": "HIPAA",
+            "full_name": "HIPAA Compliance Readiness",
+            "status": "ready",
+            "issued_date": null,
+            "valid_until": null,
+            "issuing_body": null,
+            "scope": "Healthcare data handling - internal compliance processes established",
+            "certificate_number": null,
+            "notes": "Internal processes aligned with HIPAA requirements. Formal certification pending client requirement."
+        }
+    ],
+    "compliance_summary": {
+        "total_active": 6,
+        "total_ready": 1,
+        "security_certifications": [
+            "ISO 27001",
+            "SOC 2 Type II"
+        ],
+        "cloud_partnerships": [
+            "AWS Partner",
+            "Microsoft Azure"
+        ],
+        "privacy_certifications": [
+            "GDPR Compliance"
+        ],
+        "quality_certifications": [
+            "ISO 9001"
+        ],
+        "healthcare_specific": [
+            "HIPAA"
+        ]
+    }
+}
