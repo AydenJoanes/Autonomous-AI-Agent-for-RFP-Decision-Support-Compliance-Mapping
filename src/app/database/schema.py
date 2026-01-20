@@ -69,7 +69,7 @@ class ProjectPortfolio(Base):
     year = Column(Integer)
     client_sector = Column(String(50))
     team_size = Column(Integer)
-    embedding = Column(Vector(384))  # pgvector type
+    embedding = Column(Vector(1536))  # pgvector type - OpenAI text-embedding-3-small
     created_at = Column(DateTime, default=func.now())
     
     # Indexes will be defined in the setup script or via explicit Index constructs if needed,

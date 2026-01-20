@@ -1,62 +1,70 @@
 """
-Embeddings Utility - Generate text embeddings using SentenceTransformers
+Embeddings Utility - Generate text embeddings using OpenAI
 """
 
-from typing import List, Optional
+from typing import List
 from loguru import logger
 
-# Singleton pattern for model caching
-_model_instance = None
+from config.settings import settings
+
+# Singleton pattern for OpenAI client caching
+_client_instance = None
 
 
-def get_embedding_model():
+def get_openai_client():
     """
-    Get or create the embedding model instance (singleton pattern).
-    Uses all-MiniLM-L6-v2 which produces 384-dimensional embeddings.
+    Get or create the OpenAI client instance (singleton pattern).
     
     Returns:
-        SentenceTransformer model instance
+        OpenAI client instance
     """
-    global _model_instance
+    global _client_instance
     
-    if _model_instance is None:
-        logger.info("Loading embedding model: all-MiniLM-L6-v2...")
+    if _client_instance is None:
+        logger.info("Initializing OpenAI client...")
         try:
-            from sentence_transformers import SentenceTransformer
-            _model_instance = SentenceTransformer('all-MiniLM-L6-v2')
-            logger.success("Embedding model loaded successfully")
+            from openai import OpenAI
+            _client_instance = OpenAI(api_key=settings.OPENAI_API_KEY)
+            logger.success("OpenAI client initialized successfully")
         except ImportError:
-            logger.error("sentence-transformers not installed. Run: pip install sentence-transformers")
+            logger.error("openai not installed. Run: pip install openai")
             raise
         except Exception as e:
-            logger.error(f"Failed to load embedding model: {e}")
+            logger.error(f"Failed to initialize OpenAI client: {e}")
             raise
     
-    return _model_instance
+    return _client_instance
 
 
 def generate_embedding(text: str) -> List[float]:
     """
-    Generate an embedding vector from text.
+    Generate an embedding vector from text using OpenAI.
+    Uses the model specified in settings (default: text-embedding-3-small).
+    Produces 1536-dimensional embeddings.
     
     Args:
         text: Input text to embed
         
     Returns:
-        List of floats representing the embedding (384 dimensions)
+        List of floats representing the embedding (1536 dimensions)
     """
     if not text or not text.strip():
         logger.warning("Empty text provided for embedding, returning zeros")
-        return [0.0] * 384
+        return [0.0] * 1536
     
-    model = get_embedding_model()
+    client = get_openai_client()
     
     try:
-        logger.debug(f"Generating embedding for text: {text[:50]}...")
-        embedding = model.encode(text, convert_to_numpy=True)
-        embedding_list = embedding.tolist()
-        logger.debug(f"Generated embedding with {len(embedding_list)} dimensions")
-        return embedding_list
+        logger.debug(f"Generating OpenAI embedding for text: {text[:50]}...")
+        
+        response = client.embeddings.create(
+            model=settings.EMBEDDING_MODEL,
+            input=text
+        )
+        
+        embedding = response.data[0].embedding
+        logger.debug(f"Generated embedding with {len(embedding)} dimensions")
+        return embedding
     except Exception as e:
         logger.error(f"Failed to generate embedding: {e}")
         raise
@@ -64,25 +72,35 @@ def generate_embedding(text: str) -> List[float]:
 
 def generate_embeddings_batch(texts: List[str]) -> List[List[float]]:
     """
-    Generate embeddings for multiple texts efficiently.
+    Generate embeddings for multiple texts efficiently using OpenAI batch API.
     
     Args:
         texts: List of input texts
         
     Returns:
-        List of embedding vectors
+        List of embedding vectors (each 1536 dimensions)
     """
     if not texts:
         return []
     
-    model = get_embedding_model()
+    # Filter out empty texts
+    valid_texts = [t for t in texts if t and t.strip()]
+    if not valid_texts:
+        return [[0.0] * 1536 for _ in texts]
+    
+    client = get_openai_client()
     
     try:
-        logger.info(f"Generating embeddings for {len(texts)} texts...")
-        embeddings = model.encode(texts, convert_to_numpy=True, show_progress_bar=True)
-        embeddings_list = [emb.tolist() for emb in embeddings]
-        logger.success(f"Generated {len(embeddings_list)} embeddings")
-        return embeddings_list
+        logger.info(f"Generating OpenAI embeddings for {len(valid_texts)} texts...")
+        
+        response = client.embeddings.create(
+            model=settings.EMBEDDING_MODEL,
+            input=valid_texts
+        )
+        
+        embeddings = [item.embedding for item in response.data]
+        logger.success(f"Generated {len(embeddings)} embeddings")
+        return embeddings
     except Exception as e:
         logger.error(f"Failed to generate batch embeddings: {e}")
         raise
