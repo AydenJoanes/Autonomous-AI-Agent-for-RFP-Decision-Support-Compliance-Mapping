@@ -1,0 +1,73 @@
+{
+    "company_name": "AstraNova Digital Solutions",
+    "overview": "Mid-sized technology consulting firm specializing in AI-driven enterprise automation, data engineering, and cloud-native application development. We work with clients across healthcare, finance, retail, and government sectors to modernize operations and improve decision-making using AI.",
+    "years_of_experience": 6,
+    "team_size": 35,
+    "delivery_regions": [
+        "North America",
+        "Europe",
+        "APAC",
+        "India"
+    ],
+    "budget_capacity": {
+        "min": 20000,
+        "max": 250000,
+        "currency": "USD"
+    },
+    "industries_served": [
+        "Healthcare",
+        "Finance",
+        "Retail",
+        "Public Sector"
+    ],
+    "core_services": [
+        "AI & Machine Learning",
+        "Automation & RPA",
+        "Cloud Engineering",
+        "Data Engineering",
+        "Enterprise Software Development",
+        "Security & Compliance"
+    ],
+    "service_capabilities": {
+        "ai_ml": [
+            "Large Language Model (LLM) Applications",
+            "AI Agents & Autonomous Workflows",
+            "NLP (Entity Extraction, Summarization, Classification)",
+            "Document Intelligence (RFPs, Contracts, Invoices)",
+            "Predictive Analytics & ML Pipelines"
+        ],
+        "automation": [
+            "Robotic Process Automation (RPA)",
+            "AI-Powered Decision Support Systems",
+            "Workflow Orchestration",
+            "Human-in-the-Loop AI Systems"
+        ],
+        "data_cloud": [
+            "Data Pipelines (ETL/ELT)",
+            "Cloud-Native Architectures (AWS & Azure)",
+            "API Development & Integration",
+            "Data Warehouses & Vector Databases"
+        ],
+        "enterprise_software": [
+            "Python & Java-Based Backend Systems",
+            "Microservices Architecture",
+            "REST & GraphQL APIs",
+            "Secure Authentication & Authorization"
+        ],
+        "security_compliance": [
+            "ISO 27001 Compliant Processes",
+            "SOC 2 Readiness",
+            "Data Privacy (GDPR-Aware Designs)",
+            "Secure AI Model Deployment"
+        ]
+    },
+    "team_availability": {
+        "current_utilization_percent": 70,
+        "available_developers": 10
+    },
+    "contact": {
+        "headquarters": "San Francisco, CA",
+        "website": "https://astranova.digital",
+        "email": "contact@astranova.digital"
+    }
+}
