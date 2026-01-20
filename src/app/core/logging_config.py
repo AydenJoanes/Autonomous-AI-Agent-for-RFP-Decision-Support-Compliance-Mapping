@@ -1,7 +1,7 @@
 import sys
 import os
 from loguru import logger
-from app.core.settings import settings
+from config.settings import settings
 
 def setup_logging():
     """
