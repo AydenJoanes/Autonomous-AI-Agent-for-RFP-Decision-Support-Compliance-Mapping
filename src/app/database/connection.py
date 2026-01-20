@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, event, text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import QueuePool
 from loguru import logger
-from src.app.core.settings import settings
+from config.settings import settings
 
 # Validate DATABASE_URL
 if not settings.DATABASE_URL:

@@ -44,12 +44,15 @@ async def detailed_health_check() -> Dict[str, Any]:
         "knowledge_base": {"status": "healthy", "path": settings.KNOWLEDGE_BASE_PATH}
     }
     
-    # TODO: Add database connection check when database is implemented
-    # try:
-    #     # Test database connection
-    #     components["database"] = {"status": "healthy"}
-    # except Exception as e:
-    #     components["database"] = {"status": "unhealthy", "error": str(e)}
+    try:
+        # Test database connection
+        from src.app.database.connection import test_connection
+        if test_connection(max_retries=1):
+            components["database"] = {"status": "healthy"}
+        else:
+             components["database"] = {"status": "unhealthy", "error": "Connection failed"}
+    except Exception as e:
+        components["database"] = {"status": "unhealthy", "error": str(e)}
     
     all_healthy = all(c["status"] == "healthy" for c in components.values())
     
