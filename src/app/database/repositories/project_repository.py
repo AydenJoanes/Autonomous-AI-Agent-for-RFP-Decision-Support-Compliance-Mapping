@@ -45,23 +45,24 @@ class ProjectRepository(BaseRepository[ProjectPortfolio]):
         Uses cosine distance for similarity matching.
         
         Args:
-            embedding: Query embedding vector (384 dimensions)
+            embedding: Query embedding vector (1536 dimensions for OpenAI)
             limit: Maximum number of results
             
         Returns:
             List of similar projects ordered by similarity
         """
-        # Convert embedding to PostgreSQL array format
+        # Convert embedding to PostgreSQL vector format
         embedding_str = "[" + ",".join(map(str, embedding)) + "]"
         
-        query = """
-            SELECT *, (embedding <=> :embedding::vector) as distance
+        # Use string formatting for the vector since SQLAlchemy params don't work well with pgvector
+        query = f"""
+            SELECT *, (embedding <=> '{embedding_str}'::vector) as distance
             FROM project_portfolio 
             WHERE embedding IS NOT NULL
-            ORDER BY embedding <=> :embedding::vector
+            ORDER BY embedding <=> '{embedding_str}'::vector
             LIMIT :limit
         """
-        return self.fetch_all(query, {"embedding": embedding_str, "limit": limit})
+        return self.fetch_all(query, {"limit": limit})
     
     def add_project(self, project_data: dict) -> dict:
         """
