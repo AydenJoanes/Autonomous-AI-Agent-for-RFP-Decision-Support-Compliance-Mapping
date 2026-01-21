@@ -80,18 +80,9 @@ def map_status_to_compliance(tool_name: str, status: str, details: Optional[Dict
 
     # 6. Knowledge Query (Self-determined)
     elif tool_name == "knowledge_query":
-        # Additional mappings as requested
-        if status == "STRONG_EVIDENCE":
-            return ComplianceLevel.COMPLIANT
-        elif status == "LIMITED_EVIDENCE":
-            return ComplianceLevel.PARTIAL
-        elif status == "WEAK_EVIDENCE":
-            return ComplianceLevel.WARNING
-        elif status == "NO_EVIDENCE":
-            return ComplianceLevel.UNKNOWN
-        else:
-            # Fallback or if tool set specific compliance_level internally
-            return ComplianceLevel.UNKNOWN
+        # This tool sets its own logical compliance in the step.
+        # We return UNKNOWN as standard mapping is not needed/handled internally by the tool logic flow before this map is called.
+        return ComplianceLevel.UNKNOWN
 
     logger.warning(f"Unknown status '{status}' for tool '{tool_name}'.")
     return ComplianceLevel.UNKNOWN

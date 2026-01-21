@@ -51,11 +51,13 @@ def run_mapping_tests():
         ("strategy_evaluator", "WEAK_ALIGNMENT", None, ComplianceLevel.WARNING),
         ("strategy_evaluator", "MISALIGNMENT", None, ComplianceLevel.NON_COMPLIANT),
         
-        # Knowledge Query
-        ("knowledge_query", "STRONG_EVIDENCE", None, ComplianceLevel.COMPLIANT),
-        ("knowledge_query", "LIMITED_EVIDENCE", None, ComplianceLevel.PARTIAL),
-        ("knowledge_query", "WEAK_EVIDENCE", None, ComplianceLevel.WARNING),
-        ("knowledge_query", "NO_EVIDENCE", None, ComplianceLevel.UNKNOWN),
+        
+        # Knowledge Query - Removed as tool sets compliance directly
+        # ("knowledge_query", "STRONG_EVIDENCE", None, ComplianceLevel.COMPLIANT),
+        # ("knowledge_query", "LIMITED_EVIDENCE", None, ComplianceLevel.PARTIAL),
+        # ("knowledge_query", "WEAK_EVIDENCE", None, ComplianceLevel.WARNING),
+        # ("knowledge_query", "NO_EVIDENCE", None, ComplianceLevel.UNKNOWN),
+        
         
         # Edge Cases
         ("unknown_tool", "VALID", None, ComplianceLevel.UNKNOWN),
