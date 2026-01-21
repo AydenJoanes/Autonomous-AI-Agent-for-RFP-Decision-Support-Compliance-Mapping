@@ -50,7 +50,7 @@ class CertificationCheckerTool(BaseTool):
                     details={"searched_name": normalized_name},
                     message="Certification not found in database. Manual verification needed."
                 )
-                return result.json()
+                return result.model_dump_json()
             
             # Found certification - analyze it
             status = cert.get('status', 'unknown').lower()
@@ -152,7 +152,7 @@ class CertificationCheckerTool(BaseTool):
                 message=message
             )
             
-            return result.json()
+            return result.model_dump_json()
         
         except Exception as e:
             logger.error(f"CertificationCheckerTool Error: {e}")
@@ -165,7 +165,7 @@ class CertificationCheckerTool(BaseTool):
                 details={"error": str(e)},
                 message=f"System error during certification check: {str(e)}"
             )
-            return error_result.json()
+            return error_result.model_dump_json()
         
         finally:
             session.close()

@@ -1,0 +1,38 @@
+2026-01-21 17:24:46.620 | INFO     | src.app.database.connection:<module>:21 - Connecting to database at postgresql+psycopg2://****:****@localhost:5432/rfp_bid_db
+2026-01-21 17:24:46.718 | INFO     | src.app.agent.tools:<module>:20 - [INIT] Importing reasoning tools...
+2026-01-21 17:24:46.718 | INFO     | src.app.agent.tools:<module>:39 - [INIT] REASONING_TOOLS loaded: 6 tools
+2026-01-21 17:24:46.718 | INFO     | src.app.agent.tools:<module>:51 - [INIT] ALL_TOOLS loaded: 8 tools
+2026-01-21 17:24:46.718 | INFO     | src.app.agent.tools:<module>:64 - [INIT] Tools package initialized successfully
+test_8_1_initialization (__main__.TestPhase5Service.test_8_1_initialization)
+Verify Initialization ... 2026-01-21 17:24:46.725 | INFO     | src.app.services.recommendation_service:__init__:45 - [SERVICE] RecommendationService initialized with all dependencies
+ok
+test_8_2_process_rfp (__main__.TestPhase5Service.test_8_2_process_rfp)
+Verify Process RFP ... 2026-01-21 17:24:46.725 | INFO     | src.app.services.recommendation_service:__init__:45 - [SERVICE] RecommendationService initialized with all dependencies
+ok
+test_8_4_generate_recommendation_happy_path (__main__.TestPhase5Service.test_8_4_generate_recommendation_happy_path)
+Verify Generate Recommendation - Happy Path ... 2026-01-21 17:24:46.726 | INFO     | src.app.services.recommendation_service:__init__:45 - [SERVICE] RecommendationService initialized with all dependencies
+C:\Users\ponna\anaconda3\Lib\site-packages\pydantic\main.py:193: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  self.__pydantic_validator__.validate_python(data, self_instance=self)
+2026-01-21 17:24:46.727 | INFO     | src.app.services.recommendation_service:generate_recommendation:277 - [SERVICE] Starting recommendation generation for t.pdf
+2026-01-21 17:24:46.727 | INFO     | src.app.services.recommendation_service:generate_recommendation:294 - [SERVICE] Extracted 0 risks
+2026-01-21 17:24:46.727 | INFO     | src.app.services.recommendation_service:generate_recommendation:298 - [SERVICE] Decision: RecommendationDecision.BID (confidence: 90)
+C:\Emplay-task\RFP_bid\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\scripts\..\src\app\services\recommendation_service.py:316: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  timestamp=datetime.utcnow()
+2026-01-21 17:24:46.727 | INFO     | src.app.services.recommendation_service:generate_recommendation:321 - [SERVICE] Recommendation complete in 0.00s: BID
+ok
+test_8_6_generate_recommendation_error (__main__.TestPhase5Service.test_8_6_generate_recommendation_error)
+Verify Generate Recommendation - Error ... 2026-01-21 17:24:46.729 | INFO     | src.app.services.recommendation_service:__init__:45 - [SERVICE] RecommendationService initialized with all dependencies
+2026-01-21 17:24:46.729 | INFO     | src.app.services.recommendation_service:generate_recommendation:277 - [SERVICE] Starting recommendation generation for t.pdf
+2026-01-21 17:24:46.729 | ERROR    | src.app.services.recommendation_service:generate_recommendation:335 - [SERVICE] Critical failure: Test Error
+2026-01-21 17:24:46.729 | WARNING  | src.app.services.recommendation_service:_create_error_recommendation:188 - [SERVICE] Creating error recommendation for t.pdf
+C:\Emplay-task\RFP_bid\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\scripts\..\src\app\services\recommendation_service.py:212: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  processed_date=datetime.utcnow(),
+C:\Emplay-task\RFP_bid\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\scripts\..\src\app\services\recommendation_service.py:216: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  timestamp=datetime.utcnow()
+ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.006s
+
+OK
+Recommendation Service Test Results:

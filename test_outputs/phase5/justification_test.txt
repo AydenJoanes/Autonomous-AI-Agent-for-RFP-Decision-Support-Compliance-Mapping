@@ -1,0 +1,32 @@
+2026-01-21 17:24:40.579 | INFO     | src.app.database.connection:<module>:21 - Connecting to database at postgresql+psycopg2://****:****@localhost:5432/rfp_bid_db
+2026-01-21 17:24:40.674 | INFO     | src.app.agent.tools:<module>:20 - [INIT] Importing reasoning tools...
+2026-01-21 17:24:40.674 | INFO     | src.app.agent.tools:<module>:39 - [INIT] REASONING_TOOLS loaded: 6 tools
+2026-01-21 17:24:40.674 | INFO     | src.app.agent.tools:<module>:51 - [INIT] ALL_TOOLS loaded: 8 tools
+2026-01-21 17:24:40.674 | INFO     | src.app.agent.tools:<module>:64 - [INIT] Tools package initialized successfully
+test_6_1_context_prompt_building (__main__.TestPhase5Justification.test_6_1_context_prompt_building)
+Verify _build_context_prompt ... 2026-01-21 17:24:41.298 | INFO     | src.app.utils.embeddings:get_openai_client:38 - Embedding utility initialized with text-embedding-3-small
+2026-01-21 17:24:41.298 | INFO     | src.app.services.justification_generator:__init__:154 - [JUSTIFICATION] Initialized with model=gpt-4o-mini, temp=0.3
+ok
+test_6_2_fallback_templates (__main__.TestPhase5Justification.test_6_2_fallback_templates)
+Verify Fallback Templates Logic ... 2026-01-21 17:24:41.298 | INFO     | src.app.services.justification_generator:__init__:154 - [JUSTIFICATION] Initialized with model=gpt-4o-mini, temp=0.3
+ok
+test_6_3_fallback_trigger (__main__.TestPhase5Justification.test_6_3_fallback_trigger)
+Verify Fallback Trigger on LLM Failure ... 2026-01-21 17:24:41.298 | INFO     | src.app.services.justification_generator:__init__:154 - [JUSTIFICATION] Initialized with model=gpt-4o-mini, temp=0.3
+2026-01-21 17:24:41.299 | INFO     | src.app.services.justification_generator:generate:380 - [JUSTIFICATION] Starting justification generation
+2026-01-21 17:24:41.299 | WARNING  | src.app.services.justification_generator:generate_justification:325 - [JUSTIFICATION] Using fallback template for justification
+2026-01-21 17:24:41.299 | WARNING  | src.app.services.justification_generator:generate_executive_summary:360 - [JUSTIFICATION] Using fallback template for executive summary
+2026-01-21 17:24:41.299 | INFO     | src.app.services.justification_generator:generate:400 - [JUSTIFICATION] Complete: justification=591 chars, summary=133 chars
+ok
+test_6_5_generate_orchestrator (__main__.TestPhase5Justification.test_6_5_generate_orchestrator)
+Verify Generate Orchestrator ... 2026-01-21 17:24:41.299 | INFO     | src.app.services.justification_generator:__init__:154 - [JUSTIFICATION] Initialized with model=gpt-4o-mini, temp=0.3
+2026-01-21 17:24:41.299 | INFO     | src.app.services.justification_generator:generate:380 - [JUSTIFICATION] Starting justification generation
+2026-01-21 17:24:41.299 | INFO     | src.app.services.justification_generator:generate_justification:321 - [JUSTIFICATION] Generated justification: 68 chars
+2026-01-21 17:24:41.299 | INFO     | src.app.services.justification_generator:generate_executive_summary:356 - [JUSTIFICATION] Generated executive summary: 68 chars
+2026-01-21 17:24:41.299 | INFO     | src.app.services.justification_generator:generate:400 - [JUSTIFICATION] Complete: justification=68 chars, summary=68 chars
+ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.619s
+
+OK
+Justification Generator Test Results:

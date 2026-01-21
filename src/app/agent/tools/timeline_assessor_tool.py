@@ -38,7 +38,7 @@ class TimelineAssessorTool(BaseTool):
                     details={"raw_timeline": timeline},
                     message=f"Could not parse timeline: {timeline}"
                 )
-                return result.json()
+                return result.model_dump_json()
             
             # Step 2: Get current capacity
             company_profile = self._get_company_profile(session)
@@ -196,7 +196,7 @@ class TimelineAssessorTool(BaseTool):
                 message=message
             )
             
-            return result.json()
+            return result.model_dump_json()
         
         except Exception as e:
             logger.error(f"TimelineAssessorTool Error: {e}")
@@ -209,7 +209,7 @@ class TimelineAssessorTool(BaseTool):
                 details={"error": str(e)},
                 message=f"System error during timeline assessment: {str(e)}"
             )
-            return error_result.json()
+            return error_result.model_dump_json()
         
         finally:
             session.close()

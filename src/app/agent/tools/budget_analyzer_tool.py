@@ -38,7 +38,7 @@ class BudgetAnalyzerTool(BaseTool):
                     details={"raw_budget": budget},
                     message=f"Could not parse budget: {budget}"
                 )
-                return result.json()
+                return result.model_dump_json()
             
             # Step 2: Get company capacity
             company_profile = self._get_company_profile(session)
@@ -53,7 +53,7 @@ class BudgetAnalyzerTool(BaseTool):
                     details={"budget_amount": budget_amount},
                     message="Company profile not found in database. Cannot assess budget feasibility."
                 )
-                return result.json()
+                return result.model_dump_json()
             
             budget_min = company_profile.get('budget_capacity_min', 0)
             budget_max = company_profile.get('budget_capacity_max', 0)
@@ -179,7 +179,7 @@ class BudgetAnalyzerTool(BaseTool):
                 message=message
             )
             
-            return result.json()
+            return result.model_dump_json()
         
         except Exception as e:
             logger.error(f"BudgetAnalyzerTool Error: {e}")
@@ -192,7 +192,7 @@ class BudgetAnalyzerTool(BaseTool):
                 details={"error": str(e)},
                 message=f"System error during budget analysis: {str(e)}"
             )
-            return error_result.json()
+            return error_result.model_dump_json()
         
         finally:
             session.close()

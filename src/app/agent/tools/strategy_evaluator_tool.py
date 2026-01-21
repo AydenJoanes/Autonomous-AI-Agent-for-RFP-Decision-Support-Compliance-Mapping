@@ -40,7 +40,7 @@ class StrategyEvaluatorTool(BaseTool):
                     details={"error": str(e)},
                     message="Invalid JSON input format"
                 )
-                return result.json()
+                return result.model_dump_json()
             
             industry = context.get('industry', '').strip()
             technologies = context.get('technologies', [])
@@ -191,7 +191,7 @@ class StrategyEvaluatorTool(BaseTool):
                 message=message
             )
             
-            return result.json()
+            return result.model_dump_json()
         
         except Exception as e:
             logger.error(f"StrategyEvaluatorTool Error: {e}")
@@ -204,7 +204,7 @@ class StrategyEvaluatorTool(BaseTool):
                 details={"error": str(e)},
                 message=f"System error during strategy evaluation: {str(e)}"
             )
-            return error_result.json()
+            return error_result.model_dump_json()
         
         finally:
             session.close()

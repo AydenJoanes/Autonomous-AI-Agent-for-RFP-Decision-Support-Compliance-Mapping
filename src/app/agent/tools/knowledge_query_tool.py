@@ -115,7 +115,7 @@ class KnowledgeQueryTool(BaseTool):
             )
             
             # Step 4: Return as JSON string
-            return result.json()
+            return result.model_dump_json()
 
         except Exception as e:
             logger.error(f"KnowledgeQueryTool Error: {e}")
@@ -128,7 +128,7 @@ class KnowledgeQueryTool(BaseTool):
                 details={"error": str(e)},
                 message=f"System error during knowledge query: {str(e)}"
             )
-            return error_result.json()
+            return error_result.model_dump_json()
             
         finally:
             session.close()

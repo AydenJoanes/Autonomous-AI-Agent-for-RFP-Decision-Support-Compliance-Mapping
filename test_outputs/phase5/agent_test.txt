@@ -1,0 +1,29 @@
+2026-01-21 17:24:49.682 | INFO     | src.app.database.connection:<module>:21 - Connecting to database at postgresql+psycopg2://****:****@localhost:5432/rfp_bid_db
+2026-01-21 17:24:49.766 | INFO     | src.app.agent.tools:<module>:20 - [INIT] Importing reasoning tools...
+2026-01-21 17:24:49.766 | INFO     | src.app.agent.tools:<module>:39 - [INIT] REASONING_TOOLS loaded: 6 tools
+2026-01-21 17:24:49.766 | INFO     | src.app.agent.tools:<module>:51 - [INIT] ALL_TOOLS loaded: 8 tools
+2026-01-21 17:24:49.766 | INFO     | src.app.agent.tools:<module>:64 - [INIT] Tools package initialized successfully
+test_9_1_initialization (__main__.TestPhase5Agent.test_9_1_initialization)
+Verify Initialization ... 2026-01-21 17:24:49.881 | INFO     | src.app.agent.recommendation_agent:__init__:24 - [AGENT] RecommendationAgent initialized
+ok
+test_9_2_run_method (__main__.TestPhase5Agent.test_9_2_run_method)
+Verify Run Method ... 2026-01-21 17:24:49.881 | INFO     | src.app.agent.recommendation_agent:__init__:24 - [AGENT] RecommendationAgent initialized
+2026-01-21 17:24:49.881 | INFO     | src.app.agent.recommendation_agent:run:40 - [AGENT] Processing RFP: test.pdf
+2026-01-21 17:24:49.881 | INFO     | src.app.agent.recommendation_agent:run:44 - [AGENT] Recommendation complete: RecommendationDecision.BID
+ok
+test_9_3_run_with_report (__main__.TestPhase5Agent.test_9_3_run_with_report)
+Verify Run With Report ... 2026-01-21 17:24:49.882 | INFO     | src.app.agent.recommendation_agent:__init__:24 - [AGENT] RecommendationAgent initialized
+2026-01-21 17:24:49.882 | INFO     | src.app.agent.recommendation_agent:run_with_report:73 - [AGENT] Processing RFP with report: test.pdf
+2026-01-21 17:24:49.882 | INFO     | src.app.agent.recommendation_agent:run:40 - [AGENT] Processing RFP: test.pdf
+2026-01-21 17:24:49.882 | INFO     | src.app.agent.recommendation_agent:run:44 - [AGENT] Recommendation complete: RecommendationDecision.BID
+2026-01-21 17:24:49.882 | INFO     | src.app.agent.recommendation_agent:run_with_report:81 - [AGENT] Report generated: 8 chars
+ok
+test_9_4_health_check (__main__.TestPhase5Agent.test_9_4_health_check)
+Verify Health Check ... 2026-01-21 17:24:49.883 | INFO     | src.app.agent.recommendation_agent:__init__:24 - [AGENT] RecommendationAgent initialized
+ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+OK
+Recommendation Agent Test Results:

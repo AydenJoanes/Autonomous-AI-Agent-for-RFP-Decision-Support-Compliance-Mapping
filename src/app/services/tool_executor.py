@@ -5,6 +5,7 @@ Orchestrates running all reasoning tools against extracted requirements.
 
 from typing import Dict, List, Tuple, Any
 from loguru import logger
+import json
 
 from langchain.tools import BaseTool
 
@@ -81,7 +82,7 @@ class ToolExecutorService:
                 response_json = tool._run(input_data)
             
             # Parse response
-            result = ToolResult.parse_raw(response_json)
+            result = ToolResult.model_validate_json(response_json)
             
             # Cache result
             self._cache[cache_key] = result
@@ -121,7 +122,7 @@ class ToolExecutorService:
         "STRATEGIC": "strategy_evaluator",
     }
 
-    def match_requirements_to_tools(self, requirements: List) -> Dict[str, List[Tuple[Any, Dict]]]:
+    def match_requirements_to_tools(self, requirements: List[Any]) -> Dict[str, List[Tuple[Any, Dict]]]:
         """
         Map requirements to appropriate tools with extracted inputs.
         
@@ -181,17 +182,37 @@ class ToolExecutorService:
             elif best_tool == "timeline_assessor":
                 input_dict = {"timeline": extracted.get("timeline") or req_text}
             elif best_tool == "strategy_evaluator":
-                import json
-                input_dict = {"rfp_context": json.dumps({"requirement": req_text})}
+                context = {
+                    "industry": req_category if req_category else "general",
+                    "technologies": [extracted.get("technology")] if extracted.get("technology") else [],
+                    "project_type": req_type.lower() if req_type else "other",
+                    "client_sector": "unknown",
+                    "requirement_text": req_text
+                }
+                input_dict = {"rfp_context": json.dumps(context)}
             else:
-                input_dict = {"query": req_text}
+                req_embedding = getattr(requirement, 'embedding', None)
+                if req_embedding:
+                    input_dict = {
+                        "requirement_text": req_text,
+                        "requirement_embedding": req_embedding
+                    }
+                else:
+                    input_dict = {"requirement_text": req_text, "requirement_embedding": []}
             
             # Add to mapping
             mapping[best_tool].append((requirement, input_dict))
             
             # Also add to knowledge_query for experience check
             if best_tool != "knowledge_query":
-                mapping["knowledge_query"].append((requirement, {"query": req_text}))
+                req_embedding = getattr(requirement, 'embedding', None)
+                if req_embedding and len(req_embedding) == 1536:
+                    mapping["knowledge_query"].append((requirement, {
+                        "requirement_text": req_text,
+                        "requirement_embedding": req_embedding
+                    }))
+                else:
+                    logger.debug(f"[EXECUTOR] Skipping knowledge_query for '{req_text[:30]}...' - no valid 1536-dim embedding")
             
             logger.debug(f"[EXECUTOR] Matched '{req_text[:30]}...' to {best_tool} (score: {best_score})")
         
