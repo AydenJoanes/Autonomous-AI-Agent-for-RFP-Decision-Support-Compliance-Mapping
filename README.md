@@ -1,152 +1,151 @@
-# RFP Bid Agent
+# Autonomous AI Agent for RFP Decision Support & Compliance Mapping
 
-An autonomous AI agent for RFP (Request for Proposal) decision support and compliance mapping.
+An intelligent, autonomous AI agent designed to streamline the Request for Proposal (RFP) process. This system leverages Large Language Models (LLMs), Vector Search, and Agentic workflows to analyze RFP documents, extract requirements, map them to company capabilities, and provide data-driven bid/no-bid decisions.
 
-## Overview
+![Status](https://img.shields.io/badge/Status-Development-blue)
+![Python](https://img.shields.io/badge/Python-3.10%2B-green)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109%2B-teal)
 
-This project develops an intelligent agent that:
-- Analyzes RFP documents
-- Extracts requirements and compliance criteria
-- Maps company capabilities against RFP requirements
-- Generates compliance and capability assessments
-- Supports bid/no-bid decision making
+## 🚀 Key Features
 
-## Features
+*   **Intelligent RFP Parsing**:
+    *   Unified parsing for **PDF** and **DOCX** files via `DocumentParserFactory`.
+    *   Handles complex layouts, tables, and mixed content.
+*   **Requirement Analysis Engine**:
+    *   **Automated Extraction**: Identifies potential requirements using regex heuristics and NLP.
+    *   **AI Classification**: Uses GPT-4o-mini to categorize requirements (Mandatory, Technical, Timeline, Budget) and assign priority scores (1-10).
+    *   **Semantic Understanding**: Generates 1536-dimensional embeddings (OpenAI `text-embedding-3-small`) for deep semantic search.
+*   **Knowledge Base Integration**:
+    *   Vector-based retrieval of company capabilities (Tech Stack, Certifications, Project Portfolio).
+    *   Strategic alignment checking against company preferences.
+*   **Agentic Decision Support**:
+    *   Calculates compliance scores and fit gaps.
+    *   Provides actionable Bid/No-Bid recommendations with reasoning.
 
-- **RFP Parsing**: Automatic parsing of RFP documents (PDF, DOCX, etc.)
-- **Requirement Extraction**: Intelligent extraction of technical and compliance requirements
-- **Capability Mapping**: Maps company capabilities against extracted requirements
-- **Compliance Analysis**: Identifies compliance gaps and recommendations
-- **Report Generation**: Generates detailed assessment reports
+## 🏗️ Architecture
 
-## Project Structure
+The system follows a modular architecture:
 
-```
+1.  **Ingestion Layer**: `RFPParserTool` converts raw documents into clean Markdown.
+2.  **Processing Layer**: `RequirementProcessorTool` transforms text into structured `Requirement` objects with metadata and embeddings.
+3.  **Knowledge Layer**: PostgreSQL + `pgvector` stores the Company Knowledge Base (Projects, Certs, Tech) and historical RFP data.
+4.  **Reasoning Layer**: The Agent Orchestrator (LangGraph/LangChain) plans execution, queries the KB, and synthesizes the final report.
+
+## 📂 Project Structure
+
+```bash
 rfp-bid-agent/
-├── .env.example                 # Environment configuration template
-├── .gitignore                   # Git ignore rules
-├── requirements.txt             # Python dependencies
-├── README.md                    # This file
-├── main.py                      # Entry point
-│
-├── config/
-│   └── settings.py              # Configuration management
-│
+├── config/                  # Configuration settings (Env vars)
 ├── data/
-│   ├── knowledge_base/          # Company capability files
-│   └── sample_rfps/             # Test RFP documents
-│
+│   └── knowledge_base/      # JSON source files for Company capabilities
+├── scripts/                 # Utility scripts (DB setup, Data loading, verification)
 ├── src/
-│   ├── __init__.py
-│   ├── models/                  # Pydantic data models
-│   ├── parsers/                 # RFP parsing
-│   ├── extractors/              # Requirement extraction
-│   ├── engine/                  # Reasoning engine
-│   ├── agent/                   # Main agent logic
-│   └── utils/                   # Helper functions
-│
-└── tests/
-    └── test_*.py                # Unit tests
+│   └── app/
+│       ├── agent/           # Agent Logic & Tools
+│       │   └── tools/       # RFPParserTool, RequirementProcessorTool
+│       ├── api/             # FastAPI Routes (Health, etc.)
+│       ├── database/        # SQLAlchemy Models & Connection logic
+│       ├── models/          # Pydantic schema definitions
+│       ├── services/        # Core services (e.g., DocumentParserFactory)
+│       └── utils/           # Shared utilities (Embeddings, Logging)
+├── tests/                   # Automated test suites
+└── main.py                  # Application entry point
 ```
 
-## Installation
+## 🛠️ Installation & Setup
 
-1. Clone the repository:
+### Prerequisites
+*   Python 3.10 or higher
+*   PostgreSQL 14+ (with `pgvector` extension support)
+*   OpenAI API Key
+
+### 1. Clone & Install
 ```bash
 git clone <repository-url>
 cd rfp-bid-agent
-```
 
-2. Create virtual environment:
-```bash
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-3. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-4. Configure environment:
+### 2. Configuration
+Copy the template and update with your credentials:
 ```bash
 cp .env.example .env
-# Edit .env with your configuration
+```
+Ensure `.env` contains:
+```ini
+DATABASE_URL=postgresql+psycopg2://user:pass@localhost:5432/rfp_bid_db
+OPENAI_API_KEY=sk-proj-...
+EMBEDDING_MODEL=text-embedding-3-small
 ```
 
-## Usage
+### 3. Database Initialization
+Use the provided scripts to set up the schema and load the Knowledge Base:
 
+```bash
+# Initialize Schema (Tables & Indexes)
+python scripts/setup_database.py
+
+# Load Knowledge Base (JSONs -> DB + Embeddings)
+python scripts/load_knowledge_base.py
+```
+
+### 4. Verification
+Run the verification scripts to ensure everything is working:
+
+```bash
+# Verify Phase 2 (DB & Data)
+python scripts/verify_phase2.py
+
+# Check Agent Tools
+python tests/test_rfp_tools.py
+```
+
+## 📖 Usage
+
+### Running the API
+Start the FastAPI backend:
 ```bash
 python main.py
 ```
+Health check available at: `http://localhost:8000/health`
 
-## Development
+### Using the Tools (Programmatic)
+You can import and use the tools directly in your scripts:
 
-### Running Tests
+```python
+from src.app.agent.tools.rfp_parser_tool import RFPParserTool
+from src.app.agent.tools.requirement_processor_tool import RequirementProcessorTool
+
+# 1. Parse an RFP
+parser = RFPParserTool()
+text = parser._run("path/to/rfp.pdf")
+
+# 2. Process Requirements
+processor = RequirementProcessorTool()
+requirements = processor._run(text)
+
+print(f"Found {len(requirements)} requirements")
+```
+
+## 🧪 Testing
+
+Run the full test suite with `pytest`:
 ```bash
 pytest tests/
 ```
 
-### Code Quality
-```bash
-# Format code
-black src/ tests/
+## 🤝 Contributing
+1.  Fork the repository.
+2.  Create a feature branch (`git checkout -b feature/amazing-feature`).
+3.  Commit your changes (`git commit -m 'feat: Add amazing feature'`).
+4.  Push to the branch.
+5.  Open a Pull Request.
 
-# Check linting
-flake8 src/ tests/
-
-# Sort imports
-isort src/ tests/
-
-# Type checking
-mypy src/
-```
-
-## Configuration & Setup
-
-### 1. Environment Variables
-Copy the example configuration file:
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and configure the following **required credentials**:
-
-| Variable | Description | Example / Default |
-|----------|-------------|-------------------|
-| `OPENAI_API_KEY` | **Required**. Your OpenAI API Key for LLM & Embeddings. | `sk-proj-...` |
-| `DATABASE_URL` | **Required**. PostgreSQL connection string. | `postgresql+psycopg2://rfp_user:2310@localhost:5432/rfp_bid_db` |
-| `ENV` | Environment mode (development/production) | `development` |
-| `LOG_LEVEL` | Logging verbosity | `INFO` or `DEBUG` |
-
-### 2. Database Initialization
-This project uses **PostgreSQL 14+** with the **pgvector** extension.
-
-**Option A: Automated Setup (Recommended)**
-We provide a script to automatically create the user, database, and enable extensions (bypassing the need for manual `psql` commands).
-```bash
-# 1. Initialize Database & User (rfp_user / rfp_bid_db)
-python scripts/init_db.py
-
-# 2. Create Schema & Indexes
-python scripts/setup_database.py
-```
-
-**Option B: Manual Setup**
-If you prefer to set up PostgreSQL manually:
-1. Create user `rfp_user` with password `2310`.
-2. Create database `rfp_bid_db` owned by `rfp_user`.
-3. Enable `vector` extension in `rfp_bid_db`.
-4. Run `python scripts/setup_database.py` to create tables.
-
-## Contributing
-
-[Add contribution guidelines here]
-
-## License
-
-[Add license information here]
-
-## Authors
-
-[Add author information here]
+## 📄 License
+[Add License Information]
