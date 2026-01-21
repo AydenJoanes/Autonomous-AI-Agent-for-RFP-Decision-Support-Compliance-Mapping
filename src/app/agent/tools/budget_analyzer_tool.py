@@ -229,7 +229,8 @@ class BudgetAnalyzerTool(BaseTool):
         Assumes there's only one company profile.
         """
         try:
-            query = "SELECT * FROM company_profiles LIMIT 1"
+            from sqlalchemy import text
+            query = text("SELECT * FROM company_profiles LIMIT 1")
             result = session.execute(query).mappings().first()
             return dict(result) if result else None
         except Exception as e:
