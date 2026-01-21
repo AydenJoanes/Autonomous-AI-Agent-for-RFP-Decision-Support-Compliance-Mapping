@@ -1,0 +1,1706 @@
+[
+  {
+    "id": "4fb5d563-b8d3-49b5-b198-9d21f14a4a23",
+    "text": "COSTS TO BE BORNE BY BIDDERS",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Defines financial obligations of bidders."
+    }
+  },
+  {
+    "id": "bcc265f6-a071-479d-a561-d22f40be60f6",
+    "text": "DELIVERY AND PAYMENT SCHEDULE",
+    "type": "TIMELINE",
+    "category": "logistics",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Specifies the schedule for delivery and payments."
+    }
+  },
+  {
+    "id": "dda67d85-57f9-4e5b-b0de-a482a2faacc6",
+    "text": "LICENSE COSTS",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Specifies costs associated with licensing."
+    }
+  },
+  {
+    "id": "81c99571-dcc5-43a3-8c3a-1544e911559f",
+    "text": "COMPLIANCE WITH LAWS",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Requires adherence to applicable laws."
+    }
+  },
+  {
+    "id": "52858d44-8a38-4e52-823e-5e09fc046566",
+    "text": "PRIVACY & SECURITY SAFEGUARDS",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Mandates security measures for protecting data."
+    }
+  },
+  {
+    "id": "4af307f2-06b7-4a6b-9c17-8765f495f948",
+    "text": "COSTS OF PREPARATION & SUBMISSION OF BID",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Details responsibility for costs related to bid preparation."
+    }
+  },
+  {
+    "id": "9024bd3a-24bb-4550-8486-105817aadcb5",
+    "text": "DECLARATION ON EOI DOCUMENTS AUTHENTICITY AND COMPLIANCE",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Requires authenticity of EOI documents."
+    }
+  },
+  {
+    "id": "082f6dc4-b48e-43ba-819a-705a4e9c1a47",
+    "text": "The bidders must conduct their investigation and analysis regarding any",
+    "type": "TECHNICAL",
+    "category": "process",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.75,
+    "metadata": {
+      "reason": "Instructs bidders to perform due diligence on the project."
+    }
+  },
+  {
+    "id": "414526a3-6cfd-474d-8d3c-74615247da6e",
+    "text": "Commercial bid must be submitted giving full details on CPPP portal.",
+    "type": "MANDATORY",
+    "category": "submission",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "This outlines a requirement for bid submission procedure."
+    }
+  },
+  {
+    "id": "66fa22d4-7648-4277-80ac-e6690a2f600d",
+    "text": "No binding legal relationship will exist between any of the bidder and the Bank",
+    "type": "OTHER",
+    "category": "legal",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Clarifies legal obligations and relationships."
+    }
+  },
+  {
+    "id": "c67e817a-d534-4bd0-934b-6d065b7d56e1",
+    "text": "Bidders are required to direct all communications for any clarification related to this RFP, to the Designated NABARD officials and must",
+    "type": "MANDATORY",
+    "category": "communication",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.92,
+    "metadata": {
+      "reason": "Specifies communication protocol for bidders."
+    }
+  },
+  {
+    "id": "0b6362a3-6d93-413c-8729-aa270a67c207",
+    "text": "All queries relating to the RFP, technical or otherwise, must be in writing only via electronic mail.",
+    "type": "MANDATORY",
+    "category": "communication",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.93,
+    "metadata": {
+      "reason": "Sets requirements for query submission format."
+    }
+  },
+  {
+    "id": "8b0c696f-a270-43a2-8a46-7319f2e7528c",
+    "text": "The RFP document is confidential and shall not be disclosed, reproduced, transmitted, or made acknowledged that any such revised or amended document shall be received subject to the same",
+    "type": "OTHER",
+    "category": "confidentiality",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.91,
+    "metadata": {
+      "reason": "Indicates confidentiality requirements."
+    }
+  },
+  {
+    "id": "94d441c7-1a5a-42d2-9213-72da233777f6",
+    "text": "Annexure \u2013 E. The Recipient shall not disclose or discuss the contents of the RFP document.",
+    "type": "MANDATORY",
+    "category": "confidentiality",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.94,
+    "metadata": {
+      "reason": "Specifies confidentiality of the RFP document."
+    }
+  },
+  {
+    "id": "ef4c3d62-7ecc-4ffc-a897-d9dbc27d5f41",
+    "text": "The bidder shall conduct its own investigation and analysis regarding any information",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "The bidder must independently verify the information provided."
+    }
+  },
+  {
+    "id": "9f9d1726-7cad-4e93-922c-add3e5ed2649",
+    "text": "Each bidder shall notify the Bank of any error, omission, or discrepancy, if any, found in this",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Bidders have a responsibility to report inconsistencies."
+    }
+  },
+  {
+    "id": "ca0345f3-f5f1-4ec6-b075-3a272223d0d1",
+    "text": "The RFP response document submission shall be undertaken as under: -",
+    "type": "MANDATORY",
+    "category": "submission",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Defines the process for submitting responses to the RFP."
+    }
+  },
+  {
+    "id": "acb9b12c-dded-4c45-89a6-71a6c7f34565",
+    "text": "Closing date and time as mentioned in Tender Schedule of the RFP.",
+    "type": "TIMELINE",
+    "category": "submission",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Essential deadline for submissions."
+    }
+  },
+  {
+    "id": "c7f52c4e-5378-4ea8-8c5d-ff348bae8c0f",
+    "text": "All submissions, including any accompanying documents, shall become the",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Clarifies ownership of submitted materials."
+    }
+  },
+  {
+    "id": "def87f23-676e-42fb-b638-8e60c4a5d5b8",
+    "text": "The bidder shall be required to submit an Earnest Money Deposit of \u0000,000/-",
+    "type": "MANDATORY",
+    "category": "financial",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Necessary financial commitment from bidders."
+    }
+  },
+  {
+    "id": "8d6e124c-9c74-4958-a8ba-f999b6c11063",
+    "text": "The Earnest Money Deposit shall be refunded to all conditions, the Earnest Money Deposit shall be subject to forfeiture at the discretion of NABARD.",
+    "type": "MANDATORY",
+    "category": "financial",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Outlines refund conditions and forfeiture."
+    }
+  },
+  {
+    "id": "fc878ad1-fe41-41fe-af26-69a5ab9b896c",
+    "text": "Bids once submitted shall be treated as final and no further correspondence shall be entertained. No bid shall be modified after the deadline for submission of bids.",
+    "type": "MANDATORY",
+    "category": "submission",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Firm policy on bid submissions and modifications."
+    }
+  },
+  {
+    "id": "4bc85a21-5149-445a-9c3b-fbd9b3f27135",
+    "text": "Maintenance and updates for the software as required over the five-year period.",
+    "type": "MANDATORY",
+    "category": "software maintenance",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Necessary for consistent performance and functionality over the contract duration."
+    }
+  },
+  {
+    "id": "39e9b477-7a83-4b02-a4db-64a4da8a9a6a",
+    "text": "Security and Authentication",
+    "type": "TECHNICAL",
+    "category": "security",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Essential to protect user data and access to the system."
+    }
+  },
+  {
+    "id": "fff56766-f1ef-49da-9eec-77f982456748",
+    "text": "Implement various security measures including Single Sign-on (SSO) integration.",
+    "type": "TECHNICAL",
+    "category": "security",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Critical for enhancing user experience and security."
+    }
+  },
+  {
+    "id": "17dd6d5e-a11f-407f-a17e-2feb3dda616b",
+    "text": "Implementation Timeline",
+    "type": "TIMELINE",
+    "category": "project management",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Time-sensitive aspects of the project must be defined."
+    }
+  },
+  {
+    "id": "57024442-9faf-4eca-88fc-6083ecfc7759",
+    "text": "The selected vendor would be required to customize, test and implement the data analytics software within 180 days\u2019 time as per the following schedule.",
+    "type": "TIMELINE",
+    "category": "project timeline",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Critical for project delivery and coordination."
+    }
+  },
+  {
+    "id": "0278fb63-e0c5-4056-9480-b01dec8bb0bb",
+    "text": "Timeliness of execution and delivery are very crucial in this project as concurrent migration and users across the Bank have to be achieved within the schedule mentioned above.",
+    "type": "MANDATORY",
+    "category": "project management",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Adherence to timelines is essential for project success."
+    }
+  },
+  {
+    "id": "403b58a1-bbc3-4962-91da-8e3764ea8ad4",
+    "text": "The broad criteria for evaluation of the bids would be a Quality-cum-Cost-Based-System.",
+    "type": "OTHER",
+    "category": "evaluation",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Important for understanding vendor selection criteria."
+    }
+  },
+  {
+    "id": "6606ed95-60ce-43a3-91df-a78e00d2bbf0",
+    "text": "The implementation of the project will commence upon successful signing of a contract",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Establishes a prerequisite for project initiation"
+    }
+  },
+  {
+    "id": "67a8459b-e1dd-4db7-b410-3f5ee90e1e98",
+    "text": "Only those bidders that have achieved at least the minimum qualifying score shall be treated as qualified and only their commercial proposals will be opened.",
+    "type": "MANDATORY",
+    "category": "evaluation",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Defines qualification criteria for bid evaluation"
+    }
+  },
+  {
+    "id": "df3e71e3-89d4-4ac1-8ed0-7ca685137151",
+    "text": "The proposal with the highest weighted combined score (quality and cost) shall be",
+    "type": "MANDATORY",
+    "category": "evaluation",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Specifies the method for determining the winning proposal"
+    }
+  },
+  {
+    "id": "ce10ec98-58b5-484a-bd04-647a33f4df6b",
+    "text": "Delivery and Payment Schedule",
+    "type": "MANDATORY",
+    "category": "timeline",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Provides a framework for delivery and financial terms"
+    }
+  },
+  {
+    "id": "24ba1db2-1615-49ca-9341-b3f9e0894e03",
+    "text": "Expected Delivery Schedule",
+    "type": "MANDATORY",
+    "category": "timeline",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Indicates anticipated timelines for deliverables"
+    }
+  },
+  {
+    "id": "41b67b6c-a3b2-4725-a5ae-4fb4ad8ab628",
+    "text": "Scope & schedule to be agreed mutually",
+    "type": "PREFERRED",
+    "category": "scope",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.75,
+    "metadata": {
+      "reason": "Allows flexibility in defining project scope and timelines"
+    }
+  },
+  {
+    "id": "851fb8eb-98a3-4d12-8703-4bf1fae93fe8",
+    "text": "emergency onsite support if required.",
+    "type": "PREFERRED",
+    "category": "support",
+    "priority": 5,
+    "source_section": null,
+    "confidence": 0.7,
+    "metadata": {
+      "reason": "Provides an optional requirement for enhanced support"
+    }
+  },
+  {
+    "id": "ef971836-16d9-46b3-b2fd-3729c801543d",
+    "text": "The bidder shall be able to start providing the services within 20 days of signing of",
+    "type": "TIMELINE",
+    "category": "service delivery",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Sets a clear deadline for service commencement"
+    }
+  },
+  {
+    "id": "cce19335-e517-412e-8b3b-7174d383ec30",
+    "text": "The Bank shall have the right to inspect and test the solution / service to confirm their",
+    "type": "MANDATORY",
+    "category": "quality assurance",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Ensures compliance with technical specifications"
+    }
+  },
+  {
+    "id": "6ce7721e-fda3-49a7-86fa-2d8c84654a3b",
+    "text": "The Bidder will treat all data and information about the Bank, obtained in the execution",
+    "type": "MANDATORY",
+    "category": "confidentiality",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.99,
+    "metadata": {
+      "reason": "Ensures data security and confidentiality"
+    }
+  },
+  {
+    "id": "8aa7d5c4-7eea-4c7b-a8dd-3ef46db75dc5",
+    "text": "The bidder agrees that it shall not be relieved of its obligations during notice period.",
+    "type": "MANDATORY",
+    "category": "contractual obligation",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Clarifies obligations during notice periods"
+    }
+  },
+  {
+    "id": "9444b400-95d3-4ab3-8aa1-63ff66eb5ed7",
+    "text": "i. The Bank shall make such pro rata payment for services rendered by the bidder and",
+    "type": "BUDGET",
+    "category": "payment terms",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Defines payment terms for services performed"
+    }
+  },
+  {
+    "id": "661994ca-1e2b-45ce-8703-b59264590ab2",
+    "text": "The selected bidder shall indemnify, protect and save the Bank against all claims, losses, costs, damages, expenses, action suits and other proceedings, resulting from",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Indemnification is a critical requirement to protect the Bank from various risks."
+    }
+  },
+  {
+    "id": "d9f8bd79-e702-4652-b16d-0a596f7de282",
+    "text": "Selected Bidder shall keep the Bank, its Successors, Assignees and Administrators fully informed of any claims.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Requirement for communication regarding claims is essential for risk management."
+    }
+  },
+  {
+    "id": "4e67a5db-6157-4df7-99f2-ce85d47a7786",
+    "text": "Selected Bidder shall be the principal employer of the employees, agents, contractors, subcontractors etc., engaged by Selected Bidder and shall be vicariously liable for all the actions of its employees.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Clarifies employment and liability roles, which is essential for accountability."
+    }
+  },
+  {
+    "id": "f524d906-8b6a-4556-80ed-77db76c651aa",
+    "text": "Indemnity would be limited to court awarded damages and shall exclude indirect losses.",
+    "type": "PREFERRED",
+    "category": "legal",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Establishing boundaries for indemnity helps clarify the extent of liability."
+    }
+  },
+  {
+    "id": "3e8e94e8-e44c-43a9-87a6-cbc3fc2d3598",
+    "text": "If a Force Majeure situation arises, the bidder shall promptly notify the Bank in writing.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Timely notification during unforeseen circumstances is necessary for contract management."
+    }
+  },
+  {
+    "id": "a634d1da-75e7-4b8d-a9af-e1be7d8b0e1f",
+    "text": "Bank in writing, the bidder shall continue to perform its obligations under the Contract as far as it is reasonably practical.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Ensures contractual obligations are attempted even during difficulties."
+    }
+  },
+  {
+    "id": "a31b5a43-5894-4e82-8e8e-8a327bb85179",
+    "text": "Bidder shall have the opportunity to clarify doubts pertaining to the RFP in order to clarify any",
+    "type": "OTHER",
+    "category": "consultation",
+    "priority": 5,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Allows bidders to gain clarity which is essential for accurate proposals."
+    }
+  },
+  {
+    "id": "c824e3b2-dbfa-4ec7-a32c-10faca8a99ea",
+    "text": "The offer containing erasures or alterations will not be accepted.",
+    "type": "MANDATORY",
+    "category": "submission",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures the integrity of submitted offers."
+    }
+  },
+  {
+    "id": "d2f24150-ba52-4cb9-a5d2-26b3854d00db",
+    "text": "Technical details must be completely filled up. Correct technical information of the product being offered must be filled in.",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Essential for assessing the offer's compliance with technical requirements."
+    }
+  },
+  {
+    "id": "3e050d57-ee5b-4c7a-9020-cf97ac172dc7",
+    "text": "It is absolutely essential for the Vendor to quote the lowest price at the time of making the offer in its own interest.",
+    "type": "MANDATORY",
+    "category": "pricing",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Directly impacts the cost-effectiveness of the proposals."
+    }
+  },
+  {
+    "id": "95302e73-11a2-45c4-9fa7-dbaaf6cad32e",
+    "text": "The bidder shall undertake to observe, adhere to, abide by, comply with and notify the Bank about all laws in force or as are or as made.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures compliance with relevant laws and regulations."
+    }
+  },
+  {
+    "id": "5d66c389-d90f-4d99-8d40-6e5257d3e290",
+    "text": "The bidder shall promptly ensure compliance in obtaining approvals/ permissions/ licences.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Necessary for legal operation within the project's framework."
+    }
+  },
+  {
+    "id": "58458e8e-d2ef-4cb8-8e18-a4badfeb8101",
+    "text": "Privacy & Security Safeguards",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "This requirement pertains to the necessary security measures that must be in place."
+    }
+  },
+  {
+    "id": "5ae90477-ec6c-47c7-b109-85d19ec020f0",
+    "text": "The bidder shall not publish or disclose in any manner, without the Bank's prior written consent, the details of any security safeguards designed, developed, or implemented by the bidder under this contract or existing at any Bank location.",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "This requirement ensures confidentiality of security measures."
+    }
+  },
+  {
+    "id": "2f85fd14-810b-4fef-af91-fc0cb16cda9f",
+    "text": "The bidder shall develop procedures such that all subcontractors who are involved in providing such security safeguards or part of it shall not publish or disclose in any manner, without the Bank's prior written consent, the details of any security safeguards designed.",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Ensures that subcontractors adhere to the same security confidentiality."
+    }
+  },
+  {
+    "id": "7b42acd8-baa8-4b0e-b3cf-b5b055b285bf",
+    "text": "As per Central Vigilance Commission (CVC) directives, it is required that bidders/ Suppliers/ among bidders (prior to or after offer submission) designed to establish offer prices at artificial levels.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "This requirement enforces compliance with legal directives to prevent collusion."
+    }
+  },
+  {
+    "id": "9d3a9002-5b5f-45a5-b41a-4d2ea646df8b",
+    "text": "The Selected Bidder shall not, without the Bank's prior written consent, disclose any performance of the work assigned to them.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "This establishes a confidentiality obligation for the bidder."
+    }
+  },
+  {
+    "id": "d1748748-d291-4051-b4fe-474b8e539ac3",
+    "text": "The bid shall be signed by a person or persons duly authorized by the Bidder with signature duly attested.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures that bids are submitted by authorized representatives."
+    }
+  },
+  {
+    "id": "f2da4920-1868-498a-9dbb-c197f67e2e59",
+    "text": "Costs of Preparation & Submission of Bid",
+    "type": "MANDATORY",
+    "category": "budget",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Clarifies that the bidder bears all costs related to bid preparation."
+    }
+  },
+  {
+    "id": "d4161ed4-c6a9-48ca-afc4-f7fb9eb70ff2",
+    "text": "The bidder shall bear all costs for the preparation and submission of the bid. BANK shall not be responsible or liable for reimbursing/ compensating these costs, regardless of the conduct or outcome.",
+    "type": "MANDATORY",
+    "category": "budget",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Further reinforces that all costs are the bidder's responsibility."
+    }
+  },
+  {
+    "id": "d759a09f-04e5-4b78-9b3e-919e4cd76130",
+    "text": "No contractual obligation whatsoever shall arise from the RFP process unless and until a formal contract is executed.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Clarifies the legal standing of bids during the RFP process."
+    }
+  },
+  {
+    "id": "8347bfbc-235f-470a-88b1-b374ac3d9e0f",
+    "text": "If our Bid is accepted, we will obtain and submit the Performance Bank Guarantee from a Bank.",
+    "type": "MANDATORY",
+    "category": "financial",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Requires provision of a performance guarantee upon bid acceptance."
+    }
+  },
+  {
+    "id": "dce57e66-c42f-4bce-8c04-f52327333c3d",
+    "text": "We confirm that our prices are valid for a period of minimum five years from the date of NABARD\u2019s written acceptance thereof.",
+    "type": "MANDATORY",
+    "category": "timeline",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Establishes a timeline for price validity."
+    }
+  },
+  {
+    "id": "c74735f4-8684-4dcc-8fb0-c42714370281",
+    "text": "organisation for all the systems/ goods required by the bank as called for vide the bank's",
+    "type": "MANDATORY",
+    "category": "procurement",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Specifies requirement for systems and goods for the bank."
+    }
+  },
+  {
+    "id": "9ec22323-1292-4f54-9765-94d9bdcd2854",
+    "text": "shall submit the RFP document as per your prescribed specifications for Technical &",
+    "type": "MANDATORY",
+    "category": "submission",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Indicates a requirement to submit RFP according to defined specifications."
+    }
+  },
+  {
+    "id": "e0cd9084-cf96-404f-aae8-91a35436f714",
+    "text": "I/ We shall submit a signed copy of the RFP, as a token of acceptance of all the terms &",
+    "type": "MANDATORY",
+    "category": "agreement",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Confirms the requirement of signing the RFP to accept terms."
+    }
+  },
+  {
+    "id": "ed356cc4-5994-4636-b2ef-3fd955b91dbb",
+    "text": "Confidential Information shall at all times remain the sole and exclusive property of NABARD.",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Establishes confidentiality of information belonging to NABARD."
+    }
+  },
+  {
+    "id": "c3cd3285-2b2d-4012-85dd-d64001ace0b6",
+    "text": "Upon termination of this Agreement, Confidential information shall be returned to NABARD",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Requires return of confidential information upon termination."
+    }
+  },
+  {
+    "id": "77e2acda-6145-41c4-9e50-0f3a9a7c0a59",
+    "text": "In the event Vendor is legally compelled to disclose any Confidential Information, Vendor shall",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Outlines obligations of the vendor regarding legally compelled disclosures."
+    }
+  },
+  {
+    "id": "6f331b10-c7ef-46d3-8e91-9bd6936474a4",
+    "text": "The Vendor shall not commercially use or disclose any Confidential Information, or any Confidential Information solely for the Purpose authorized above.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "This requirement mandates the proper handling and protection of confidential information."
+    }
+  },
+  {
+    "id": "2c9711ee-00d4-4661-8b0f-719149249506",
+    "text": "The obligations of this clause shall survive the expiration.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "This stipulates that confidentiality obligations continue post-agreement."
+    }
+  },
+  {
+    "id": "3bf8ed09-acf6-494f-a757-3d0706a56edf",
+    "text": "Obligation of confidentiality contemplated under this Agreement shall continue to be binding.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "It affirms the continuous binding nature of confidentiality obligations."
+    }
+  },
+  {
+    "id": "e735ece9-8660-4f3b-ac63-188122e23911",
+    "text": "Upon written demand of the Disclosing Party, the Receiving Party shall (i) cease using the Confidential Information.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "It outlines the necessary actions upon request regarding confidential information."
+    }
+  },
+  {
+    "id": "9ca7ba4d-9cd3-4884-bf47-1fc1c2dc8e1f",
+    "text": "Receiving Party shall notify Disclosing Party immediately upon discovery of any breach of this Agreement by Receiving Party, and will cooperate with Disclosing.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "This ensures prompt notification and cooperation in case of a breach."
+    }
+  },
+  {
+    "id": "559e0605-9152-4fd1-84a1-23d05c51f8d1",
+    "text": "Receiving Party shall return all originals, copies, reproductions and summaries of Confidential Information.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "It specifies the obligation to return confidential materials upon termination."
+    }
+  },
+  {
+    "id": "43cfaa1e-fc46-4c4f-a40d-d0b62102abd6",
+    "text": "party shall be entitled, without waiving any other rights or remedies, to seek relief.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "This clause reinforces the party's right to seek legal remedies."
+    }
+  },
+  {
+    "id": "72c3abb5-fe2f-4ab2-9669-0bd9f38d673b",
+    "text": "The Vendor shall not make news releases, public announcements, give interviews, issue, or otherwise disclose any details regarding this Agreement without prior written consent.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "It restricts public disclosure of the agreement's details, ensuring confidentiality."
+    }
+  },
+  {
+    "id": "4d9220ba-65e3-4235-9787-cff7c31174af",
+    "text": "Agreement nor any right granted hereunder shall be assignable or otherwise transferable.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "This ensures that the rights under the agreement are non-transferable."
+    }
+  },
+  {
+    "id": "08d0cf5f-90ca-4721-a76e-0de62c07bcec",
+    "text": "other deliverables provided or to be provided by the consultants to Bank shall be the property of the Bank and shall not be considered as confidential information to the Bank. However, such",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Defines ownership of deliverables"
+    }
+  },
+  {
+    "id": "5e21067d-b896-4236-95cd-2de466cbb2af",
+    "text": "service/ solutions or other deliverables shall be considered as confidential information by the consultant and shall not be disclose such details to any third parties without having the express",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Establishes confidentiality obligations for the consultant"
+    }
+  },
+  {
+    "id": "8a90807b-60cd-4816-852b-8bae3e7c2dbd",
+    "text": "All obligations created by this Agreement shall survive change or termination of the",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Specifies that contractual obligations remain in effect"
+    }
+  },
+  {
+    "id": "3c474750-0490-422e-ad6b-d78dcd5bb2ea",
+    "text": "If any provision of this Agreement shall be held by a court of competent jurisdiction to be illegal, invalid or unenforceable, the remaining provisions shall remain in full force and",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Ensures the validity of remaining contract clauses"
+    }
+  },
+  {
+    "id": "4acd7be2-43df-4fa6-92b0-fbad00f6512b",
+    "text": "We shall treat all Confidential Information as strictly private and confidential and take all steps necessary (including but not limited to those required by this Undertaking), to preserve",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Confidentiality is critical for the protection of sensitive information."
+    }
+  },
+  {
+    "id": "3486fd7a-84f3-4f7f-b238-e54bfc22da96",
+    "text": "We shall use the Confidential Information solely for the preparation of our response to the",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Proper use of confidential information is essential to maintain trust and compliance."
+    }
+  },
+  {
+    "id": "fbc7800e-af25-411d-a4bf-ed812720abc1",
+    "text": "We shall not disclose any Confidential Information to any other person or firm, other than",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Prohibition of disclosure is vital for maintaining confidentiality."
+    }
+  },
+  {
+    "id": "dd82ef83-5085-439b-b390-126665328f8c",
+    "text": "To the extent that such disclosure is required by law;",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Legal compliance is essential for governance and risk management."
+    }
+  },
+  {
+    "id": "b3a1b4e2-7684-45fd-b388-204b08779701",
+    "text": "This Undertaking shall be governed by and construed in accordance with Indian Law and any dispute arising from it shall be subject to the exclusive jurisdiction of the Mumbai courts.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Clear legal jurisdiction is necessary for dispute resolution."
+    }
+  },
+  {
+    "id": "b3d5a95e-2a5e-43a0-8c77-30deeb0ba470",
+    "text": "CPPP portal) for procurement of Data Analytics Software, we shall have access to and be",
+    "type": "TECHNICAL",
+    "category": "procurement",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Access requirements for procurement are vital for project execution."
+    }
+  },
+  {
+    "id": "295effa4-499a-4354-a068-94d38627725b",
+    "text": "Total = Cost + taxes",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Defines the calculation of total costs including taxes."
+    }
+  },
+  {
+    "id": "3adef431-4cd0-4d3a-ae01-15d096b470b1",
+    "text": "Subscription cost to the uniform",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Specifies a cost item related to uniform subscriptions."
+    }
+  },
+  {
+    "id": "913bb2a3-db32-4e31-8217-2120429acd55",
+    "text": "Perpetual license cost to the",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Indicates the cost associated with perpetual software licenses."
+    }
+  },
+  {
+    "id": "800e7094-d61e-409a-b166-bba1ced403cf",
+    "text": "Cost for five years",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Indicates the total financial commitment over a five-year period."
+    }
+  },
+  {
+    "id": "a3435f37-7562-4fcc-a15d-28b4a8a0e1e2",
+    "text": "Total cost for five years \u2013 as per",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Requests a summary of total cost for a defined period."
+    }
+  },
+  {
+    "id": "9711bd64-a6e4-46c6-bed8-70cd1af5dc3c",
+    "text": "One time cost for recreating",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.75,
+    "metadata": {
+      "reason": "Details a one-time cost associated with recreating something."
+    }
+  },
+  {
+    "id": "151a9835-e13e-4177-8e17-306d3d646a51",
+    "text": "Total cost",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Requests a summary of overall costs."
+    }
+  },
+  {
+    "id": "c6128e0a-5e69-4aec-895f-acabace83e05",
+    "text": "Training cost $",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Specifies the cost associated with training."
+    }
+  },
+  {
+    "id": "6d2f0c80-f8f4-4aa2-b5c7-37aca8f422b7",
+    "text": "programme for 5 days \u2013 cost per",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Indicates cost requirements for a 5-day training program."
+    }
+  },
+  {
+    "id": "a76adc26-5e41-4ece-8735-2a11101f3478",
+    "text": "programme for 2 days \u2013 cost per",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.75,
+    "metadata": {
+      "reason": "Requests cost details for a 2-day training program."
+    }
+  },
+  {
+    "id": "5438d0a2-ee67-4f36-8bf0-fb8d0399695b",
+    "text": "Per man-day cost for developing",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Specifies the cost structure for development based on man-days."
+    }
+  },
+  {
+    "id": "001fd4e4-bdf0-4b26-ae15-7f0a48c2c93e",
+    "text": "conduct the training programmes. All other expenses such as cost of developing training modules, travel costs, etc., should be factored in the quotation.",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Requests comprehensive budgeting for all training-related expenses."
+    }
+  },
+  {
+    "id": "b884912b-9402-4294-b8f0-10bd4c39a67a",
+    "text": "The per training programme cost shall be valid during the project period of 5 years.",
+    "type": "TIMELINE",
+    "category": "financial",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Indicates that training costs should remain consistent throughout the project duration."
+    }
+  },
+  {
+    "id": "865e2f6b-3bfd-4a26-85d9-657bf0013151",
+    "text": "The cost mentioned should be valid for the project period of 5 years.",
+    "type": "TIMELINE",
+    "category": "financial",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Emphasizes that the quoted cost should be applicable throughout the project."
+    }
+  },
+  {
+    "id": "15f88a53-6cce-411a-881b-44079bf07c47",
+    "text": "The cost mentioned should be valid for the project period of 5 years.",
+    "type": "MANDATORY",
+    "category": "budget",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Defines the duration for which the pricing is applicable."
+    }
+  },
+  {
+    "id": "33f981c0-d292-4abe-b2af-fd0b7dd27969",
+    "text": "loading and unloading, should be included in the Bid price.",
+    "type": "MANDATORY",
+    "category": "budget",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Specifies that certain costs must be included in the bid."
+    }
+  },
+  {
+    "id": "aae73ed8-288a-46f7-8520-e9316465e426",
+    "text": "The unit price quoted shall remain fixed on pro-rata basis for all additional licenses procured",
+    "type": "MANDATORY",
+    "category": "budget",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures unit pricing stability for additional licenses."
+    }
+  },
+  {
+    "id": "c2b7a161-0b3a-4e98-92a2-59bbb59bfd9b",
+    "text": "If there is any downward revision of price, it will be passed on to NABARD without any delay.",
+    "type": "MANDATORY",
+    "category": "budget",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Outlines obligation to pass on cost reductions."
+    }
+  },
+  {
+    "id": "c5fd9466-201b-4ef8-a562-1dd6c5b1b28f",
+    "text": "In case of any discrepancy between unit price and total price, the unit price shall prevail.",
+    "type": "MANDATORY",
+    "category": "budget",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Clarifies precedence of pricing details in case of discrepancies."
+    }
+  },
+  {
+    "id": "8e44d499-aca3-474c-93f6-368578e3c2b8",
+    "text": "The unit/ total price may be rounded off to the nearest rupee.",
+    "type": "PREFERRED",
+    "category": "budget",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Suggests a method for price presentation."
+    }
+  },
+  {
+    "id": "85f38497-8660-466d-b511-49cca9e62360",
+    "text": "We, the said ___________________________ Limited shall indemnify, protect and save NABARD and hold NABARD harmless from and against all claims, losses, costs, damages.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Establishes legal obligation for indemnity."
+    }
+  },
+  {
+    "id": "45e25694-82ca-4626-b18a-3518181a59a6",
+    "text": "We, the said ___________________________ Limited shall further indemnify NABARD.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Reiterates commitment to indemnification."
+    }
+  },
+  {
+    "id": "a5819c2f-0a6c-4a75-a70b-a175741f43dd",
+    "text": "Bidders are required to mention specifically the Name, Address, Telephone Number,",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Essential information for bid submission."
+    }
+  },
+  {
+    "id": "59895334-5253-49e6-9cd9-5a146f9242a0",
+    "text": "M/s_________________- shall Implement and provide Support to NABARD in",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Critical requirement for implementation of services."
+    }
+  },
+  {
+    "id": "abbbecef-86f6-4b29-b909-3f4986b96712",
+    "text": "M/s_________________ will monitor, track and report on performance parameters as per",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Required for performance management."
+    }
+  },
+  {
+    "id": "7cd9d6f8-d97f-4227-89df-1040b42dec37",
+    "text": "M/s_________________ will have to resolve the incidents as per the response times",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures timely incident resolution."
+    }
+  },
+  {
+    "id": "1f649863-bef4-4edd-b80a-f459f09c0807",
+    "text": "All incidents that exceed the response time will be escalated to the escalation contacts listed",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Important for incident management and accountability."
+    }
+  },
+  {
+    "id": "95484e7a-2216-4ac1-971a-7a6879029401",
+    "text": "Any change in the escalation contacts will be mutually discussed and agreed upon by the",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures clear communication regarding changes."
+    }
+  },
+  {
+    "id": "002e8439-ba57-4c36-9853-a70ff08922ab",
+    "text": "Scheduled Business Operation Hours of NABARD is from 8:00 AM to 8:00 PM",
+    "type": "PREFERRED",
+    "category": "operational",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Informs operational timing preferences."
+    }
+  },
+  {
+    "id": "96368466-9f2f-4627-86e1-c2b62b6f85cf",
+    "text": "The SLA will be reviewed at a minimum of once per fiscal year. Contents of this document may be amended as required, provided mutual agreement is obtained and communicated to all affected parties.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "This requirement outlines the necessity for periodic review and agreement, which is essential for contract compliance."
+    }
+  },
+  {
+    "id": "d9709a6a-cffa-41cb-9eb0-0758c5036c02",
+    "text": "The Service Provider shall, whenever required by such Auditors, furnish all relevant information, records/ data to them.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "This ensures compliance and transparency during audits, which is essential for the service agreement."
+    }
+  },
+  {
+    "id": "2cd829ed-c5db-49d9-b035-d437705e3b10",
+    "text": "It is agreed upon by the Service Provider that it shall correct/ resolve the same at the earliest and shall provide all necessary documents related to resolution thereof.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "This enforces accountability on the Service Provider to rectify issues, ensuring service quality."
+    }
+  },
+  {
+    "id": "9fe61e81-2639-43b6-9dee-3ffc06d30b35",
+    "text": "Service Provider further agrees that whenever required by the NABARD, it will furnish all required documents.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "It mandates collaboration with NABARD, which is necessary for regulatory compliance."
+    }
+  },
+  {
+    "id": "371073c8-f5be-4e64-846b-a2b960dbe270",
+    "text": "These services will be made available on a time and materials basis including expenses.",
+    "type": "BUDGET",
+    "category": "financial",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Specifies the billing method for services, crucial for budgeting and financial planning."
+    }
+  },
+  {
+    "id": "fe58b9ca-8fd9-421a-b89b-84a296d6b503",
+    "text": "M/S_____________________ shall establish and maintain such security measures",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Establishing and maintaining security measures is critical for protecting sensitive information."
+    }
+  },
+  {
+    "id": "30231eaf-849e-4381-9c20-877be2329e6a",
+    "text": "The parties shall treat as confidential the terms of this Agreement and any other",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Confidentiality of the agreement terms is crucial for legal compliance and trust."
+    }
+  },
+  {
+    "id": "69a0b451-458a-4263-bea6-055ee510760b",
+    "text": "Agreement shall be deemed to be 'Confidential Information' for the purpose of this clause",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Defines confidentiality in a legal context, essential for protecting sensitive data."
+    }
+  },
+  {
+    "id": "739cd5f6-ad99-424a-a30d-d03df2c10636",
+    "text": "Information provided by Bank in terms of this agreement shall also be deemed to be confidential",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures that information shared remains protected under confidentiality clauses."
+    }
+  },
+  {
+    "id": "11a5253e-107a-4d25-a257-55973e2c326d",
+    "text": "All data captured and obtained by Vendor will be property of the Bank.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Clarifies ownership of data, which is important for intellectual property rights."
+    }
+  },
+  {
+    "id": "fb0def5d-c455-45a5-8e69-7b095efb50a3",
+    "text": "The Provision of Confidential Information shall survive termination or expiration",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 1.0,
+    "metadata": {
+      "reason": "Ensures that confidentiality obligations continue to apply even after the agreement ends."
+    }
+  },
+  {
+    "id": "8b453f52-377c-4d77-8c05-071c51e3fe55",
+    "text": "The Vendor shall ensure that all persons subcontracted in rendering services under the engagement",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Vendor must ensure security measures for subcontracted personnel to maintain integrity."
+    }
+  },
+  {
+    "id": "d2882a81-1a61-4617-b7fd-9d90209d4b40",
+    "text": "M/S________________________warrants that the Support services will be performed",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Warrant for support services performance is important for service reliability."
+    }
+  },
+  {
+    "id": "a828d012-a3c9-4572-8f24-3ecd22a8cce8",
+    "text": "indemnity submitted along with the Technical Bid, which shall be considered part of this",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Indemnity is a legal requirement for the submission of the Technical Bid."
+    }
+  },
+  {
+    "id": "0c1beaa8-8cef-4a01-b1cb-cae1e3c607a7",
+    "text": "Any notice or other information required or authorized to serve these SLAs shall be in writing,",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Specifies the method of communication for notices related to SLAs."
+    }
+  },
+  {
+    "id": "08e5794d-61f6-4478-b526-ce10f7f086ae",
+    "text": "The bidder agrees that it shall not be relieved of its obligations during notice period.",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Ensures that the bidder remains accountable during the notice period."
+    }
+  },
+  {
+    "id": "09c1d5ab-16de-40fc-9dad-f984cad868ef",
+    "text": "ii. Termination shall not absolve the liability of the Bank to make payments of",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Clarifies the payment obligations of the Bank upon termination."
+    }
+  },
+  {
+    "id": "e5d2986e-bef4-4f96-82a3-886f0e27cc31",
+    "text": "This agreement shall be effective for a period of \u2026\u2026\u2026\u2026\u2026.. years from \u2026\u2026\u2026\u2026\u2026...",
+    "type": "TIMELINE",
+    "category": "legal",
+    "priority": 6,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Defines the duration of the agreement, establishing a clear timeline."
+    }
+  },
+  {
+    "id": "56037720-2311-4289-bc6a-6c060f865e59",
+    "text": "NABARD represents and warrants that it will use the Software solely on computers owned",
+    "type": "MANDATORY",
+    "category": "technical",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Outlines the permitted usage of the software, ensuring compliance with ownership."
+    }
+  },
+  {
+    "id": "ecb8df4b-d201-4413-b6e0-d8fc17720ea0",
+    "text": "Vendor shall provide, if asked, copy of necessary valid compliance certificates with",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 9,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Compliance verification is crucial for legal adherence."
+    }
+  },
+  {
+    "id": "8b96ed9e-441b-4411-b6d7-bde5e22f88be",
+    "text": "Provider/ Vendor shall furnish you with a Bank guarantee by a scheduled commercial Bank",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 10,
+    "source_section": null,
+    "confidence": 0.95,
+    "metadata": {
+      "reason": "Bank guarantee is a critical security measure."
+    }
+  },
+  {
+    "id": "375eb8fa-4c87-4acd-b41e-d6361e4475b2",
+    "text": "The Bank Guarantee shall not be affected in any manner by reason of merger, amalgamation,",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.85,
+    "metadata": {
+      "reason": "Ensures the stability of the bank guarantee."
+    }
+  },
+  {
+    "id": "dde1921f-e34d-49e9-8495-d975f00a5c7d",
+    "text": "This guarantee shall be valid up to and including the \u001f\u007f\u007f... day of \u001f\u007f... 20\u001f\u007f... ",
+    "type": "MANDATORY",
+    "category": "security",
+    "priority": 7,
+    "source_section": null,
+    "confidence": 0.8,
+    "metadata": {
+      "reason": "Validity period is essential for guarantee enforcement."
+    }
+  },
+  {
+    "id": "af53fe4b-fe82-4d14-ab9f-8da4e675e182",
+    "text": "NABARD shall have the right to reject my/our bid, and if the bid has resulted in a",
+    "type": "MANDATORY",
+    "category": "legal",
+    "priority": 8,
+    "source_section": null,
+    "confidence": 0.9,
+    "metadata": {
+      "reason": "Sets the legal framework for bid acceptance."
+    }
+  }
+]

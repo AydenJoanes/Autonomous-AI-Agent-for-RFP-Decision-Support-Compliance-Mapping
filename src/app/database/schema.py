@@ -92,6 +92,9 @@ class RFPUpload(Base):
     file_size = Column(Integer)
     uploaded_at = Column(DateTime, default=func.now())
     status = Column(String(50), default='uploaded')
+    parsed_markdown = Column(Text, nullable=True)
+    parsed_at = Column(DateTime, nullable=True)
+    parser_used = Column(String(50), nullable=True)
 
 class Analysis(Base):
     __tablename__ = 'analyses'
