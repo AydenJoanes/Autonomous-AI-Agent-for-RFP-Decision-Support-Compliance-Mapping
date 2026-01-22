@@ -61,7 +61,7 @@ class CalibrationMetricsResponse(BaseModel):
 # ROUTER & AGENT
 # ============================================================================
 
-router = APIRouter(prefix="/api/v1/recommendation", tags=["Recommendation"])
+router = APIRouter(tags=["Recommendation"])
 agent = RecommendationAgent()
 
 

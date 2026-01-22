@@ -543,22 +543,22 @@ def generate_reports(verification_results: Dict[str, Any]):
     
     # Report 1: Behavior Diff
     behavior_report = generate_behavior_diff_report(verifier)
-    reports_dir.joinpath("phase6_behavior_diff.md").write_text(behavior_report)
+    reports_dir.joinpath("phase6_behavior_diff.md").write_text(behavior_report, encoding='utf-8')
     logger.info("✓ Generated: reports/phase6_behavior_diff.md")
     
     # Report 2: Failure Matrix
     failure_report = generate_failure_matrix_report(verifier, verification_results)
-    reports_dir.joinpath("phase6_failure_matrix.md").write_text(failure_report)
+    reports_dir.joinpath("phase6_failure_matrix.md").write_text(failure_report, encoding='utf-8')
     logger.info("✓ Generated: reports/phase6_failure_matrix.md")
     
     # Report 3: Data Integrity
     integrity_report = generate_data_integrity_report(verifier, verification_results)
-    reports_dir.joinpath("phase6_data_integrity.md").write_text(integrity_report)
+    reports_dir.joinpath("phase6_data_integrity.md").write_text(integrity_report, encoding='utf-8')
     logger.info("✓ Generated: reports/phase6_data_integrity.md")
     
     # Report 4: Readiness Summary
     readiness_report = generate_readiness_summary_report(verification_results)
-    reports_dir.joinpath("phase6_readiness_summary.md").write_text(readiness_report)
+    reports_dir.joinpath("phase6_readiness_summary.md").write_text(readiness_report, encoding='utf-8')
     logger.info("✓ Generated: reports/phase6_readiness_summary.md")
 
 
