@@ -26,7 +26,7 @@ class DecisionEngine:
         ComplianceLevel.COMPLIANT: 90,
         ComplianceLevel.PARTIAL: 60,
         ComplianceLevel.WARNING: 50,
-        ComplianceLevel.UNKNOWN: 40,
+        ComplianceLevel.UNKNOWN: 50,
         ComplianceLevel.NON_COMPLIANT: 0
     }
 
@@ -38,7 +38,7 @@ class DecisionEngine:
     
     NON_COMPLIANT_PENALTY = 30
     WARNING_PENALTY = 10
-    UNKNOWN_PENALTY = 5
+    UNKNOWN_PENALTY = 2
     MAX_PENALTY_CAP = 50
 
     # Decision Thresholds
@@ -134,10 +134,15 @@ class DecisionEngine:
         """
         decision = None
         
-        # Priority 1: Mandatory failure
-        if not compliance_summary.mandatory_met:
-            self._log_trace("Decision: NO_BID (mandatory requirements failed)")
+        # Priority 1: Mandatory NON_COMPLIANT
+        if compliance_summary.mandatory_failed:
+            self._log_trace("Decision: NO_BID (mandatory requirement NON_COMPLIANT)")
             decision = RecommendationDecision.NO_BID
+            
+        # Priority 2: Mandatory UNKNOWN (needs human verification)
+        elif compliance_summary.mandatory_unknown:
+            self._log_trace("Decision: CONDITIONAL_BID (mandatory requirement UNKNOWN - needs verification)")
+            decision = RecommendationDecision.CONDITIONAL_BID
             
         # Priority 2: Overall NON_COMPLIANT
         elif compliance_summary.overall_compliance == ComplianceLevel.NON_COMPLIANT:
@@ -208,9 +213,15 @@ class DecisionEngine:
         requires_review = False
         reasons = []
 
-        # Trigger 1: UNKNOWN on mandatory (inferred from unknown_count > 0 and overall not COMPLIANT)
-        # Note: True mandatory check might need more granular data, but this is a safe heuristic
-        if compliance_summary.unknown_count > 0 and compliance_summary.overall_compliance != ComplianceLevel.COMPLIANT:
+        # Trigger 1: Mandatory UNKNOWN
+        if compliance_summary.mandatory_unknown:
+            requires_review = True
+            reasons.append("Mandatory requirement could not be verified - needs human review")
+            self._log_trace("Human review: Mandatory UNKNOWN")
+            
+        # Trigger 1.5: General UNKNOWN (logic update)
+        elif compliance_summary.unknown_count > 0 and compliance_summary.overall_compliance != ComplianceLevel.COMPLIANT:
+            # Keep this as a secondary check if mandatory not triggered
             requires_review = True
             reasons.append("Some requirements could not be verified automatically")
             self._log_trace("Human review: UNKNOWN requirements present")

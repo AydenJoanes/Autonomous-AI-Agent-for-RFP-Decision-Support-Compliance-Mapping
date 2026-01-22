@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 from pydantic import BaseModel, Field, validator
 
 from src.app.models.compliance import ComplianceLevel
@@ -77,6 +77,8 @@ class ComplianceSummary(BaseModel):
     total_evaluated: int = Field(0, ge=0, description="Total requirements evaluated")
     confidence_avg: float = Field(0.0, ge=0.0, le=1.0, description="Average confidence (0-1)")
     mandatory_met: bool = Field(True, description="All mandatory requirements passed")
+    mandatory_unknown: bool = Field(False, description="Any mandatory requirement is UNKNOWN")
+    mandatory_failed: bool = Field(False, description="Any mandatory requirement is NON_COMPLIANT")
     tool_results: List[ToolResultSummary] = Field(default_factory=list, description="Individual result summaries")
 
     @validator('total_evaluated', always=True)
@@ -99,7 +101,7 @@ class RFPMetadata(BaseModel):
     """RFP document metadata."""
     filename: str = Field(..., description="Original filename")
     file_path: str = Field(..., description="Full file path")
-    processed_date: datetime = Field(default_factory=datetime.utcnow, description="When processing occurred")
+    processed_date: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="When processing occurred")
     word_count: int = Field(0, ge=0, description="Document word count")
     requirement_count: int = Field(0, ge=0, description="Extracted requirements count")
 
@@ -115,7 +117,7 @@ class Recommendation(BaseModel):
     requires_human_review: bool = Field(..., description="Whether human review needed")
     review_reasons: List[str] = Field(default_factory=list, description="Why human review needed")
     rfp_metadata: RFPMetadata = Field(..., description="Document metadata")
-    timestamp: datetime = Field(default_factory=datetime.utcnow, description="When recommendation created")
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="When recommendation created")
 
     @validator('confidence_score')
     def validate_confidence(cls, v):

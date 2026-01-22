@@ -77,12 +77,19 @@ class ToolExecutorService:
             
             # Execute tool
             if isinstance(input_data, dict):
-                response_json = tool._run(**input_data)
+                response = tool._run(**input_data)
             else:
-                response_json = tool._run(input_data)
+                response = tool._run(input_data)
             
-            # Parse response
-            result = ToolResult.model_validate_json(response_json)
+            # Parse response - handle dict, model, or string
+            if isinstance(response, ToolResult):
+                result = response
+            elif isinstance(response, dict):
+                result = ToolResult.model_validate(response)
+            elif isinstance(response, str):
+                result = ToolResult.model_validate_json(response)
+            else:
+                raise ValueError(f"Unexpected response type: {type(response)}")
             
             # Cache result
             self._cache[cache_key] = result

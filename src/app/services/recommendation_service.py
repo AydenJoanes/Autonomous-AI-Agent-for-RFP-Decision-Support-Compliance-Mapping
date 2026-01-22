@@ -152,6 +152,8 @@ class RecommendationService:
             total_evaluated=aggregation["total_evaluated"],
             confidence_avg=aggregation["confidence_avg"],
             mandatory_met=aggregation["mandatory_requirements_met"],
+            mandatory_unknown=aggregation.get("mandatory_unknown", False),
+            mandatory_failed=aggregation.get("mandatory_failed", False),
             tool_results=tool_summaries
         )
         
