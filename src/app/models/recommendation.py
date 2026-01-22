@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional
+from typing import List, Optional, Dict
 from datetime import datetime, timezone
 from pydantic import BaseModel, Field, validator
 
@@ -22,6 +22,14 @@ class RiskSeverity(str, Enum):
     HIGH = "HIGH"  # Critical risk, may block bid
     MEDIUM = "MEDIUM"  # Significant risk, needs mitigation
     LOW = "LOW"  # Minor risk, acceptable
+
+
+class OutcomeStatus(str, Enum):
+    """Real-world outcome of a bid recommendation."""
+    WON = "WON"
+    LOST = "LOST"
+    NO_BID_CONFIRMED = "NO_BID_CONFIRMED"  # We decided no-bid and didn't bid
+    UNKNOWN = "UNKNOWN"
 
 
 class RiskCategory(str, Enum):
@@ -116,8 +124,14 @@ class Recommendation(BaseModel):
     compliance_summary: ComplianceSummary = Field(..., description="Aggregated compliance data")
     requires_human_review: bool = Field(..., description="Whether human review needed")
     review_reasons: List[str] = Field(default_factory=list, description="Why human review needed")
+    clarification_questions: List[str] = Field(default_factory=list, description="Guidance questions for gaps")
     rfp_metadata: RFPMetadata = Field(..., description="Document metadata")
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="When recommendation created")
+    
+    # Phase 6: Reflection & Calibration (Optional, Read-Only)
+    reflection_notes: Optional[Dict] = Field(None, description="Reflection engine observations (Phase 6)")
+    calibration_metrics: Optional[Dict] = Field(None, description="Calibration quality metrics (Phase 6)")
+    embedding: Optional[List[float]] = Field(None, description="Vector embedding for similarity search (Phase 6, 1536-dim)")
 
     @validator('confidence_score')
     def validate_confidence(cls, v):
@@ -145,3 +159,11 @@ class Recommendation(BaseModel):
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
+
+
+class OutcomeCreate(BaseModel):
+    """Payload for recording a real-world outcome."""
+    outcome: OutcomeStatus = Field(..., description="The actual outcome of the bid")
+    notes: Optional[str] = Field(None, description="Optional notes or reflection on the outcome")
+    calibration_metrics: Optional[Dict[str, float]] = Field(None, description="Optional metrics for calibration")
+

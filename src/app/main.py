@@ -1,11 +1,24 @@
 from fastapi import FastAPI
-from src.app.api.routes import health, recommendation
+from starlette.middleware.cors import CORSMiddleware
+from src.app.api.routes.health import router as health_router
+from src.app.api.routes.recommendation import router as recommendation_router
+from src.app.api.routes.outcomes import router as outcome_router
 
-app = FastAPI(title="RFP Bid Agent", version="1.0.0")
+app = FastAPI(title="RFP Bid Agent API", version="1.0.0")
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Register routers
-app.include_router(health.router)
-app.include_router(recommendation.router)
+app.include_router(health_router, prefix="/api/v1/recommendation", tags=["Health"])
+app.include_router(recommendation_router, prefix="/api/v1/recommendation", tags=["Recommendation"])
+app.include_router(outcome_router, prefix="/api/v1/outcomes", tags=["Outcomes"])
 
 if __name__ == "__main__":
     import uvicorn

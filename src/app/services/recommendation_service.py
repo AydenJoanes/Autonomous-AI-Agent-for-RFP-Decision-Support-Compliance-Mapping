@@ -26,6 +26,9 @@ from src.app.services.decision_engine import DecisionEngine
 from src.app.services.justification_generator import JustificationGenerator
 from src.app.strategies.compliance_strategy import aggregate_compliance
 from src.app.agent.tools import RFPParserTool, RequirementProcessorTool
+from src.app.services.reflection_engine import ReflectionEngine
+from src.app.services.clarification_generator import ClarificationGenerator
+from src.app.services.phase6_orchestrator import Phase6Orchestrator
 
 
 class RecommendationService:
@@ -41,6 +44,9 @@ class RecommendationService:
         self._justification_generator = JustificationGenerator()
         self._rfp_parser = RFPParserTool()
         self._requirement_processor = RequirementProcessorTool()
+        self._reflection_engine = ReflectionEngine()
+        self._clarification_generator = ClarificationGenerator()
+        self._phase6_orchestrator = Phase6Orchestrator()
         
         logger.info("[SERVICE] RecommendationService initialized with all dependencies")
 
@@ -304,6 +310,15 @@ class RecommendationService:
                 compliance_summary, decision, risks
             )
             
+            # Step 6.5: Generate Clarification Questions (Phase 6)
+            try:
+                clarification_questions = self._clarification_generator.generate(
+                    compliance_summary, tool_results, decision, risks
+                )
+            except Exception as e:
+                logger.error(f"[SERVICE] Clarification generation failed (non-blocking): {e}")
+                clarification_questions = []  # Fallback to empty list
+
             # Step 7: Build Recommendation
             recommendation = Recommendation(
                 recommendation=decision["recommendation"],
@@ -314,11 +329,22 @@ class RecommendationService:
                 compliance_summary=compliance_summary,
                 requires_human_review=decision["requires_human_review"],
                 review_reasons=decision["review_reasons"],
+                clarification_questions=clarification_questions,
                 rfp_metadata=metadata,
                 timestamp=datetime.now(timezone.utc)
             )
             
-            # Step 8: Log completion
+            # Step 8: Phase 6 Orchestration (non-invasive coordination)
+            # This applies reflection, ensures clarifications, and generates embedding
+            # WITHOUT modifying Phase 5 logic
+            try:
+                recommendation = self._phase6_orchestrator.orchestrate(recommendation)
+            except Exception as e:
+                # Orchestration is optional - failure must not block response
+                logger.error(f"[SERVICE] Phase 6 orchestration failed (non-blocking): {e}")
+                # Continue with unenhanced recommendation
+            
+            # Step 9: Log completion
             elapsed = time.time() - start_time
             logger.info(f"[SERVICE] Recommendation complete in {elapsed:.2f}s: {recommendation.recommendation}")
             

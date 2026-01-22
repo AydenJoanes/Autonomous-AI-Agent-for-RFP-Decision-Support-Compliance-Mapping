@@ -75,7 +75,7 @@ class LearningGatekeeper:
         
         # Get all recommendations with outcomes
         outcomes = db.query(RecommendationDB).filter(
-            RecommendationDB.outcome.isnot(None)
+            RecommendationDB.outcome_status.isnot(None)
         ).all()
         
         total_outcomes = len(outcomes)
@@ -110,7 +110,7 @@ class LearningGatekeeper:
         """Count outcomes by status."""
         counts: Dict[str, int] = {}
         for rec in outcomes:
-            status = getattr(rec, 'outcome', 'UNKNOWN')
+            status = getattr(rec, 'outcome_status', 'UNKNOWN')
             counts[status] = counts.get(status, 0) + 1
         return counts
     
@@ -183,7 +183,7 @@ class LearningGatekeeper:
         
         # Get outcome stats
         outcomes = db.query(RecommendationDB).filter(
-            RecommendationDB.outcome.isnot(None)
+            RecommendationDB.outcome_status.isnot(None)
         ).all()
         
         outcome_counts = self._count_outcomes(outcomes)
