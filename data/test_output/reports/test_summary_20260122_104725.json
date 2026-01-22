@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Models",
+    "script": "scripts/test_recommendation_models.py",
+    "success": true,
+    "returncode": 0,
+    "elapsed_seconds": 0.281872,
+    "stdout": "\n============================================================\nMODELS TEST RESULTS\n============================================================\nTests Run: 17\nFailures: 0\nErrors: 0\nLog saved: data\\test_output\\logs\\test_models_20260122_104659.log\n============================================================\n",
+    "stderr": ""
+  },
+  {
+    "name": "Extractor",
+    "script": "scripts/test_value_extractor.py",
+    "success": true,
+    "returncode": 0,
+    "elapsed_seconds": 4.540284,
+    "stdout": "\n============================================================\nVALUE EXTRACTOR TEST RESULTS\n============================================================\nTests Run: 23\nFailures: 0\nErrors: 0\nLog saved: data\\test_output\\logs\\test_extractor_20260122_104703.log\n============================================================\n",
+    "stderr": "hnology extracted: PostgreSQL from \"PostgreSQL database...\"\n2026-01-22 10:47:03.991 | DEBUG    | src.app.services.value_extractor:extract_technology:256 - [EXTRACTOR] No technology found in \"No technology mentioned...\"\n2026-01-22 10:47:03.992 | INFO     | src.app.services.value_extractor:extract_budget:36 - [EXTRACTOR] Budget extracted: 150000 from \"Budget $150,000. SOC 2. Python. 3 months timeline....\"\n2026-01-22 10:47:03.992 | INFO     | src.app.services.value_extractor:extract_timeline:91 - [EXTRACTOR] Timeline extracted: 3 months from \"Budget $150,000. SOC 2. Python. 3 months timeline....\"\n2026-01-22 10:47:03.992 | INFO     | src.app.services.value_extractor:extract_certification:156 - [EXTRACTOR] Certification extracted: SOC 2 from \"Budget $150,000. SOC 2. Python. 3 months timeline....\"\n2026-01-22 10:47:03.992 | INFO     | src.app.services.value_extractor:extract_technology:252 - [EXTRACTOR] Technology extracted: Python from \"Budget $150,000. SOC 2. Python. 3 months timeline....\"\n"
+  },
+  {
+    "name": "Decision",
+    "script": "scripts/test_decision_engine.py",
+    "success": true,
+    "returncode": 0,
+    "elapsed_seconds": 4.72337,
+    "stdout": "\n============================================================\nDECISION ENGINE TEST RESULTS\n============================================================\nTests Run: 20\nFailures: 0\nErrors: 0\nLog saved: data\\test_output\\logs\\test_decision_20260122_104708.log\n============================================================\n",
+    "stderr": "ne:_log_trace:66 - [DECISION_TRACE] Penalties: 0 (capped to 0)\n2026-01-22 10:47:08.669 | DEBUG    | src.app.services.decision_engine:_log_trace:66 - [DECISION_TRACE] Final confidence score: 100\n2026-01-22 10:47:08.669 | DEBUG    | src.app.services.decision_engine:_log_trace:66 - [DECISION_TRACE] Base score for ComplianceLevel.COMPLIANT: 90\n2026-01-22 10:47:08.669 | DEBUG    | src.app.services.decision_engine:_log_trace:66 - [DECISION_TRACE] Mandatory met: +10\n2026-01-22 10:47:08.669 | DEBUG    | src.app.services.decision_engine:_log_trace:66 - [DECISION_TRACE] Confidence avg adjustment: +2.0\n2026-01-22 10:47:08.669 | DEBUG    | src.app.services.decision_engine:_log_trace:66 - [DECISION_TRACE] Penalties: 0 (capped to 0)\n2026-01-22 10:47:08.669 | DEBUG    | src.app.services.decision_engine:_log_trace:66 - [DECISION_TRACE] Final confidence score: 100\n2026-01-22 10:47:08.669 | DEBUG    | src.app.services.decision_engine:_log_trace:66 - [DECISION_TRACE] Decision: BID (confidence 100 >= 80)\n"
+  },
+  {
+    "name": "Justification",
+    "script": "scripts/test_justification_generator.py",
+    "success": true,
+    "returncode": 0,
+    "elapsed_seconds": 5.256412,
+    "stdout": "\n============================================================\nJUSTIFICATION GENERATOR TEST RESULTS\n============================================================\nTests Run: 8\nFailures: 0\nErrors: 0\nLog saved: data\\test_output\\logs\\test_justification_20260122_104713.log\n============================================================\n",
+    "stderr": "CATION] Generated justification: 100 chars\n2026-01-22 10:47:13.839 | INFO     | src.app.services.justification_generator:generate_executive_summary:356 - [JUSTIFICATION] Generated executive summary: 100 chars\n2026-01-22 10:47:13.839 | INFO     | src.app.services.justification_generator:generate:400 - [JUSTIFICATION] Complete: justification=100 chars, summary=100 chars\n2026-01-22 10:47:13.839 | INFO     | src.app.services.justification_generator:generate:380 - [JUSTIFICATION] Starting justification generation\n2026-01-22 10:47:13.839 | INFO     | src.app.services.justification_generator:generate_justification:321 - [JUSTIFICATION] Generated justification: 100 chars\n2026-01-22 10:47:13.839 | INFO     | src.app.services.justification_generator:generate_executive_summary:356 - [JUSTIFICATION] Generated executive summary: 100 chars\n2026-01-22 10:47:13.839 | INFO     | src.app.services.justification_generator:generate:400 - [JUSTIFICATION] Complete: justification=100 chars, summary=100 chars\n"
+  },
+  {
+    "name": "Service",
+    "script": "scripts/test_recommendation_service.py",
+    "success": true,
+    "returncode": 0,
+    "elapsed_seconds": 5.281366,
+    "stdout": "\n============================================================\nRECOMMENDATION SERVICE TEST RESULTS\n============================================================\nTests Run: 8\nFailures: 0\nErrors: 0\nLog saved: data\\test_output\\logs\\test_service_20260122_104718.log\n============================================================\n",
+    "stderr": "ndation complete in 0.00s: BID\n2026-01-22 10:47:19.146 | WARNING  | src.app.services.recommendation_service:_create_error_recommendation:190 - [SERVICE] Creating error recommendation for /test.pdf\n2026-01-22 10:47:19.146 | WARNING  | src.app.services.recommendation_service:_create_no_requirements_recommendation:231 - [SERVICE] Creating no-requirements recommendation for test.pdf\n2026-01-22 10:47:19.146 | INFO     | src.app.services.recommendation_service:generate_recommendation_report:401 - [SERVICE] Generating recommendation report\n2026-01-22 10:47:19.146 | INFO     | src.app.services.recommendation_service:generate_recommendation_report:478 - [SERVICE] Report generated: 959 chars\n2026-01-22 10:47:19.146 | INFO     | src.app.services.recommendation_service:generate_recommendation_report:401 - [SERVICE] Generating recommendation report\n2026-01-22 10:47:19.146 | INFO     | src.app.services.recommendation_service:generate_recommendation_report:478 - [SERVICE] Report generated: 959 chars\n"
+  },
+  {
+    "name": "Integration",
+    "script": "scripts/test_phase5_integration.py",
+    "success": true,
+    "returncode": 0,
+    "elapsed_seconds": 5.866708,
+    "stdout": "\n[OUTPUT] Recommendation saved: data\\test_output\\samples\\recommendation_20260122_104724.json\n[OUTPUT] Report saved: data\\test_output\\samples\\report_20260122_104724.md\n\n============================================================\nINTEGRATION TEST RESULTS\n============================================================\nTests Run: 5\nFailures: 0\nErrors: 0\nLog saved: data\\test_output\\logs\\test_integration_20260122_104724.log\n============================================================\n",
+    "stderr": "rvice:__init__:45 - [SERVICE] RecommendationService initialized with all dependencies\n2026-01-22 10:47:24.682 | INFO     | src.app.agent.recommendation_agent:__init__:24 - [AGENT] RecommendationAgent initialized\n2026-01-22 10:47:24.682 | INFO     | src.app.agent.recommendation_agent:run:40 - [AGENT] Processing RFP: /fake.pdf\n2026-01-22 10:47:24.682 | INFO     | src.app.agent.recommendation_agent:run:44 - [AGENT] Recommendation complete: BID\n2026-01-22 10:47:24.890 | INFO     | src.app.services.tool_executor:__init__:40 - [EXECUTOR] Initialized with 6 tools\n2026-01-22 10:47:24.890 | INFO     | src.app.services.justification_generator:__init__:154 - [JUSTIFICATION] Initialized with model=gpt-4o-mini, temp=0.3\n2026-01-22 10:47:24.890 | INFO     | src.app.services.recommendation_service:__init__:45 - [SERVICE] RecommendationService initialized with all dependencies\n2026-01-22 10:47:24.890 | INFO     | src.app.agent.recommendation_agent:__init__:24 - [AGENT] RecommendationAgent initialized\n"
+  }
+]

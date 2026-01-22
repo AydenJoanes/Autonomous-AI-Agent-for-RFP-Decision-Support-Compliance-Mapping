@@ -45,6 +45,21 @@ SessionLocal = sessionmaker(
     bind=engine
 )
 
+from contextlib import contextmanager
+
+@contextmanager
+def get_db_context():
+    """Context manager for non-FastAPI database access"""
+    db = SessionLocal()
+    try:
+        yield db
+    except Exception as e:
+        logger.error(f"Database session error: {e}")
+        db.rollback()
+        raise
+    finally:
+        db.close()
+
 def get_db():
     """Dependency for FastAPI endpoints"""
     db = SessionLocal()

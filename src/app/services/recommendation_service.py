@@ -26,6 +26,8 @@ from src.app.services.decision_engine import DecisionEngine
 from src.app.services.justification_generator import JustificationGenerator
 from src.app.strategies.compliance_strategy import aggregate_compliance
 from src.app.agent.tools import RFPParserTool, RequirementProcessorTool
+from src.app.services.reflection_engine import ReflectionEngine
+from src.app.services.clarification_generator import ClarificationGenerator
 
 
 class RecommendationService:
@@ -41,6 +43,8 @@ class RecommendationService:
         self._justification_generator = JustificationGenerator()
         self._rfp_parser = RFPParserTool()
         self._requirement_processor = RequirementProcessorTool()
+        self._reflection_engine = ReflectionEngine()
+        self._clarification_generator = ClarificationGenerator()
         
         logger.info("[SERVICE] RecommendationService initialized with all dependencies")
 
@@ -304,6 +308,11 @@ class RecommendationService:
                 compliance_summary, decision, risks
             )
             
+            # Step 6.5: Generate Clarification Questions (Phase 6)
+            clarification_questions = self._clarification_generator.generate(
+                compliance_summary, tool_results, decision, risks
+            )
+
             # Step 7: Build Recommendation
             recommendation = Recommendation(
                 recommendation=decision["recommendation"],
@@ -314,11 +323,21 @@ class RecommendationService:
                 compliance_summary=compliance_summary,
                 requires_human_review=decision["requires_human_review"],
                 review_reasons=decision["review_reasons"],
+                clarification_questions=clarification_questions,
                 rfp_metadata=metadata,
                 timestamp=datetime.now(timezone.utc)
             )
             
-            # Step 8: Log completion
+            # Step 8: Reflection (Phase 6)
+            try:
+                reflection = self._reflection_engine.reflect(recommendation)
+                recommendation.reflection_notes = reflection
+                logger.info(f"[SERVICE] Reflection captured: {len(reflection.get('flags', []))} flags")
+            except Exception as e:
+                logger.error(f"[SERVICE] Reflection failed (non-blocking): {e}")
+                # Don't block the main output, just log
+            
+            # Step 9: Log completion
             elapsed = time.time() - start_time
             logger.info(f"[SERVICE] Recommendation complete in {elapsed:.2f}s: {recommendation.recommendation}")
             

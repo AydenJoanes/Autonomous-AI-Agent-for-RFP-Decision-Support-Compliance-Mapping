@@ -124,4 +124,13 @@ class Recommendation(Base):
     escalation_needed = Column(Boolean, default=False)
     escalation_reason = Column(Text)
     reasoning_steps = Column(JSON)
+    
+    # Phase 6: Memory & Feedback Extensions
+    outcome_status = Column(String(50), nullable=True)  # WON, LOST, NO_BID_CONFIRMED, UNKNOWN
+    outcome_recorded_at = Column(DateTime, nullable=True)
+    outcome_notes = Column(Text, nullable=True)
+    reflection_notes = Column(JSON, nullable=True)
+    calibration_metrics = Column(JSON, nullable=True)
+    embedding = Column(Vector(1536), nullable=True)
+
     created_at = Column(DateTime, default=func.now())
