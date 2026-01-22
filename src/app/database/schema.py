@@ -113,7 +113,7 @@ class Recommendation(Base):
     __tablename__ = 'recommendations'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    analysis_id = Column(String(100), ForeignKey('analyses.analysis_id'), nullable=False)
+    analysis_id = Column(String(100), ForeignKey('analyses.analysis_id'), nullable=True)
     decision = Column(String(20), nullable=False)
     confidence_score = Column(Integer, CheckConstraint('confidence_score >= 0 AND confidence_score <= 100'))
     justification = Column(Text, nullable=False)
