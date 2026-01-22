@@ -189,7 +189,7 @@ class CalibrationMetrics:
         
         # Get all recommendations with binary outcomes
         recs = db.query(RecommendationDB).filter(
-            RecommendationDB.outcome.in_(['WON', 'LOST'])
+            RecommendationDB.outcome_status.in_(['WON', 'LOST'])
         ).all()
         
         if not recs:
@@ -205,7 +205,7 @@ class CalibrationMetrics:
         predictions = [
             {
                 "confidence": rec.confidence_score,
-                "outcome": rec.outcome
+                "outcome": rec.outcome_status
             }
             for rec in recs
         ]

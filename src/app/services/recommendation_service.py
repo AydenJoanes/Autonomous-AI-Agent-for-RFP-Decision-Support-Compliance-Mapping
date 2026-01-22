@@ -28,6 +28,7 @@ from src.app.strategies.compliance_strategy import aggregate_compliance
 from src.app.agent.tools import RFPParserTool, RequirementProcessorTool
 from src.app.services.reflection_engine import ReflectionEngine
 from src.app.services.clarification_generator import ClarificationGenerator
+from src.app.services.phase6_orchestrator import Phase6Orchestrator
 
 
 class RecommendationService:
@@ -45,6 +46,7 @@ class RecommendationService:
         self._requirement_processor = RequirementProcessorTool()
         self._reflection_engine = ReflectionEngine()
         self._clarification_generator = ClarificationGenerator()
+        self._phase6_orchestrator = Phase6Orchestrator()
         
         logger.info("[SERVICE] RecommendationService initialized with all dependencies")
 
@@ -309,9 +311,13 @@ class RecommendationService:
             )
             
             # Step 6.5: Generate Clarification Questions (Phase 6)
-            clarification_questions = self._clarification_generator.generate(
-                compliance_summary, tool_results, decision, risks
-            )
+            try:
+                clarification_questions = self._clarification_generator.generate(
+                    compliance_summary, tool_results, decision, risks
+                )
+            except Exception as e:
+                logger.error(f"[SERVICE] Clarification generation failed (non-blocking): {e}")
+                clarification_questions = []  # Fallback to empty list
 
             # Step 7: Build Recommendation
             recommendation = Recommendation(
@@ -328,14 +334,15 @@ class RecommendationService:
                 timestamp=datetime.now(timezone.utc)
             )
             
-            # Step 8: Reflection (Phase 6)
+            # Step 8: Phase 6 Orchestration (non-invasive coordination)
+            # This applies reflection, ensures clarifications, and generates embedding
+            # WITHOUT modifying Phase 5 logic
             try:
-                reflection = self._reflection_engine.reflect(recommendation)
-                recommendation.reflection_notes = reflection
-                logger.info(f"[SERVICE] Reflection captured: {len(reflection.get('flags', []))} flags")
+                recommendation = self._phase6_orchestrator.orchestrate(recommendation)
             except Exception as e:
-                logger.error(f"[SERVICE] Reflection failed (non-blocking): {e}")
-                # Don't block the main output, just log
+                # Orchestration is optional - failure must not block response
+                logger.error(f"[SERVICE] Phase 6 orchestration failed (non-blocking): {e}")
+                # Continue with unenhanced recommendation
             
             # Step 9: Log completion
             elapsed = time.time() - start_time

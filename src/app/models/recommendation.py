@@ -127,6 +127,11 @@ class Recommendation(BaseModel):
     clarification_questions: List[str] = Field(default_factory=list, description="Guidance questions for gaps")
     rfp_metadata: RFPMetadata = Field(..., description="Document metadata")
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="When recommendation created")
+    
+    # Phase 6: Reflection & Calibration (Optional, Read-Only)
+    reflection_notes: Optional[Dict] = Field(None, description="Reflection engine observations (Phase 6)")
+    calibration_metrics: Optional[Dict] = Field(None, description="Calibration quality metrics (Phase 6)")
+    embedding: Optional[List[float]] = Field(None, description="Vector embedding for similarity search (Phase 6, 1536-dim)")
 
     @validator('confidence_score')
     def validate_confidence(cls, v):
