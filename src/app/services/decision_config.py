@@ -21,11 +21,8 @@ CONFIDENCE_BASE_SCORES = {
 # ADJUSTMENT CONSTANTS
 # ============================================================================
 
-# Mandatory requirement adjustments
 MANDATORY_MET_BONUS = 10
 MANDATORY_FAILED_PENALTY = 15
-
-# Confidence average adjustments
 CONFIDENCE_AVG_MULTIPLIER = 20
 CONFIDENCE_AVG_BASELINE = 0.7
 
@@ -42,10 +39,9 @@ MAX_PENALTY_CAP = 40
 # THRESHOLD CONSTANTS
 # ============================================================================
 
-# Decision thresholds
 BID_CONFIDENCE_THRESHOLD = 75
 CONDITIONAL_CONFIDENCE_THRESHOLD = 50
-UNKNOWN_HEAVY_THRESHOLD = 0.5  # >50% unknown triggers CONDITIONAL
+UNKNOWN_HEAVY_THRESHOLD = 0.5
 
 # ============================================================================
 # HUMAN REVIEW CONSTANTS

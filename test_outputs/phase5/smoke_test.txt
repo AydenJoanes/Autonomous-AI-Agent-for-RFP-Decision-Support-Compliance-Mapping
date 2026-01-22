@@ -1,0 +1,29 @@
+2026-01-21 17:24:12.429 | INFO     | src.app.database.connection:<module>:21 - Connecting to database at postgresql+psycopg2://****:****@localhost:5432/rfp_bid_db
+2026-01-21 17:24:12.514 | INFO     | src.app.agent.tools:<module>:20 - [INIT] Importing reasoning tools...
+2026-01-21 17:24:12.514 | INFO     | src.app.agent.tools:<module>:39 - [INIT] REASONING_TOOLS loaded: 6 tools
+2026-01-21 17:24:12.514 | INFO     | src.app.agent.tools:<module>:51 - [INIT] ALL_TOOLS loaded: 8 tools
+2026-01-21 17:24:12.514 | INFO     | src.app.agent.tools:<module>:64 - [INIT] Tools package initialized successfully
+============================================================
+PHASE 5 SMOKE TEST
+============================================================
+
+[1/5] Testing imports...
+Traceback (most recent call last):
+  File "C:\Emplay-task\RFP_bid\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\scripts\smoke_test_phase5.py", line 31, in smoke_test
+    print("\u2705 All imports successful")
+  File "C:\Users\ponna\anaconda3\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Emplay-task\RFP_bid\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\scripts\smoke_test_phase5.py", line 84, in <module>
+    smoke_test()
+  File "C:\Emplay-task\RFP_bid\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\scripts\smoke_test_phase5.py", line 36, in smoke_test
+    print(f"\u274c Import failed with unexpected error: {e}")
+  File "C:\Users\ponna\anaconda3\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u274c' in position 0: character maps to <undefined>

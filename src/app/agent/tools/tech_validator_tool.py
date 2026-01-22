@@ -48,7 +48,7 @@ class TechValidatorTool(BaseTool):
                     details={"searched_technology": normalized_tech},
                     message="Technology not in official stack. Team might still have expertise."
                 )
-                return result.json()
+                return result.model_dump_json()
             
             # Found technology - analyze it
             tech_name = tech.get('technology', normalized_tech)
@@ -164,7 +164,7 @@ class TechValidatorTool(BaseTool):
                 message=message
             )
             
-            return result.json()
+            return result.model_dump_json()
         
         except Exception as e:
             logger.error(f"TechValidatorTool Error: {e}")
@@ -177,7 +177,7 @@ class TechValidatorTool(BaseTool):
                 details={"error": str(e)},
                 message=f"System error during technology validation: {str(e)}"
             )
-            return error_result.json()
+            return error_result.model_dump_json()
         
         finally:
             session.close()

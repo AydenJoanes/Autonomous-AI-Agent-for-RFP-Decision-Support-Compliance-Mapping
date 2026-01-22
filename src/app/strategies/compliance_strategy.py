@@ -204,6 +204,19 @@ def aggregate_compliance(tool_results: List[ToolResult], mandatory_tools: Option
     else:
         overall = ComplianceLevel.PARTIAL
 
+    # Track mandatory status details
+    mandatory_unknown = False
+    mandatory_failed = False
+
+    for result in tool_results:
+        # Check if this is a mandatory requirement result
+        is_mandatory = getattr(result, 'is_mandatory', False)
+        if is_mandatory:
+            if result.compliance_level == ComplianceLevel.UNKNOWN:
+                mandatory_unknown = True
+            elif result.compliance_level == ComplianceLevel.NON_COMPLIANT:
+                mandatory_failed = True
+
     return {
         "overall_compliance": overall,
         "compliant_count": counts[ComplianceLevel.COMPLIANT],
@@ -213,5 +226,7 @@ def aggregate_compliance(tool_results: List[ToolResult], mandatory_tools: Option
         "warning_count": counts[ComplianceLevel.WARNING],
         "confidence_avg": float(f"{confidence_avg:.2f}"),
         "mandatory_requirements_met": mandatory_met,
+        "mandatory_unknown": mandatory_unknown,
+        "mandatory_failed": mandatory_failed,
         "total_evaluated": total_count
     }

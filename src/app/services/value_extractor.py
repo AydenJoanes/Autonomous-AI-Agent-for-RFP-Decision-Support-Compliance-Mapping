@@ -116,7 +116,7 @@ class ValueExtractor:
         match = re.search(pattern_days, text, re.IGNORECASE)
         if match:
             days = int(match.group(1))
-            months = int(days / 30)
+            months = max(1, int(days / 30))  # Minimum 1 month
             normalized = f"{months} months"
             logger.info(f'[EXTRACTOR] Timeline extracted: {normalized} (from {days} days) from "{text[:50]}..."')
             return normalized
@@ -149,7 +149,7 @@ class ValueExtractor:
             return normalized
         
         # Pattern 2: SOC 2, SOC 2 Type II, etc.
-        pattern_soc = r'SOC\s*[12](?:\s*Type\s*(?:I|II|1|2))?'
+        pattern_soc = r'SOC\s*[12](?:\s*Type\s*(?:II|I|2|1))?' # II before I for longest match
         match = re.search(pattern_soc, text, re.IGNORECASE)
         if match:
             normalized = match.group(0).upper()
