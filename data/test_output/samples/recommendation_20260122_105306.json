@@ -1,0 +1,46 @@
+{
+  "recommendation": "BID",
+  "confidence_score": 100,
+  "justification": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "executive_summary": "BBBBBBBBBBBBBBBBBBBBBBBBB",
+  "risks": [],
+  "compliance_summary": {
+    "overall_compliance": "COMPLIANT",
+    "compliant_count": 2,
+    "non_compliant_count": 0,
+    "partial_count": 0,
+    "warning_count": 0,
+    "unknown_count": 0,
+    "total_evaluated": 2,
+    "confidence_avg": 1.0,
+    "mandatory_met": true,
+    "mandatory_unknown": false,
+    "mandatory_failed": false,
+    "tool_results": [
+      {
+        "tool_name": "tech_validator",
+        "requirement": "Python",
+        "compliance_level": "COMPLIANT",
+        "confidence": 1.0,
+        "status": "EXPERT"
+      },
+      {
+        "tool_name": "budget_analyzer",
+        "requirement": "150000",
+        "compliance_level": "COMPLIANT",
+        "confidence": 1.0,
+        "status": "ACCEPTABLE"
+      }
+    ]
+  },
+  "requires_human_review": false,
+  "review_reasons": [],
+  "rfp_metadata": {
+    "filename": "dummy_test.pdf",
+    "file_path": "data\\sample_rfps\\dummy_test.pdf",
+    "processed_date": "2026-01-22 05:23:06.764738+00:00",
+    "word_count": 5,
+    "requirement_count": 2
+  },
+  "timestamp": "2026-01-22 05:23:06.991691+00:00"
+}
