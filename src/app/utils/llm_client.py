@@ -32,10 +32,18 @@ class LLMClient:
         Initialize LLM client.
         
         Args:
-            api_key: OpenAI API key (if None, will use OPENAI_API_KEY env var)
+            api_key: OpenAI API key (if None, will try settings.OPENAI_API_KEY, then env var)
         """
         if not OPENAI_AVAILABLE:
             raise ImportError("OpenAI library not installed. Run: pip install openai tiktoken")
+        
+        # Priority: explicit param > settings > environment
+        if not api_key:
+            try:
+                from config.settings import settings
+                api_key = settings.OPENAI_API_KEY
+            except (ImportError, AttributeError):
+                api_key = None  # Will let OpenAI() try env var
         
         self.client = OpenAI(api_key=api_key)
         self.total_input_tokens = 0
