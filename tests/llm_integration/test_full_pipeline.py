@@ -22,7 +22,7 @@ def test_full_pipeline():
     
     # 1. Setup
     service = RecommendationService()
-    rfp_path = project_root / "data" / "sample_rfps" / "smol_rfp.pdf"
+    rfp_path = project_root / "data" / "sample_rfps" / "highConfi_rfp.pdf"
     
     output_dir = project_root / "tests" / "llm_integration" / "test_outputs"
     output_dir.mkdir(parents=True, exist_ok=True)
