@@ -258,6 +258,16 @@ class TimelineAssessorTool(BaseTool):
             # Clean the input
             cleaned = timeline_str.strip().lower()
             
+            # 1. Check for specific date-like patterns (Month Year)
+            # If it looks like a start date (e.g. "June 2026"), it's not a duration.
+            months = ["january", "february", "march", "april", "may", "june", 
+                      "july", "august", "september", "october", "november", "december",
+                      "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+            
+            if any(m in cleaned for m in months) and re.search(r'\d{4}', cleaned):
+                 logger.warning(f"Timeline '{timeline_str}' appears to be a date, not duration.")
+                 return None
+
             # Extract number using regex
             number_match = re.search(r'(\d+(?:\.\d+)?)', cleaned)
             if not number_match:
@@ -265,6 +275,12 @@ class TimelineAssessorTool(BaseTool):
             
             value = float(number_match.group(1))
             
+            # Sanity check: If value matches a year (e.g. 2024, 2025, 2026) and no explicit duration unit
+            # It's likely a year
+            if value > 1900 and value < 2100 and "day" not in cleaned:
+                logger.warning(f"Timeline '{timeline_str}' appears to be a year {value}, not duration.")
+                return None
+
             # Determine unit
             if 'week' in cleaned:
                 # Convert weeks to months (approximately)
@@ -277,6 +293,11 @@ class TimelineAssessorTool(BaseTool):
                 return int(value / 30)
             else:
                 # Assume months if no unit specified
+                # BUT if value is suspiciously large for months (e.g. > 120 months = 10 years), treat as invalid/year
+                if value > 120:
+                    logger.warning(f"Timeline '{timeline_str}' value {value} too large for months, treating as invalid.")
+                    return None
+                    
                 return int(value)
         
         except (ValueError, AttributeError) as e:

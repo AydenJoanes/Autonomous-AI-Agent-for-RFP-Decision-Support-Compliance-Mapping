@@ -57,7 +57,7 @@ class LLMConfig(BaseSettings):
     routing_confidence_threshold: float = Field(default=0.8, alias="ROUTING_CONFIDENCE_THRESHOLD")
     
     # Chunking Configuration
-    max_chunk_size_tokens: int = Field(default=100000, alias="MAX_CHUNK_SIZE_TOKENS")
+    max_chunk_size_tokens: int = Field(default=6000, alias="MAX_CHUNK_SIZE_TOKENS")
     chunk_overlap_tokens: int = Field(default=200, alias="CHUNK_OVERLAP_TOKENS")
     
     # Temperature Settings (0.0 = deterministic)

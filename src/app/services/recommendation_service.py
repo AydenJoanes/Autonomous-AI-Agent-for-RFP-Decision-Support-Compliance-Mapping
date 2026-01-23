@@ -55,8 +55,9 @@ class RecommendationService:
         self._tool_executor = ToolExecutorService()
         self._decision_engine = DecisionEngine()
         self._justification_generator = JustificationGenerator()
-        from src.app.agent.tools import RFPParserTool, RequirementProcessorTool
-        self._rfp_parser = RFPParserTool()
+        from src.app.parsers import UnifiedParser
+        from src.app.agent.tools import RequirementProcessorTool
+        self._unified_parser = UnifiedParser()
         self._requirement_processor = RequirementProcessorTool()
         self._reflection_engine = ReflectionEngine()
         self._clarification_generator = ClarificationGenerator()
@@ -103,20 +104,33 @@ class RecommendationService:
         if ext.lower() not in self.SUPPORTED_EXTENSIONS:
             raise ValueError(f"Unsupported file type: {ext}. Supported: {self.SUPPORTED_EXTENSIONS}")
         
-        # Step 3: Parse document to markdown
+        # Step 3: Parse document using Unified Parser
         try:
-            markdown_text = self._rfp_parser._run(file_path)
+            parsed_doc = self._unified_parser.parse(file_path)
+            markdown_text = parsed_doc.normalized_text
+            
+            logger.info(f"[SERVICE] Parsed with {parsed_doc.parser_used} (Quality: {parsed_doc.quality_score:.2f})")
+            
+            # Log warnings if any
+            if parsed_doc.warnings:
+                logger.warning(f"[SERVICE] Parse warnings: {parsed_doc.warnings}")
+                
         except Exception as e:
             logger.error(f"[SERVICE] RFP parsing failed: {e}")
             raise RuntimeError(f"Failed to parse RFP document: {e}")
+            
         # Step 3.5: Build initial metadata
         metadata = RFPMetadata(
             filename=os.path.basename(file_path),
             file_path=file_path,
             processed_date=datetime.now(timezone.utc),
-            word_count=len(markdown_text.split()) if markdown_text else 0,
+            word_count=parsed_doc.word_count,
             requirement_count=0
         )
+        
+        # Add parser-specific metadata if supported by model
+        # (Assuming RFPMetadata extensible or just logging for now)
+        logger.info(f"[SERVICE] Metadata: Language={parsed_doc.language}, Conf={parsed_doc.language_confidence:.2f}")
         
         # Step 4: Extract requirements
         logger.info(f"DEBUG: LLM_AVAILABLE={LLM_AVAILABLE}")
@@ -161,7 +175,7 @@ class RecommendationService:
             requirements = []  # Graceful degradation
         
         # Step 4.25: Apply hard limit on requirements (Fix 3: Post-extraction filter)
-        MAX_REQUIREMENTS = 15
+        MAX_REQUIREMENTS = 50
         if requirements and len(requirements) > MAX_REQUIREMENTS:
             logger.warning(f"[SERVICE] Too many requirements ({len(requirements)}), applying hard limit of {MAX_REQUIREMENTS}")
             # Prioritize by type: CERTIFICATION > TECHNOLOGY > EXPERIENCE > TIMELINE > BUDGET > TEAM
