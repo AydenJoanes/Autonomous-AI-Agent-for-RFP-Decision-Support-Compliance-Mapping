@@ -89,7 +89,42 @@ class TimelineAssessorTool(BaseTool):
                 details["historical_project_count"] = len(valid_projects)
                 details["deviation_from_avg"] = round(((timeline_months - avg_duration) / avg_duration * 100) if avg_duration > 0 else 0, 1)
                 
-                # Determine status based on timeline comparison
+                # Step 3.5: Strategic Preference Check
+                # Hardcoded preferences for now (should be loaded from DB/Config in future)
+                strategic_max_months = 12
+                strategic_ideal_range = "3-6"
+                
+                if timeline_months > strategic_max_months:
+                    # Exceeds strategic maximum
+                    final_status = "STRATEGIC_MISMATCH"
+                    compliance_level = ComplianceLevel.PARTIAL
+                    confidence = 0.9
+                    
+                    # Tiered severity
+                    if timeline_months > (strategic_max_months * 2):
+                        # 2x over limit -> MEDIUM Risk
+                        message = f"Timeline of {timeline_months} months SIGNIFICANTLY exceeds strategic preference (max {strategic_max_months} months)."
+                        risks.append(f"Timeline ({timeline_months} mth) is >2x strategic max ({strategic_max_months} mth) (MEDIUM Risk)")
+                        details["strategic_check"] = "CRITICAL_MISMATCH"
+                    else:
+                        # <2x over limit -> LOW Risk (but still Partial compliance)
+                        message = f"Timeline of {timeline_months} months exceeds strategic preference (max {strategic_max_months} months)."
+                        risks.append(f"Timeline exceeds strategic maximum of {strategic_max_months} months")
+                        details["strategic_check"] = "EXCEEDS_MAX"
+                    
+                    # Return early or let historical logic adjust confidence?
+                    # Let's return, as strategic mismatch is a primary concern
+                    result = ToolResult(
+                        tool_name=self.name,
+                        requirement=timeline,
+                        status=final_status,
+                        compliance_level=compliance_level,
+                        confidence=confidence,
+                        details=details,
+                        risks=risks,
+                        message=message
+                    )
+                    return result.model_dump_json()
                 if min_duration <= timeline_months <= max_duration:
                     # WITHIN HISTORICAL RANGE
                     compliance_level = ComplianceLevel.COMPLIANT

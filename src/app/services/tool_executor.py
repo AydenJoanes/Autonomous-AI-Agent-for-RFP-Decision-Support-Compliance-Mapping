@@ -360,14 +360,23 @@ class ToolExecutorService:
             
             for risk_text in result.risks:
                 # Determine severity
-                if result.compliance_level == ComplianceLevel.NON_COMPLIANT:
+                # Check for explicit severity override in text
+                if "(high risk)" in risk_text.lower():
                     severity = RiskSeverity.HIGH
-                elif result.compliance_level == ComplianceLevel.WARNING:
+                elif "(medium risk)" in risk_text.lower():
                     severity = RiskSeverity.MEDIUM
-                elif result.compliance_level == ComplianceLevel.PARTIAL and result.confidence < 0.5:
-                    severity = RiskSeverity.MEDIUM
-                else:
+                elif "(low risk)" in risk_text.lower():
                     severity = RiskSeverity.LOW
+                else:
+                    # Default heuristic based on compliance level
+                    if result.compliance_level == ComplianceLevel.NON_COMPLIANT:
+                        severity = RiskSeverity.HIGH
+                    elif result.compliance_level == ComplianceLevel.WARNING:
+                        severity = RiskSeverity.MEDIUM
+                    elif result.compliance_level == ComplianceLevel.PARTIAL and result.confidence < 0.5:
+                        severity = RiskSeverity.MEDIUM
+                    else:
+                        severity = RiskSeverity.LOW
                 
                 # Determine category
                 category = self.TOOL_TO_CATEGORY.get(result.tool_name, RiskCategory.RESOURCE)

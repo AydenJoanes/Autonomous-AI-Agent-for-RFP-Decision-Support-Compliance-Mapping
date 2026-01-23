@@ -17,8 +17,12 @@ class PyPDFParser(BaseParser):
             text_content = []
             with open(file_path, 'rb') as f:
                 reader = pypdf.PdfReader(f)
-                for page in reader.pages:
-                    text_content.append(page.extract_text())
+                for i, page in enumerate(reader.pages):
+                    try:
+                        text_content.append(page.extract_text())
+                    except Exception as page_e:
+                        logger.warning(f"Failed to extract text from page {i}: {page_e}")
+                        text_content.append("") # Empty string for failed page
             
             # Join pages with newlines
             full_text = "\n\n".join(text_content)

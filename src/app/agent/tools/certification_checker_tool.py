@@ -124,9 +124,23 @@ class CertificationCheckerTool(BaseTool):
                 risks.append("Certification not yet finalized")
             
             elif status == "ready":
-                compliance_level = ComplianceLevel.COMPLIANT
-                confidence = 0.9
-                message = f"Certification '{cert_name}' is ready (pre-approved or in progress)."
+                # Dynamic severity reasoning
+                is_healthcare = False
+                # Simple check for healthcare context in certificaiton name
+                if "hipaa" in cert_name.lower() or "hitrust" in cert_name.lower():
+                    is_healthcare = True
+                
+                if is_healthcare:
+                    # Higher severity for healthcare cert requirements (often strictly mandatory)
+                    compliance_level = ComplianceLevel.PARTIAL
+                    confidence = 0.7
+                    message = f"Certification '{cert_name}' is pending formal audit. CRITICAL for healthcare compliance."
+                    risks.append(f"Certification '{cert_name}' is 'Ready' but not active - Formal audit may be pending (MEDIUM Risk)")
+                else:
+                    compliance_level = ComplianceLevel.PARTIAL
+                    confidence = 0.8
+                    message = f"Certification '{cert_name}' is ready/pending (not fully certified). Verification needed."
+                    risks.append(f"Certification '{cert_name}' is 'Ready' but not active - Formal audit may be pending")
             
             else:
                 # Unknown status

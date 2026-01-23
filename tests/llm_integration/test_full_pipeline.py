@@ -17,6 +17,8 @@ from src.app.models.recommendation import RecommendationDecision
 
 def test_full_pipeline():
     logger.info("Starting Full Pipeline Integration Test")
+    logger.remove()
+    logger.add(sys.stderr, level="DEBUG")
     
     # 1. Setup
     service = RecommendationService()
