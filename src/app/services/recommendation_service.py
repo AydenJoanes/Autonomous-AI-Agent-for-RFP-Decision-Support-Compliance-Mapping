@@ -35,7 +35,9 @@ try:
     from src.app.services.llm_config import get_llm_config
     from src.app.services.llm_requirement_extractor import LLMRequirementExtractor
     from src.app.services.requirement_validator import RequirementValidator
+    from src.app.services.requirement_validator import RequirementValidator
     from src.app.services.evidence_synthesizer import EvidenceSynthesizer
+    from src.app.utils.embeddings import generate_batch_embeddings
     LLM_AVAILABLE = True
 except ImportError as e:
     logger.warning(f"LLM services not available: {e}")
@@ -157,6 +159,19 @@ class RecommendationService:
         except Exception as e:
             logger.error(f"[SERVICE] Requirement extraction failed: {e}")
             requirements = []  # Graceful degradation
+        
+        # Step 4.5: Generate embeddings for requirements
+        if requirements and LLM_AVAILABLE:
+            try:
+                logger.info(f"[SERVICE] Generating embeddings for {len(requirements)} requirements")
+                req_texts = [r.text for r in requirements]
+                embeddings = generate_batch_embeddings(req_texts)
+                
+                for req, emb in zip(requirements, embeddings):
+                    req.embedding = emb
+            except Exception as e:
+                logger.error(f"[SERVICE] Embedding generation failed: {e}")
+                # Continue without embeddings (tools needing them will fail/skip)
         
         # Step 5: Update metadata
         metadata.requirement_count = len(requirements)

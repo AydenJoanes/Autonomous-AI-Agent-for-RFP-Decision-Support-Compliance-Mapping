@@ -30,6 +30,8 @@ VALIDATION_SYSTEM_PROMPT = """You are validating extracted RFP requirements. For
    - Valid: "ISO 27001", "Azure", "5 years healthcare experience"
    - Invalid: "security", "cloud", "experience"
 
+IMPORTANT: For "EXPERIENCE" type requirements, be PERMISSIVE. If it mentions a specific domain (e.g., "Public Sector", "Healthcare") or project type, mark it as VALID. Only mark as Invalid if it is completely generic (e.g., "Must have experience").
+
 4. CONFIDENCE: Your confidence in this validation (0.0 to 1.0)
 
 Respond with a JSON object containing a "validations" array matching the input order. For invalid requirements, set is_valid to false."""
