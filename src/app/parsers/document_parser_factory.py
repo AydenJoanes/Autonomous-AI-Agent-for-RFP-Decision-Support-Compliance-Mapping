@@ -1,6 +1,6 @@
-from app.parsers.docling_parser import DoclingParser
-from app.parsers.pypdf_parser import PyPDFParser
-from app.parsers.docx_parser import DocxParser
+from src.app.parsers.docling_parser import DoclingParser
+from src.app.parsers.pypdf_parser import PyPDFParser
+from src.app.parsers.docx_parser import DocxParser
 from loguru import logger
 import os
 

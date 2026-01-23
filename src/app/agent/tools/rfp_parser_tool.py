@@ -6,7 +6,7 @@ from typing import Type
 from pydantic import BaseModel, Field
 from langchain_core.tools import BaseTool
 from loguru import logger
-from src.app.services.parser.factory import DocumentParserFactory
+from src.app.parsers.document_parser_factory import DocumentParserFactory
 
 class RFPParserInput(BaseModel):
     file_path: str = Field(..., description="Absolute path to the RFP file (PDF or DOCX)")
@@ -22,7 +22,9 @@ class RFPParserTool(BaseTool):
         
         try:
             text = DocumentParserFactory.parse_with_fallback(file_path)
-            clean_text = DocumentParserFactory.clean_text(text)
+            logger.info(f"DEBUG: Parsed text length: {len(text) if text else 0}")
+            
+            clean_text = text # DocumentParserFactory.clean_text(text) doesn't exist, just use text
             
             word_count = len(clean_text.split())
             logger.info(f"[TOOL] RFP Parser complete: {word_count} words")

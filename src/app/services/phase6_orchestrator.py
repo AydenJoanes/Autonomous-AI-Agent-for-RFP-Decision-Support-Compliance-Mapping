@@ -48,7 +48,7 @@ class Phase6Orchestrator:
         self._clarification_generator = ClarificationGenerator()
         logger.info("[ORCHESTRATOR] Phase 6 Orchestrator initialized")
     
-    def orchestrate(self, recommendation: Recommendation) -> Recommendation:
+    def orchestrate(self, recommendation: Recommendation, synthesis_report=None) -> Recommendation:
         """
         Apply Phase 6 enhancements to a finalized recommendation.
         
@@ -63,6 +63,7 @@ class Phase6Orchestrator:
         
         Args:
             recommendation: Fully finalized Recommendation object
+            synthesis_report: Optional synthesis report for deeper reflection
         
         Returns:
             The same Recommendation object with optional Phase 6 metadata:
@@ -86,7 +87,7 @@ class Phase6Orchestrator:
         # ====================================================================
         
         if not recommendation.reflection_notes:
-            self._apply_reflection(recommendation)
+            self._apply_reflection(recommendation, synthesis_report)
         else:
             logger.info("[ORCHESTRATOR] Reflection already applied, skipping")
         
@@ -115,7 +116,7 @@ class Phase6Orchestrator:
     # REFLECTION HOOK
     # ========================================================================
     
-    def _apply_reflection(self, recommendation: Recommendation) -> None:
+    def _apply_reflection(self, recommendation: Recommendation, synthesis_report=None) -> None:
         """
         Apply reflection engine to recommendation (non-blocking).
         
@@ -129,11 +130,12 @@ class Phase6Orchestrator:
         
         Args:
             recommendation: Recommendation object to reflect on
+            synthesis_report: Optional report for context
         """
         try:
             logger.debug("[ORCHESTRATOR] Running reflection engine")
             
-            reflection = self._reflection_engine.reflect(recommendation)
+            reflection = self._reflection_engine.reflect(recommendation, synthesis_report)
             recommendation.reflection_notes = reflection
             
             flags_count = len(reflection.get('flags', [])) if reflection else 0

@@ -21,6 +21,15 @@ from src.app.models.compliance import ComplianceLevel, ToolResult
 from src.app.models.recommendation import RiskItem, RiskCategory, RiskSeverity
 from src.app.services.value_extractor import ValueExtractor
 
+# LLM Intelligent Router
+try:
+    from src.app.services.llm_config import get_llm_config
+    from src.app.services.intelligent_router import IntelligentRouter
+    LLM_ROUTING_AVAILABLE = True
+except ImportError:
+    LLM_ROUTING_AVAILABLE = False
+    logger.warning("Intelligent router not available, using keyword-based routing")
+
 
 class ToolExecutorService:
     """Orchestrate tool execution and risk extraction."""
@@ -37,6 +46,21 @@ class ToolExecutorService:
             "strategy_evaluator": StrategyEvaluatorTool(),
             "knowledge_query": KnowledgeQueryTool(),
         }
+        
+        # Initialize intelligent router if available
+        if LLM_ROUTING_AVAILABLE:
+            try:
+                self._llm_config = get_llm_config()
+                self._intelligent_router = IntelligentRouter()
+                logger.info("[EXECUTOR] Intelligent router initialized")
+            except Exception as e:
+                logger.warning(f"[EXECUTOR] Intelligent router initialization failed: {e}")
+                self._llm_config = None
+                self._intelligent_router = None
+        else:
+            self._llm_config = None
+            self._intelligent_router = None
+        
         logger.info(f"[EXECUTOR] Initialized with {len(self._tools)} tools")
 
     def _get_cache_key(self, tool_name: str, input_value: str) -> str:
@@ -139,6 +163,87 @@ class ToolExecutorService:
         Returns:
             Dictionary mapping tool names to list of (requirement, input_dict) tuples
         """
+        # Try intelligent routing first if available
+        if (LLM_ROUTING_AVAILABLE and self._llm_config and 
+            self._llm_config.enable_llm_routing and self._intelligent_router):
+            try:
+                logger.info("[EXECUTOR] Using intelligent routing")
+                routing_map = self._intelligent_router.route_requirements_to_tools(requirements)
+                return self._build_mapping_from_routing(requirements, routing_map)
+            except Exception as e:
+                logger.warning(f"[EXECUTOR] Intelligent routing failed, falling back to keyword-based: {e}")
+                # Fall through to keyword-based routing
+        
+        # Keyword-based routing (original logic)
+        return self._keyword_based_routing(requirements)
+    
+    def _build_mapping_from_routing(
+        self, 
+        requirements: List[Any], 
+        routing_map: Dict[str, str]
+    ) -> Dict[str, List[Tuple[Any, Dict]]]:
+        """Build tool mapping from intelligent router output."""
+        mapping: Dict[str, List[Tuple[Any, Dict]]] = {
+            tool_name: [] for tool_name in self._tools.keys()
+        }
+        
+        for requirement in requirements:
+            req_text = getattr(requirement, 'text', str(requirement))
+            req_type = getattr(requirement, 'type', '').upper()
+            
+            # Get tool from routing map
+            req_id = f"{req_type}:{getattr(requirement, 'extracted_value', req_text)}"
+            tool_name = routing_map.get(req_id, "knowledge_query")
+            
+            # Skip if routed to SKIP
+            if tool_name == "SKIP":
+                logger.debug(f"[EXECUTOR] Skipping requirement: {req_text[:50]}...")
+                continue
+            
+            # Build input dict
+            input_dict = self._build_tool_input(tool_name, requirement)
+            mapping[tool_name].append((requirement, input_dict))
+            
+            logger.debug(f"[EXECUTOR] Routed '{req_text[:30]}...' to {tool_name}")
+        
+        return mapping
+    
+    def _build_tool_input(self, tool_name: str, requirement: Any) -> Dict:
+        """Build input dictionary for a specific tool."""
+        req_text = getattr(requirement, 'text', str(requirement))
+        req_category = getattr(requirement, 'category', '').lower()
+        req_type = getattr(requirement, 'type', '').upper()
+        extracted = self._value_extractor.extract_all(req_text)
+        
+        if tool_name == "certification_checker":
+            return {"certification_name": extracted.get("certification") or req_text}
+        elif tool_name == "tech_validator":
+            return {"technology": extracted.get("technology") or req_text}
+        elif tool_name == "budget_analyzer":
+            return {"budget": extracted.get("budget") or req_text}
+        elif tool_name == "timeline_assessor":
+            return {"timeline": extracted.get("timeline") or req_text}
+        elif tool_name == "strategy_evaluator":
+            context = {
+                "industry": req_category if req_category else "general",
+                "technologies": [extracted.get("technology")] if extracted.get("technology") else [],
+                "project_type": req_type.lower() if req_type else "other",
+                "client_sector": "unknown",
+                "requirement_text": req_text
+            }
+            return {"rfp_context": json.dumps(context)}
+        else:  # knowledge_query
+            req_embedding = getattr(requirement, 'embedding', None)
+            if req_embedding:
+                return {
+                    "requirement_text": req_text,
+                    "requirement_embedding": req_embedding
+                }
+            else:
+                return {"requirement_text": req_text, "requirement_embedding": []}
+    
+    def _keyword_based_routing(self, requirements: List[Any]) -> Dict[str, List[Tuple[Any, Dict]]]:
+        """Original keyword-based routing logic."""
         mapping: Dict[str, List[Tuple[Any, Dict]]] = {
             tool_name: [] for tool_name in self._tools.keys()
         }
@@ -175,37 +280,8 @@ class ToolExecutorService:
             if best_score == 0:
                 best_tool = "knowledge_query"
             
-            # Extract appropriate value
-            extracted = self._value_extractor.extract_all(req_text)
-            
-            # Build input dict based on tool
-            input_dict = {}
-            if best_tool == "certification_checker":
-                input_dict = {"certification_name": extracted.get("certification") or req_text}
-            elif best_tool == "tech_validator":
-                input_dict = {"technology": extracted.get("technology") or req_text}
-            elif best_tool == "budget_analyzer":
-                input_dict = {"budget": extracted.get("budget") or req_text}
-            elif best_tool == "timeline_assessor":
-                input_dict = {"timeline": extracted.get("timeline") or req_text}
-            elif best_tool == "strategy_evaluator":
-                context = {
-                    "industry": req_category if req_category else "general",
-                    "technologies": [extracted.get("technology")] if extracted.get("technology") else [],
-                    "project_type": req_type.lower() if req_type else "other",
-                    "client_sector": "unknown",
-                    "requirement_text": req_text
-                }
-                input_dict = {"rfp_context": json.dumps(context)}
-            else:
-                req_embedding = getattr(requirement, 'embedding', None)
-                if req_embedding:
-                    input_dict = {
-                        "requirement_text": req_text,
-                        "requirement_embedding": req_embedding
-                    }
-                else:
-                    input_dict = {"requirement_text": req_text, "requirement_embedding": []}
+            # Build input dict
+            input_dict = self._build_tool_input(best_tool, requirement)
             
             # Add to mapping
             mapping[best_tool].append((requirement, input_dict))

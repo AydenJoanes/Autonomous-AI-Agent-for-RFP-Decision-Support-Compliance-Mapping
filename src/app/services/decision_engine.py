@@ -255,13 +255,19 @@ class DecisionEngine:
 
         return requires_review, reasons
 
-    def generate_decision(self, compliance_summary: ComplianceSummary, risks: List[RiskItem]) -> Dict[str, Any]:
+    def generate_decision(
+        self, 
+        compliance_summary: ComplianceSummary, 
+        risks: List[RiskItem],
+        synthesis_report=None  # Optional synthesis report from LLM
+    ) -> Dict[str, Any]:
         """
         Orchestrate all decision methods to generate final decision.
         
         Args:
             compliance_summary: Summary of compliance analysis
             risks: List of identified risks
+            synthesis_report: Optional synthesis report from evidence synthesizer
             
         Returns:
             Dictionary containing decision components
@@ -269,11 +275,44 @@ class DecisionEngine:
         # 1. Calculate Score
         score = self.calculate_confidence_score(compliance_summary)
         
-        # 2. Determine Recommendation
+        # 2. Apply synthesis adjustments if available
+        if synthesis_report:
+            original_score = score
+            
+            # Reduce confidence if conflicts identified
+            if synthesis_report.conflicts_identified:
+                conflict_penalty = min(len(synthesis_report.conflicts_identified) * 5, 15)
+                score -= conflict_penalty
+                self._log_trace(f"Synthesis: {len(synthesis_report.conflicts_identified)} conflicts, -{conflict_penalty}")
+            
+            # Reduce confidence for negative factors
+            if synthesis_report.confidence_factors_negative:
+                negative_penalty = min(len(synthesis_report.confidence_factors_negative) * 3, 10)
+                score -= negative_penalty
+                self._log_trace(f"Synthesis: {len(synthesis_report.confidence_factors_negative)} negative factors, -{negative_penalty}")
+            
+            # Increase confidence for positive factors (smaller boost)
+            if synthesis_report.confidence_factors_positive:
+                positive_boost = min(len(synthesis_report.confidence_factors_positive) * 2, 5)
+                score += positive_boost
+                self._log_trace(f"Synthesis: {len(synthesis_report.confidence_factors_positive)} positive factors, +{positive_boost}")
+            
+            # Clamp score
+            score = max(0, min(100, score))
+            
+            if score != original_score:
+                self._log_trace(f"Synthesis adjusted score: {original_score} → {score}")
+        
+        # 3. Determine Recommendation
         rec = self.determine_recommendation(compliance_summary, score)
         
-        # 3. Check for Human Review
+        # 4. Check for Human Review
         requires_review, reasons = self.determine_human_review(compliance_summary, score, risks, rec)
+        
+        # 5. Add synthesis human review triggers
+        if synthesis_report and synthesis_report.human_review_triggers:
+            requires_review = True
+            reasons.extend(synthesis_report.human_review_triggers)
         
         return {
             "recommendation": rec,
@@ -282,3 +321,4 @@ class DecisionEngine:
             "review_reasons": reasons,
             "decision_trace": self.get_trace()
         }
+

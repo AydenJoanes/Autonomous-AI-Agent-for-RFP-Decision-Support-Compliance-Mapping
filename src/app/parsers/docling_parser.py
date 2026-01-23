@@ -1,4 +1,4 @@
-from app.parsers.base_parser import BaseParser
+from src.app.parsers.base_parser import BaseParser
 from docling.document_converter import DocumentConverter
 from loguru import logger
 import os

@@ -53,14 +53,21 @@ class DocumentParserFactory:
         try:
             from pypdf import PdfReader
             reader = PdfReader(str(path))
+            logger.info(f"Starting PDF extraction for: {path.name} with {len(reader.pages)} pages")
             text = []
             for i, page in enumerate(reader.pages):
-                page_text = page.extract_text()
-                if page_text:
-                    text.append(page_text)
+                try:
+                    page_text = page.extract_text()
+                    if page_text:
+                        text.append(page_text)
+                        logger.debug(f"Page {i+1}/{len(reader.pages)} extracted {len(page_text)} chars")
+                    else:
+                        logger.warning(f"Page {i+1}/{len(reader.pages)} text extraction returned empty")
+                except Exception as e:
+                    logger.warning(f"Failed to extract text from page {i+1}: {e}. Skipping page.")
             
             full_text = "\n\n".join(text)
-            logger.debug(f"Extracted {len(full_text)} chars from PDF")
+            logger.info(f"PDF Extraction Complete. Total chars: {len(full_text)}. Pages attempted: {len(reader.pages)}")
             return full_text
         except ImportError:
             logger.error("pypdf not installed. Run: pip install pypdf")
