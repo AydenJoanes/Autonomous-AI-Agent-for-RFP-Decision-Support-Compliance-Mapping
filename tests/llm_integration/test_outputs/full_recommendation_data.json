@@ -1,8 +1,8 @@
 {
   "recommendation": "CONDITIONAL_BID",
   "confidence_score": 62,
-  "justification": "Based on the compliance assessment results, I recommend a CONDITIONAL_BID for this RFP response, with a confidence level of 62 out of 100. While we have met all mandatory requirements, several areas require attention to enhance our overall compliance and project viability.\n\nKey strengths supporting this recommendation include our active ISO 27001 certification, which is valid until 2027 and demonstrates our commitment to information security management in software development and cloud services. Additionally, our advanced proficiency in Microsoft Azure, backed by three years of experience, positions us well for the technical demands of the project. Furthermore, we have successfully executed relevant healthcare analytics projects, showcasing our capability in this domain.\n\nHowever, there are significant concerns that need to be addressed. The HIPAA certification is currently in 'ready' status but not fully active, which poses a medium risk to compliance. Additionally, the timeline assessment reveals a critical mismatch, with our proposed duration exceeding the strategic maximum by more than double, which could jeopardize project delivery. Lastly, the absence of GDPR certification, which is mandatory, further complicates our compliance standing.\n\nTo strengthen our bid, we must accelerate the process to achieve full HIPAA certification and reassess our project timelines and resource allocation to address the critical mismatch. Initiating the GDPR certification process is also essential to meet all mandatory requirements. \n\nIn conclusion, while we have a solid foundation to build upon, it is imperative to resolve these issues promptly. I recommend that we proceed with the CONDITIONAL_BID and implement the necessary actions to mitigate the identified risks.",
-  "executive_summary": "I recommend proceeding with a conditional bid, as we have met all mandatory requirements and achieved a compliance snapshot of 3 out of 7. The most critical factor is that our HIPAA certification is ready but not yet active, posing a medium risk due to a pending formal audit. To mitigate this risk, we should prioritize completing the certification process before finalizing our bid submission.",
+  "justification": "Based on the compliance assessment of the RFP, I recommend a CONDITIONAL_BID with a confidence level of 62 out of 100. This recommendation reflects a moderate fit for the requirements outlined in the RFP, with certain conditions that must be addressed to enhance our proposal's viability.\n\nKey strengths of our submission include the active and valid ISO 27001 certification, which is crucial for demonstrating robust information security management practices. Additionally, our advanced proficiency in Azure, supported by three years of relevant experience, aligns well with the technological requirements specified in the RFP. These strengths position us favorably in terms of compliance and capability.\n\nHowever, there are significant concerns that need to be addressed. The HIPAA certification is currently classified as \"Ready,\" indicating that it is not yet active, which introduces a medium risk due to the potential for a pending formal audit. Furthermore, the timeline for project completion shows a critical mismatch, as the proposed duration of 30 months exceeds the strategic maximum of 12 months. This discrepancy raises questions about our ability to meet the submission deadline of April 30, 2026. Additionally, while we have demonstrated Azure expertise, the documentation indicates a team size of zero, which poses potential resource allocation challenges.\n\nTo strengthen our bid, it is essential to resolve these gaps. Specifically, we must obtain and provide evidence of the validity and issuing body for the HIPAA certification to ensure full compliance. Additionally, a reassessment of project timelines and resource allocation is necessary to address the critical mismatches and confirm our capacity to meet the outlined deadlines. \n\nIn conclusion, while there are notable strengths in our proposal, the identified risks must be mitigated to enhance our chances of success. I recommend taking immediate steps to gather the required documentation and reassess our project strategy, allowing us to submit a more competitive bid.",
+  "executive_summary": "I recommend proceeding with a conditional bid, as we have met all mandatory requirements and achieved a compliance score of 62/100. The most critical factor to address is the pending formal audit for HIPAA certification, which presents a medium risk. To mitigate this risk, we should prioritize obtaining the necessary certification before finalizing our bid submission.",
   "risks": [
     {
       "category": "compliance",
@@ -14,9 +14,9 @@
     {
       "category": "timeline",
       "severity": "MEDIUM",
-      "description": "Timeline (60 mth) is >2x strategic max (12 mth) (MEDIUM Risk)",
+      "description": "Timeline (30 mth) is >2x strategic max (12 mth) (MEDIUM Risk)",
       "source_tool": "timeline_assessor",
-      "requirement_text": "60 months"
+      "requirement_text": "Proposal Submission Deadline: 30 April 2026, 17:00 UTC"
     },
     {
       "category": "technical",
@@ -28,37 +28,30 @@
   ],
   "compliance_summary": {
     "overall_compliance": "PARTIAL",
-    "compliant_count": 3,
+    "compliant_count": 2,
     "non_compliant_count": 0,
-    "partial_count": 4,
+    "partial_count": 3,
     "warning_count": 0,
     "unknown_count": 0,
-    "total_evaluated": 7,
-    "confidence_avg": 0.75,
+    "total_evaluated": 5,
+    "confidence_avg": 0.88,
     "mandatory_met": true,
     "mandatory_unknown": false,
     "mandatory_failed": false,
     "tool_results": [
       {
         "tool_name": "certification_checker",
+        "requirement": "HIPAA",
+        "compliance_level": "PARTIAL",
+        "confidence": 0.7,
+        "status": "READY"
+      },
+      {
+        "tool_name": "certification_checker",
         "requirement": "ISO 27001",
         "compliance_level": "COMPLIANT",
         "confidence": 1.0,
         "status": "VALID"
-      },
-      {
-        "tool_name": "certification_checker",
-        "requirement": "HIPAA",
-        "compliance_level": "PARTIAL",
-        "confidence": 0.7,
-        "status": "READY"
-      },
-      {
-        "tool_name": "certification_checker",
-        "requirement": "HIPAA",
-        "compliance_level": "PARTIAL",
-        "confidence": 0.7,
-        "status": "READY"
       },
       {
         "tool_name": "tech_validator",
@@ -69,24 +62,17 @@
       },
       {
         "tool_name": "timeline_assessor",
-        "requirement": "60 months",
+        "requirement": "Proposal Submission Deadline: 30 April 2026, 17:00 UTC",
         "compliance_level": "PARTIAL",
         "confidence": 0.9,
         "status": "STRATEGIC_MISMATCH"
       },
       {
-        "tool_name": "knowledge_query",
-        "requirement": "prior engagement within one or more of the following domains: Public sector or quasi-governmental or",
+        "tool_name": "timeline_assessor",
+        "requirement": "60 months",
         "compliance_level": "PARTIAL",
-        "confidence": 0.6,
-        "status": "Found 1 relevant projects (1 successful)"
-      },
-      {
-        "tool_name": "knowledge_query",
-        "requirement": "prior engagement within one or more of the following domains: Healthcare and health-related analytic",
-        "compliance_level": "COMPLIANT",
-        "confidence": 0.45,
-        "status": "Found 4 relevant projects (3 successful)"
+        "confidence": 0.9,
+        "status": "STRATEGIC_MISMATCH"
       }
     ]
   },
@@ -94,8 +80,8 @@
   "review_reasons": [
     "Borderline confidence requires human judgment",
     "Conditional recommendation requires business decision",
-    "Verification of HIPAA certification readiness and timeline mismatch details.",
-    "Clarification on GDPR certification status."
+    "Partial compliance in HIPAA certification requires verification of details.",
+    "Critical mismatch in timeline compliance needs strategic review and potential adjustment."
   ],
   "clarification_questions": [
     "Can the vendor clarify whether the proposed delivery timeline is firm and achievable for the full scope?"
@@ -103,11 +89,11 @@
   "rfp_metadata": {
     "filename": "smol_rfp.pdf",
     "file_path": "C:\\Users\\joane\\OneDrive\\Desktop\\EMPLAY WORK\\Internship\\AI Agent\\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\\data\\sample_rfps\\smol_rfp.pdf",
-    "processed_date": "2026-01-23T06:08:29.063429Z",
+    "processed_date": "2026-01-23T06:47:25.447737Z",
     "word_count": 2373,
-    "requirement_count": 7
+    "requirement_count": 5
   },
-  "timestamp": "2026-01-23T06:09:28.908226+00:00",
+  "timestamp": "2026-01-23T06:47:58.001099+00:00",
   "reflection_notes": {
     "flags": [],
     "consistency_score": 1.0,
