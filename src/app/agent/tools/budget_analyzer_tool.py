@@ -204,7 +204,21 @@ class BudgetAnalyzerTool(BaseTool):
         """
         try:
             # Remove common currency symbols and whitespace
-            cleaned = budget_str.strip().replace("$", "").replace("USD", "").replace(",", "").replace(" ", "")
+            # Handle ranges with - or to (e.g. "100-150", "100 to 150")
+            range_pattern = r'(\d+(?:,\d+)*(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:,\d+)*(?:\.\d+)?)'
+            range_match = re.search(range_pattern, budget_str.replace("$", "").replace("USD", ""))
+            
+            if range_match:
+                # If range, take max for "within capacity" conservative check
+                # or take max to be permissive. "Capacity" usually means "Can we handle this?"
+                # If budget is 100-125k, and our max is 150k, we are fine.
+                # If budget is 100-125k, and our min is 110k, we are fine (125 > 110).
+                # Strategy: Return the MAX of the range for feasibility.
+                val_str = range_match.group(2)
+                logger.info(f"Budget range detected in '{budget_str}'. using max value: {val_str}")
+                cleaned = val_str.replace(",", "")
+            else:
+                cleaned = budget_str.strip().replace("$", "").replace("USD", "").replace(",", "").replace(" ", "")
             
             # Handle 'k' notation (e.g., "150k" = 150000)
             if cleaned.lower().endswith('k'):

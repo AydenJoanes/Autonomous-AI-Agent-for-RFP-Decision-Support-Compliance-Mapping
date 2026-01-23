@@ -33,6 +33,14 @@ class Settings(BaseSettings):
     # --- Application Settings ---
     MAX_UPLOAD_SIZE_MB: int = 25
     ALLOWED_EXTENSIONS: Any = ["pdf", "docx"]
+    
+    # --- Parser Configuration ---
+    PARSER_PRIMARY: str = "docling"
+    PARSER_PDF_FALLBACK: str = "pypdf"
+    PARSER_DOCX_FALLBACK: str = "python-docx"
+    PARSER_ENABLE_OCR: bool = True
+    PARSER_MIN_CONFIDENCE: float = 0.7
+    PARSER_EXPECTED_LANGUAGE: str = "en"
 
     @field_validator("ALLOWED_EXTENSIONS", mode="before")
     @classmethod

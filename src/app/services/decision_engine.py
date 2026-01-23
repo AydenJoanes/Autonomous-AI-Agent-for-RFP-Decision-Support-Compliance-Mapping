@@ -24,7 +24,7 @@ class DecisionEngine:
     # Scoring Constants
     CONFIDENCE_BASE_SCORES = {
         ComplianceLevel.COMPLIANT: 90,
-        ComplianceLevel.PARTIAL: 60,
+        ComplianceLevel.PARTIAL: 75,  # Increased from 60 - Partial with good fit should be bid-able
         ComplianceLevel.WARNING: 50,
         ComplianceLevel.UNKNOWN: 50,
         ComplianceLevel.NON_COMPLIANT: 0
@@ -38,7 +38,7 @@ class DecisionEngine:
     
     NON_COMPLIANT_PENALTY = 30
     WARNING_PENALTY = 10
-    UNKNOWN_PENALTY = 2
+    UNKNOWN_PENALTY = 0.5  # Reduced from 2 - Don't penalize unknowns too heavily if everything else is good
     MAX_PENALTY_CAP = 50
 
     # Decision Thresholds
@@ -220,11 +220,11 @@ class DecisionEngine:
             self._log_trace("Human review: Mandatory UNKNOWN")
             
         # Trigger 1.5: General UNKNOWN (logic update)
-        elif compliance_summary.unknown_count > 0 and compliance_summary.overall_compliance != ComplianceLevel.COMPLIANT:
-            # Keep this as a secondary check if mandatory not triggered
+        elif compliance_summary.unknown_count > 1 and compliance_summary.overall_compliance != ComplianceLevel.COMPLIANT:
+            # Only trigger if MULTIPLE unknowns or not compliant
             requires_review = True
-            reasons.append("Some requirements could not be verified automatically")
-            self._log_trace("Human review: UNKNOWN requirements present")
+            reasons.append("Multiple requirements could not be verified automatically")
+            self._log_trace("Human review: Multiple UNKNOWN requirements present")
 
         # Trigger 2: Borderline confidence
         if self.BORDERLINE_CONFIDENCE_LOW <= confidence_score <= self.BORDERLINE_CONFIDENCE_HIGH:
