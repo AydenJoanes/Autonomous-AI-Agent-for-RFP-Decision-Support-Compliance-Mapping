@@ -19,11 +19,11 @@ EXTRACTION_SYSTEM_PROMPT = """You are an expert RFP analyst. Your task is to ext
 WHAT TO EXTRACT:
 - Certification requirements: Specific certifications the vendor must hold (ISO 27001, SOC 2, HIPAA, etc.)
 - Technology requirements: Specific technologies the vendor must have expertise in (Azure, AWS, Python, etc.)
-- Experience requirements: Domain or project experience the vendor must demonstrate (healthcare, public sector, etc.)
+- Experience requirements: Domain expertise, industry experience, past project types that can be verified against company portfolio. Examples: "healthcare analytics experience", "public sector engagement", "cloud-native delivery experience"
 - Timeline constraints: Project duration limits or deadlines
 - Budget constraints: Explicit budget amounts or ranges (only when dollar amounts are stated)
 - Team requirements: Minimum team size, specific roles required
-- Geographic requirements: Location, delivery region, or on-site requirements
+- Team requirements: Minimum team size, specific roles required
 
 WHAT TO IGNORE:
 - Delivery scope: Descriptions of what the system should do or what the vendor should build
@@ -32,22 +32,49 @@ WHAT TO IGNORE:
 - Background context: Organizational history, current challenges, project rationale
 - Reservation of rights: Legal disclaimers, right to reject proposals
 - System functionality: Features the delivered system should have (these are delivery scope, not vendor capability)
+- Geographic preferences: Do not extract generic geographic requirements unless a specific city/country is mandated.
 
 CRITICAL DISTINCTION:
 - "The vendor must have ISO 27001 certification" → EXTRACT (certification requirement)
 - "The system must support ISO 27001-aligned security practices" → EXTRACT (certification requirement implied)
 - "The system must calculate cost growth metrics" → IGNORE (delivery scope, not budget)
 - "Budget: $500,000" → EXTRACT (budget constraint)
-- "The vendor shall implement cost analytics" → IGNORE (delivery scope)
+
+IMPORTANT RULES:
+1. PAIRED STANDARDS: If a sentence mentions multiple standards (e.g. "aligned with HIPAA and GDPR", "ISO 27001 and SOC 2"), you MUST extract EACH as a SEPARATE requirement.
+   Example: "data privacy principles consistent with HIPAA and GDPR" →
+   - Req 1: HIPAA
+   - Req 2: GDPR
+   Do NOT combine them into one string "HIPAA and GDPR".
+
+2. VENDOR QUALIFICATION SECTIONS: Sections titled "Vendor Qualifications", "Eligibility Requirements", or similar contain CHECKABLE experience requirements. These are NOT procedural.
+   Extract as EXPERIENCE type:
+   - "must demonstrate prior engagement within one or more of the following domains: Healthcare and health-related analytics" → EXPERIENCE ("Healthcare analytics")
+   - "proven experience delivering cloud-native solutions" → EXPERIENCE ("Cloud-native solutions")
+   - "vendors must demonstrate proven experience delivering cloud-native solutions using modern architectural principles" → EXPERIENCE ("Cloud-native solutions")
 
 For each requirement, provide:
-1. type: One of CERTIFICATION, TECHNOLOGY, EXPERIENCE, TIMELINE, BUDGET, TEAM, GEOGRAPHIC
+1. type: One of CERTIFICATION, TECHNOLOGY, EXPERIENCE, TIMELINE, BUDGET, TEAM
 2. original_text: The exact text from the RFP (keep under 200 characters)
 3. extracted_value: The specific checkable value (e.g., "ISO 27001", "Azure", "5 years", "$500,000")
 4. is_mandatory: true if required, false if preferred/optional
 5. section_reference: Which section of the RFP this came from
 
-Respond with a JSON object containing a "requirements" array. No preamble, no explanation."""
+Respond with a JSON object containing a "requirements" array. No preamble, no explanation.
+
+EXAMPLES:
+
+Text: "The solution must be HIPAA and GDPR compliant."
+Output: [
+  {"type": "CERTIFICATION", "original_text": "HIPAA and GDPR compliant", "extracted_value": "HIPAA", "is_mandatory": true},
+  {"type": "CERTIFICATION", "original_text": "HIPAA and GDPR compliant", "extracted_value": "GDPR", "is_mandatory": true}
+]
+
+Text: "Vendor Qualifications: Must have demonstrated experience in healthcare analytics and prior work with public sector agencies."
+Output: [
+  {"type": "EXPERIENCE", "original_text": "demonstrated experience in healthcare analytics", "extracted_value": "Healthcare analytics", "is_mandatory": true},
+  {"type": "EXPERIENCE", "original_text": "prior work with public sector agencies", "extracted_value": "Public sector agencies", "is_mandatory": true}
+]"""
 
 
 def build_extraction_user_prompt(rfp_text: str, metadata: RFPMetadata, chunk_info: Optional[Dict] = None) -> str:
@@ -154,7 +181,7 @@ class LLMRequirementExtractor:
         logger.info(f"Split document into {total_chunks} chunks")
         
         return chunks
-    
+
     def merge_chunk_extractions(self, chunk_results: List[List[Requirement]]) -> List[Requirement]:
         """
         Merge and deduplicate requirements from multiple chunks.
@@ -176,29 +203,52 @@ class LLMRequirementExtractor:
         if not all_requirements:
             return []
         
-        # Group by extracted value for deduplication
-        value_groups: Dict[str, List[Requirement]] = {}
+        logger.info(f"Merging {len(all_requirements)} requirements (before dedupe)")
+        
+        # Sort by length descending to prioritize longer/more specific descriptions
+        # This helps with containment check
+        all_requirements.sort(key=lambda r: len(r.extracted_value or ""), reverse=True)
+        
+        unique_reqs = []
+        # Keep track of what we've seen (normalized)
+        # Store as set of (type, normalized_value)
+        seen_values = set()
         
         for req in all_requirements:
-            key = f"{req.type.value}:{req.extracted_value}"
-            if key not in value_groups:
-                value_groups[key] = []
-            value_groups[key].append(req)
+            if not req.extracted_value:
+                continue
+                
+            norm_value = req.extracted_value.strip().lower()
+            # Remove common prefixes/suffixes for better dup detection
+            clean_value = norm_value.replace("compliance", "").replace("certification", "").replace("experience", "").strip()
+            if not clean_value:
+                clean_value = norm_value # Fallback if empty
+                
+            req_type = req.type.value
+            
+            # Check for exact Match or Containment using clean value
+            # Since we sorted by length descending, "HIPAA Compliance" comes first.
+            # "HIPAA" (shorter) comes later.
+            # If we see "HIPAA Compliance" -> add to set.
+            # If we see "HIPAA" -> checks if "hipaa" in "hipaa compliance" -> True -> Skip.
+            
+            is_dupe = False
+            for seen_val, seen_type in seen_values:
+                if seen_type == req_type:
+                    # Check if current value is contained in an existing longer value
+                    # OR if existing value is contained in current (shouldn't happen due to sort, but good safety)
+                    if clean_value in seen_val or seen_val in clean_value:
+                        logger.debug(f"Deduplicating '{norm_value}' (similar to '{seen_val}')")
+                        is_dupe = True
+                        break
+            
+            if not is_dupe:
+                unique_reqs.append(req)
+                seen_values.add((clean_value, req_type))
         
-        # For each group, keep the most complete requirement
-        merged = []
-        for key, group in value_groups.items():
-            if len(group) == 1:
-                merged.append(group[0])
-            else:
-                # Keep the one with longest original_text (most context)
-                best = max(group, key=lambda r: len(r.text))
-                merged.append(best)
-                logger.debug(f"Deduplicated {len(group)} instances of: {best.extracted_value}")
+        logger.info(f"Merged {len(all_requirements)} requirements into {len(unique_reqs)} unique requirements")
         
-        logger.info(f"Merged {len(all_requirements)} requirements into {len(merged)} unique requirements")
-        
-        return merged
+        return unique_reqs
     
     def parse_llm_response(self, response: Dict[str, Any]) -> List[Requirement]:
         """

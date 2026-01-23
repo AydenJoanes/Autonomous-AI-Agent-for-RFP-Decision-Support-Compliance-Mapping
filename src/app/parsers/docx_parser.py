@@ -1,5 +1,9 @@
 from src.app.parsers.base_parser import BaseParser
-import docx
+try:
+    import docx
+    DOCX_AVAILABLE = True
+except ImportError:
+    DOCX_AVAILABLE = False
 from loguru import logger
 import os
 
@@ -12,6 +16,9 @@ class DocxParser(BaseParser):
     def parse(self, file_path: str) -> str:
         logger.info(f"Using python-docx fallback parser for {file_path}")
         self.validate_file(file_path)
+        
+        if not DOCX_AVAILABLE:
+            raise ImportError("python-docx is not installed. Install with: pip install python-docx")
         
         try:
             doc = docx.Document(file_path)

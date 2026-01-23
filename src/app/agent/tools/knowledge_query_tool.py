@@ -35,8 +35,13 @@ class KnowledgeQueryTool(BaseTool):
         from src.app.utils.llm_client import LLMClient
         from src.app.services.llm_config import get_llm_config, LLM_AVAILABLE
         
-        llm_client = LLMClient() if LLM_AVAILABLE else None
-        llm_config = get_llm_config() if LLM_AVAILABLE else None
+        try:
+            llm_client = LLMClient() if LLM_AVAILABLE else None
+            llm_config = get_llm_config() if LLM_AVAILABLE else None
+        except Exception as e:
+            logger.warning(f"Failed to initialize LLM client (likely openai version mismatch): {e}")
+            llm_client = None
+            llm_config = None
         
         try:
             # Step 1: Search similar projects
@@ -47,18 +52,38 @@ class KnowledgeQueryTool(BaseTool):
             else:
                 logger.info("No results returned from repository.")
             
-            # Filter by similarity threshold
+            # Step 1: Filter by similarity threshold
             # Use config threshold (similarity) -> convert to distance (1 - sim)
             # Default to 0.5 similarity (0.5 distance) if config missing
             sim_threshold = llm_config.relevance_threshold if llm_config else 0.5
             dist_threshold = 1.0 - sim_threshold
             
             similar_projects = []
+            
+            # Initial Search
             for p in results:
-                # distance is returned by search_similar
                 distance = p.get('distance', 1.0)
                 if distance <= dist_threshold:
                     similar_projects.append(p)
+            
+            logger.info(f"[TOOL] Knowledge Query: Found {len(similar_projects)} projects with sim >= {sim_threshold} (dist <= {dist_threshold})")
+            
+            # Fallback/Retry Logic: If no results, try looser threshold
+            if not similar_projects and results:
+                logger.info("[TOOL] No projects found with strict threshold. Attempting looser search...")
+                # Reduce similarity req by 0.15 (e.g., 0.5 -> 0.35)
+                fallback_sim = max(0.3, sim_threshold - 0.15)
+                fallback_dist = 1.0 - fallback_sim
+                
+                for p in results:
+                    distance = p.get('distance', 1.0)
+                    if distance <= fallback_dist:
+                        similar_projects.append(p)
+                
+                if similar_projects:
+                    logger.info(f"[TOOL] Fallback Search: Found {len(similar_projects)} projects with sim >= {fallback_sim:.2f}")
+                else:
+                    logger.info(f"[TOOL] Fallback Search: No results even with sim >= {fallback_sim:.2f}")
             
             # Step 2: LLM Relevance Assessment (if enabled)
             relevant_projects = []

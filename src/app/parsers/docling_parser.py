@@ -1,5 +1,9 @@
 from src.app.parsers.base_parser import BaseParser
-from docling.document_converter import DocumentConverter
+try:
+    from docling.document_converter import DocumentConverter
+    DOCLING_AVAILABLE = True
+except ImportError:
+    DOCLING_AVAILABLE = False
 from loguru import logger
 import os
 
@@ -16,6 +20,9 @@ class DoclingParser(BaseParser):
             self.validate_file(file_path)
             
             # Initialize Docling converter
+            if not DOCLING_AVAILABLE:
+                raise ImportError("docling library not installed. Install with: pip install docling")
+            
             # Default behavior preserves table structures and converts to markdown
             converter = DocumentConverter()
             

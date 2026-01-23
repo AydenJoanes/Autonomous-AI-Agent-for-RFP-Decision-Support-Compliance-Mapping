@@ -11,11 +11,17 @@ from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_excep
 
 try:
     from openai import OpenAI, OpenAIError, APITimeoutError, RateLimitError
-    import tiktoken
     OPENAI_AVAILABLE = True
 except ImportError:
     OPENAI_AVAILABLE = False
     logger.warning("OpenAI library not available. LLM features will be disabled.")
+
+try:
+    import tiktoken
+    TIKTOKEN_AVAILABLE = True
+except ImportError:
+    TIKTOKEN_AVAILABLE = False
+    logger.warning("tiktoken not installed. Token counting will be approximate.")
 
 
 class LLMClient:
@@ -56,6 +62,9 @@ class LLMClient:
         Returns:
             Token count
         """
+        if not TIKTOKEN_AVAILABLE:
+            return len(text) // 4  # Rough estimation
+            
         try:
             encoding = tiktoken.encoding_for_model(model)
         except KeyError:
