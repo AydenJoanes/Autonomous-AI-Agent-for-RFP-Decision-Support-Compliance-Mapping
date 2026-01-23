@@ -1,40 +1,33 @@
 {
   "recommendation": "CONDITIONAL_BID",
-  "confidence_score": 62,
-  "justification": "Based on the compliance assessment of the RFP, I recommend a CONDITIONAL_BID with a confidence level of 62 out of 100. This decision reflects a careful evaluation of our capabilities against the requirements outlined in the RFP, acknowledging both our strengths and the areas that necessitate improvement.\n\nOur proposal demonstrates several key strengths, notably our active ISO 27001 certification, which validates our commitment to information security management and is effective until 2028. Additionally, we possess advanced proficiency in Microsoft Azure, supported by three years of relevant experience. Our track record in successfully completing multiple healthcare-related projects further underscores our capability in healthcare analytics, aligning well with the needs of the RFP.\n\nHowever, there are significant concerns that must be addressed before we can confidently proceed. The HIPAA certification is currently in a 'ready' status, indicating that full compliance has not yet been achieved, which poses a medium risk. Furthermore, the timeline assessment reveals a critical mismatch, as our proposed timeline exceeds the required five years by more than double. Additionally, the absence of documented GDPR certification is a blocking issue that must be resolved, as it is a mandatory requirement.\n\nTo move forward with this conditional bid, we must prioritize several actions: expedite the process to achieve full HIPAA certification by collaborating with a certifying body, reassess our project timelines to align with the five-year requirement, and initiate the GDPR certification process. Addressing these conditions will enhance our compliance standing and strengthen our proposal.\n\nIn conclusion, while we have a solid foundation to build upon, it is imperative that we resolve the identified gaps to ensure a competitive bid. I recommend that we implement the necessary actions promptly to position ourselves favorably for this opportunity.",
-  "executive_summary": "I recommend proceeding with a conditional bid, as we have met all mandatory requirements and achieved compliance on 3 out of 7 criteria. The most significant concern is that our HIPAA certification is ready but not yet active, which poses a medium risk pending a formal audit. To mitigate this risk, we should prioritize activating the certification before finalizing our bid submission.",
+  "confidence_score": 61,
+  "justification": "Based on the compliance assessment of the RFP, I recommend a CONDITIONAL_BID with a confidence level of 61 out of 100. This decision reflects a moderate fit with the requirements outlined in the RFP, acknowledging both our strengths and the areas that require further clarification or adjustment.\n\nOur key strengths include a valid ISO 27001 certification, which is crucial for demonstrating our commitment to information security, particularly in software development and cloud services. Additionally, our expert proficiency in AWS, backed by five years of experience, positions us well to meet the technical demands of the project. These factors contribute positively to our overall compliance and enhance our credibility as a potential partner.\n\nHowever, there are significant concerns that must be addressed before proceeding. The timeline requirement for project initiation in June 2026 presents a critical mismatch, as it exceeds our strategic maximum of 12 months. Furthermore, the budget requirement remains unknown due to an invalid status from the budget analyzer, which poses a risk to our ability to meet financial expectations. Additionally, while our AWS expertise is robust, the lack of documented Azure experience could be perceived as a gap, even though it is not a mandatory requirement.\n\nTo strengthen our bid, it is essential to resolve these issues. We must reassess our project scheduling and resource allocation to align with the June 2026 timeline. Additionally, conducting a thorough budget analysis will be necessary to ensure we can meet the estimated budget range of USD 100,000 to 125,000. \n\nIn conclusion, while we have a solid foundation to build upon, addressing these conditions is critical for a successful bid. I recommend initiating discussions with relevant stakeholders to clarify the timeline and budget requirements, thereby enhancing our proposal's competitiveness.",
+  "executive_summary": "I recommend submitting a conditional bid, as we have met all mandatory requirements and achieved compliance with four out of six criteria. However, the primary concern is the timeline, which exceeds our strategic maximum by more than double, presenting a medium risk. Please review the timeline implications and decide on the next steps by the end of the week.",
   "risks": [
-    {
-      "category": "compliance",
-      "severity": "MEDIUM",
-      "description": "Certification 'HIPAA' is 'Ready' but not active - Formal audit may be pending (MEDIUM Risk)",
-      "source_tool": "certification_checker",
-      "requirement_text": "HIPAA"
-    },
     {
       "category": "timeline",
       "severity": "MEDIUM",
-      "description": "Timeline (60 mth) is >2x strategic max (12 mth) (MEDIUM Risk)",
+      "description": "Timeline (2026 mth) is >2x strategic max (12 mth) (MEDIUM Risk)",
       "source_tool": "timeline_assessor",
-      "requirement_text": "60 months"
+      "requirement_text": "Estimated Start Date June 2026"
     },
     {
       "category": "technical",
       "severity": "LOW",
       "description": "Team size for this technology not documented",
       "source_tool": "tech_validator",
-      "requirement_text": "Azure"
+      "requirement_text": "AWS"
     }
   ],
   "compliance_summary": {
     "overall_compliance": "PARTIAL",
-    "compliant_count": 3,
+    "compliant_count": 4,
     "non_compliant_count": 0,
-    "partial_count": 4,
+    "partial_count": 1,
     "warning_count": 0,
-    "unknown_count": 0,
-    "total_evaluated": 7,
-    "confidence_avg": 0.75,
+    "unknown_count": 1,
+    "total_evaluated": 6,
+    "confidence_avg": 0.8,
     "mandatory_met": true,
     "mandatory_unknown": false,
     "mandatory_failed": false,
@@ -47,67 +40,62 @@
         "status": "VALID"
       },
       {
-        "tool_name": "certification_checker",
-        "requirement": "HIPAA",
-        "compliance_level": "PARTIAL",
-        "confidence": 0.7,
-        "status": "READY"
-      },
-      {
-        "tool_name": "certification_checker",
-        "requirement": "HIPAA",
-        "compliance_level": "PARTIAL",
-        "confidence": 0.7,
-        "status": "READY"
+        "tool_name": "tech_validator",
+        "requirement": "AWS",
+        "compliance_level": "COMPLIANT",
+        "confidence": 1.0,
+        "status": "EXPERT"
       },
       {
         "tool_name": "tech_validator",
-        "requirement": "Azure",
+        "requirement": "AWS",
         "compliance_level": "COMPLIANT",
-        "confidence": 0.9,
-        "status": "ADVANCED"
+        "confidence": 1.0,
+        "status": "EXPERT"
+      },
+      {
+        "tool_name": "budget_analyzer",
+        "requirement": "Estimated Budget Range USD 100,000 - 125,000",
+        "compliance_level": "UNKNOWN",
+        "confidence": 0.0,
+        "status": "INVALID_BUDGET"
       },
       {
         "tool_name": "timeline_assessor",
-        "requirement": "60 months",
+        "requirement": "Estimated Start Date June 2026",
         "compliance_level": "PARTIAL",
         "confidence": 0.9,
         "status": "STRATEGIC_MISMATCH"
       },
       {
-        "tool_name": "knowledge_query",
-        "requirement": "prior engagement within one or more of the following domains: Public sector or quasi-governmental or",
-        "compliance_level": "PARTIAL",
-        "confidence": 0.6,
-        "status": "Found 1 relevant projects (1 successful)"
-      },
-      {
-        "tool_name": "knowledge_query",
-        "requirement": "prior engagement within one or more of the following domains: Healthcare and health-related analytic",
+        "tool_name": "timeline_assessor",
+        "requirement": "4 months",
         "compliance_level": "COMPLIANT",
-        "confidence": 0.45,
-        "status": "Found 4 relevant projects (3 successful)"
+        "confidence": 0.9,
+        "status": "FEASIBLE"
       }
     ]
   },
   "requires_human_review": true,
   "review_reasons": [
+    "Some requirements could not be verified automatically",
     "Borderline confidence requires human judgment",
     "Conditional recommendation requires business decision",
-    "The critical mismatch in timeline assessment requires a detailed review to understand the underlying causes and potential solutions.",
-    "The lack of GDPR certification needs a strategic decision on whether to pursue certification or adjust the bid strategy."
+    "Critical mismatch in timeline assessment requires strategic review.",
+    "Unknown budget compliance needs further investigation."
   ],
   "clarification_questions": [
-    "Can the vendor clarify whether the proposed delivery timeline is firm and achievable for the full scope?"
+    "Can the vendor clarify whether the proposed delivery timeline is firm and achievable for the full scope?",
+    "Can the vendor confirm whether the stated budget covers the full scope, including implementation and support?"
   ],
   "rfp_metadata": {
-    "filename": "smol_rfp.pdf",
-    "file_path": "C:\\Emplay-task\\RFP_bid\\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\\data\\sample_rfps\\smol_rfp.pdf",
-    "processed_date": "2026-01-23T07:41:04.145128Z",
-    "word_count": 1967,
-    "requirement_count": 7
+    "filename": "highConfi_rfp.pdf",
+    "file_path": "C:\\Users\\joane\\OneDrive\\Desktop\\EMPLAY WORK\\Internship\\AI Agent\\Autonomous-AI-Agent-for-RFP-Decision-Support-Compliance-Mapping\\data\\sample_rfps\\highConfi_rfp.pdf",
+    "processed_date": "2026-01-23T09:20:52.043353Z",
+    "word_count": 1594,
+    "requirement_count": 6
   },
-  "timestamp": "2026-01-23T07:41:55.656888+00:00",
+  "timestamp": "2026-01-23T09:21:23.481854+00:00",
   "reflection_notes": {
     "flags": [],
     "consistency_score": 1.0,

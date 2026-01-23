@@ -13,28 +13,36 @@ from src.app.services.llm_config import get_llm_config
 
 
 # System prompt for validation
-VALIDATION_SYSTEM_PROMPT = """You are validating extracted RFP requirements. For each requirement, determine:
+VALIDATION_SYSTEM_PROMPT = """You are aggressively validating extracted RFP requirements. BE STRICT - filter out anything questionable.
 
-1. IS_VALID: Can this requirement be checked against a vendor's capabilities?
-   - Valid: "Must have ISO 27001 certification" (checkable against cert database)
-   - Valid: "Experience with healthcare analytics" (checkable against portfolio)
-   - Invalid: "Must implement robust analytics" (too vague, no specific capability)
-   - Invalid: "System shall process data efficiently" (delivery scope, not capability)
+For each requirement, determine if it should be KEPT or REMOVED:
 
-2. CORRECTED_TYPE: Is the type classification correct?
-   - If "BUDGET" but no dollar amount exists, mark invalid or reclassify
-   - If "TECHNOLOGY" but it's actually a certification, correct it
-   - If "EXPERIENCE" but it's actually asking for a certification, correct it
+AUTOMATICALLY MARK AS INVALID (is_valid: false):
+- Generic phrases: "must demonstrate", "ensure compliance", "maintain security"
+- System features: anything about what the system/platform "must do"
+- Process requirements: documentation, submission, reporting procedures
+- Vague values: "experience", "capability", "expertise" without specific domain
+- No specific named value that can be looked up in a database
 
-3. EXTRACTED_VALUE_VALID: Is the extracted value specific enough?
-   - Valid: "ISO 27001", "Azure", "5 years healthcare experience"
-   - Invalid: "security", "cloud", "experience"
+MARK AS VALID (is_valid: true) ONLY IF:
+- Has a SPECIFIC NAMED VALUE: ISO 27001, AWS, Healthcare, $500k, 12 months
+- Can be verified against: certification database, tech stack, project portfolio
+- Is a VENDOR qualification, not a system/deliverable feature
 
-IMPORTANT: For "EXPERIENCE" type requirements, be PERMISSIVE. If it mentions a specific domain (e.g., "Public Sector", "Healthcare") or project type, mark it as VALID. Only mark as Invalid if it is completely generic (e.g., "Must have experience").
+VALIDATION RULES:
+1. IS_VALID: Can this requirement be verified with a simple database lookup?
+   - Valid: "ISO 27001", "Azure experience", "Healthcare analytics"
+   - Invalid: "robust analytics", "compliance-aware", "organizational maturity"
 
-4. CONFIDENCE: Your confidence in this validation (0.0 to 1.0)
+2. EXTRACTED_VALUE_VALID: Is the value specific enough?
+   - Valid: "ISO 27001", "Azure", "Healthcare analytics", "$2M", "12 months"
+   - Invalid: "security", "cloud", "experience", "compliance"
 
-Respond with a JSON object containing a "validations" array matching the input order. For invalid requirements, set is_valid to false."""
+3. IF INVALID: Set is_valid to false with reason
+
+BE AGGRESSIVE: When in doubt, mark as INVALID. Better to have 5 good requirements than 50 noisy ones.
+
+Return JSON: {"validations": [{"index": 0, "is_valid": true/false, "reason": "...", "confidence": 0.9}]}"""
 
 
 def build_validation_user_prompt(requirements: List[Requirement]) -> str:

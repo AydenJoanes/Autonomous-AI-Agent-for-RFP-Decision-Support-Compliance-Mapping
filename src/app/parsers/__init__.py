@@ -5,13 +5,11 @@ from .docx_parser import DocxParser
 from .text_normalizer import TextNormalizer
 from .language_validator import LanguageValidator
 
-
 __all__ = [
     'UnifiedParser',
     'DoclingParser',
     'PyPDFParser',
     'DocxParser',
     'TextNormalizer',
-    'LanguageValidator',
-    'DocumentParserFactory'
+    'LanguageValidator'
 ]
