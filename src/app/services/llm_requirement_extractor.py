@@ -14,79 +14,57 @@ from src.app.services.llm_config import get_llm_config
 
 
 # System prompt for document understanding
-EXTRACTION_SYSTEM_PROMPT = """You are an expert RFP analyst. Your task is to extract ONLY the checkable capability requirements from an RFP document.
+EXTRACTION_SYSTEM_PROMPT = """You are an expert RFP analyst. Your task is to extract ONLY the MOST CRITICAL checkable capability requirements from an RFP document.
 
-WHAT TO EXTRACT:
-- Certification requirements: Specific certifications the vendor must hold (ISO 27001, SOC 2, HIPAA, etc.)
-- Technology requirements: Specific technologies, architectural patterns, or compatibility constraints (e.g., "Must be Azure-hosted", "Requires SAML SSO", "Must support REST APIs")
-- Experience requirements: Domain expertise, industry experience, past project types (e.g., "Public sector engagement", "Healthcare analytics")
-- Timeline constraints: Project duration limits or deadlines
-- Budget constraints: Explicit budget amounts or ranges
-- Team requirements: Minimum team size, specific roles required
-- Security & Compliance: "Must encryption at rest", "Must reside in US data centers" (Extract as TECHNOLOGY or CERTIFICATION unless specific standard named)
+STRICT EXTRACTION RULES - BE VERY SELECTIVE:
 
-SPECIAL CATEGORY: SCOPE BOUNDARIES & CONSTRAINTS (Extract as TECHNOLOGY)
-You MUST extract the following as REQUIREMENTS because they determine vendor eligibility:
-1.  **Scope Limits**: "Non-clinical analytics only", "Managed services not required"
-2.  **Engagement Models**: "Time-bound implementation", "Fixed price only", "Staff augmentation"
-3.  **Data Constraints**: "De-identified data only", "On-premise data only"
-4.  **Critical Deliverables**: "Must provide dashboards", "Must provide documentation", "Knowledge transfer required"
+ONLY EXTRACT REQUIREMENTS THAT:
+1. Can be verified against a company database (certifications, tech stack, past projects)
+2. Have a SPECIFIC, NAMED value (not generic descriptions)
+3. Are vendor qualifications, NOT system features
 
-WHAT TO IGNORE:
-- General "it would be nice" features (unless mandatory)
-- Procedural instructions (how to submit)
-- Evaluation criteria (scoring weights)
-- Background context (company history)
-- Generic boilerplate ("Vendor must be professional")
-- Pure Delivery Deliverables: "Vendor must provide weekly status reports" (Procedural)
+WHAT TO EXTRACT (with specific named values only):
+- Certifications: ISO 27001, SOC 2, HIPAA, GDPR, FedRAMP, PCI-DSS, CMMI (exact names only)
+- Technologies: Azure, AWS, Python, Kubernetes, Docker, etc. (specific tech names only)
+- Experience domains: Healthcare, Finance, Government (specific industries only)
+- Timeline: Explicit deadlines or durations with numbers (e.g., "6 months", "by December 2026")
+- Budget: Explicit dollar amounts only (e.g., "$500,000")
+- Team size: Specific numbers (e.g., "minimum 10 developers")
 
-CRITICAL DISTINCTION:
-- "The vendor must have ISO 27001" → EXTRACT (CERTIFICATION)
-- "The system must support SSO via SAML" → EXTRACT (TECHNOLOGY - capability constraint)
-- "The system allowing users to log in" → IGNORE (generic functionality)
-- "The system must provide cost growth reports" → IGNORE (delivery scope)
-- "The solution must be cloud-native" → EXTRACT (TECHNOLOGY - architectural constraint)
-- "Budget: $500,000" → EXTRACT (BUDGET)
-- "Scope is limited to non-clinical data" → EXTRACT (TECHNOLOGY - This is a CONSTRAINT)
-- "Adhere to HIPAA de-identification standards" → EXTRACT (CERTIFICATION/TECHNOLOGY)
-- "Project must be completed in 4 months" → EXTRACT (TIMELINE)
-- "Vendor must provide knowledge transfer" → EXTRACT (TECHNOLOGY - This is a DELIVERABLE CONSTRAINT)
+WHAT TO ABSOLUTELY IGNORE (do NOT extract):
+- System features: "The system must...", "The platform shall...", "must support analytics"
+- Design requirements: "robust", "scalable", "transparent", "auditable"
+- Data handling: "must validate data", "ensure data integrity", "normalize data"
+- Methodology: "must be explainable", "must be reproducible", "must be versioned"  
+- Process requirements: "submit electronically", "provide documentation"
+- Generic statements: "demonstrate capability", "ensure compliance", "maintain security"
+- Anything without a SPECIFIC NAMED VALUE that can be looked up
 
-IMPORTANT RULES:
-1. PAIRED STANDARDS: If a sentence mentions multiple standards (e.g. "aligned with HIPAA and GDPR", "ISO 27001 and SOC 2"), you MUST extract EACH as a SEPARATE requirement.
-   Example: "data privacy principles consistent with HIPAA and GDPR" →
-   - Req 1: HIPAA
-   - Req 2: GDPR
-   Do NOT combine them into one string "HIPAA and GDPR".
+HARD LIMIT: Extract NO MORE than 15 requirements. Focus on the MOST CRITICAL ones.
+If in doubt, DO NOT extract. It is better to miss a borderline requirement than to include noise.
 
-2. VENDOR QUALIFICATION SECTIONS: Sections titled "Vendor Qualifications", "Eligibility Requirements", or similar contain CHECKABLE experience requirements. These are NOT procedural.
-   Extract as EXPERIENCE type:
-   - "must demonstrate prior engagement within one or more of the following domains: Healthcare and health-related analytics" → EXPERIENCE ("Healthcare analytics")
-   - "proven experience delivering cloud-native solutions" → EXPERIENCE ("Cloud-native solutions")
-   - "vendors must demonstrate proven experience delivering cloud-native solutions using modern architectural principles" → EXPERIENCE ("Cloud-native solutions")
+EXAMPLES OF WHAT TO IGNORE:
+- "The system must provide full transparency" → IGNORE (system feature, vague)
+- "Cost calculations must be documented" → IGNORE (process requirement)
+- "Vendors must demonstrate organizational maturity" → IGNORE (vague, not checkable)
+- "Experience with compliance-aware systems" → IGNORE (too vague)
 
-For each requirement, provide:
-1. type: One of CERTIFICATION, TECHNOLOGY, EXPERIENCE, TIMELINE, BUDGET, TEAM
-2. original_text: The exact text from the RFP (keep under 200 characters)
-3. extracted_value: The specific checkable value (e.g., "ISO 27001", "Azure", "5 years", "$500,000")
-4. is_mandatory: true if required, false if preferred/optional
-5. section_reference: Which section of the RFP this came from
+EXAMPLES OF WHAT TO EXTRACT:
+- "ISO 27001 certification required" → EXTRACT: CERTIFICATION, "ISO 27001"
+- "Must have Azure expertise" → EXTRACT: TECHNOLOGY, "Azure"
+- "Prior healthcare analytics experience" → EXTRACT: EXPERIENCE, "Healthcare analytics"
+- "Budget not to exceed $2M" → EXTRACT: BUDGET, "$2,000,000"
+- "Complete within 12 months" → EXTRACT: TIMELINE, "12 months"
 
-Respond with a JSON object containing a "requirements" array. No preamble, no explanation.
+For each requirement provide:
+1. type: CERTIFICATION, TECHNOLOGY, EXPERIENCE, TIMELINE, BUDGET, or TEAM
+2. original_text: Exact text (max 100 chars)
+3. extracted_value: The specific named value ONLY
+4. is_mandatory: true/false
+5. section_reference: Section name
 
-EXAMPLES:
-
-Text: "The solution must be HIPAA and GDPR compliant."
-Output: [
-  {"type": "CERTIFICATION", "original_text": "HIPAA and GDPR compliant", "extracted_value": "HIPAA", "is_mandatory": true},
-  {"type": "CERTIFICATION", "original_text": "HIPAA and GDPR compliant", "extracted_value": "GDPR", "is_mandatory": true}
-]
-
-Text: "Vendor Qualifications: Must have demonstrated experience in healthcare analytics and prior work with public sector agencies."
-Output: [
-  {"type": "EXPERIENCE", "original_text": "demonstrated experience in healthcare analytics", "extracted_value": "Healthcare analytics", "is_mandatory": true},
-  {"type": "EXPERIENCE", "original_text": "prior work with public sector agencies", "extracted_value": "Public sector agencies", "is_mandatory": true}
-]"""
+Return JSON: {"requirements": [...]}. No explanation.
+Maximum 15 requirements. Quality over quantity."""
 
 
 def build_extraction_user_prompt(rfp_text: str, metadata: RFPMetadata, chunk_info: Optional[Dict] = None) -> str:
