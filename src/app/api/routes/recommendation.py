@@ -5,8 +5,11 @@ Exposes RecommendationAgent capabilities via FastAPI.
 
 from pathlib import Path
 from typing import List, Dict, Optional
+import shutil
+import tempfile
+import uuid
 from loguru import logger
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from pydantic import BaseModel, Field
 
 from src.app.agent.recommendation_agent import RecommendationAgent
@@ -152,6 +155,73 @@ async def analyze_with_report(request: RecommendationRequest):
     except Exception as e:
         logger.error(f"[API] Unexpected error: {str(e)}")
         raise HTTPException(status_code=500, detail="An unexpected error occurred during analysis")
+
+
+@router.post("/upload-analyze", response_model=RecommendationReportResponse)
+async def analyze_upload(file: UploadFile = File(...)):
+    """
+    Upload an RFP file and generate recommendation with report.
+    Accepts PDF, DOCX, DOC files via multipart/form-data.
+    
+    This endpoint is designed for frontend file upload integration.
+    """
+    # Validate file extension
+    filename = file.filename or "uploaded_file"
+    extension = Path(filename).suffix.lower()
+    
+    valid_extensions = {'.pdf', '.docx', '.doc'}
+    if extension not in valid_extensions:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Unsupported file type: {extension}. Supported: PDF, DOCX, DOC"
+        )
+    
+    logger.info(f"[API] File upload received: {filename}")
+    
+    # Create temp file with unique name
+    temp_dir = Path(tempfile.gettempdir())
+    unique_filename = f"{uuid.uuid4().hex}_{filename}"
+    temp_path = temp_dir / unique_filename
+    
+    try:
+        # Save uploaded file to temp location
+        with open(temp_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        logger.info(f"[API] File saved to: {temp_path}")
+        
+        # Process the file
+        recommendation, report = agent.run_with_report(str(temp_path))
+        logger.info(f"[API] Recommendation generated: {recommendation.recommendation} ({recommendation.confidence_score}%)")
+        
+        return RecommendationReportResponse(
+            recommendation=recommendation,
+            report_markdown=report
+        )
+        
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Uploaded file could not be processed")
+        
+    except ValueError as e:
+        logger.error(f"[API] Validation error: {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e))
+        
+    except RuntimeError as e:
+        logger.error(f"[API] Agent runtime error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+        
+    except Exception as e:
+        logger.error(f"[API] Unexpected error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
+        
+    finally:
+        # Clean up temp file
+        try:
+            if temp_path.exists():
+                temp_path.unlink()
+                logger.debug(f"[API] Temp file cleaned up: {temp_path}")
+        except Exception:
+            pass  # Ignore cleanup errors
 
 
 @router.get("/health", response_model=HealthResponse)

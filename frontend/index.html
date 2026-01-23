@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFP Decision Support Agent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <!-- Background Animation -->
+    <div class="bg-gradient"></div>
+    <div class="bg-blur"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="url(#gradient)" stroke-width="2"
+                            fill="none" />
+                        <path d="M16 10L22 14V22L16 26L10 22V14L16 10Z" fill="url(#gradient)" />
+                        <defs>
+                            <linearGradient id="gradient" x1="4" y1="2" x2="28" y2="30">
+                                <stop offset="0%" stop-color="#6366f1" />
+                                <stop offset="100%" stop-color="#8b5cf6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>RFP Decision Agent</h1>
+                    <span class="tagline">AI-Powered Bid Analysis</span>
+                </div>
+            </div>
+            <div class="status-badge" id="apiStatus">
+                <span class="status-dot"></span>
+                <span>Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section" id="uploadSection">
+                <div class="upload-card glass">
+                    <div class="upload-area" id="dropZone">
+                        <div class="upload-icon">
+                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                                <path d="M32 8L52 28H40V44H24V28H12L32 8Z" fill="url(#uploadGrad)" fill-opacity="0.2" />
+                                <path d="M32 8L52 28H40V44H24V28H12L32 8Z" stroke="url(#uploadGrad)" stroke-width="2" />
+                                <path d="M8 52H56V56H8V52Z" fill="url(#uploadGrad)" />
+                                <defs>
+                                    <linearGradient id="uploadGrad" x1="8" y1="8" x2="56" y2="56">
+                                        <stop offset="0%" stop-color="#6366f1" />
+                                        <stop offset="100%" stop-color="#8b5cf6" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h2>Upload RFP Document</h2>
+                        <p>Drag & drop your PDF or DOCX file here</p>
+                        <span class="or-divider">or</span>
+                        <label class="browse-btn">
+                            <input type="file" id="fileInput" accept=".pdf,.docx,.doc" hidden>
+                            Browse Files
+                        </label>
+                        <p class="file-types">Supported: PDF, DOCX, DOC</p>
+                    </div>
+                    <div class="selected-file" id="selectedFile" style="display: none;">
+                        <div class="file-icon">📄</div>
+                        <div class="file-info">
+                            <span class="file-name" id="fileName"></span>
+                            <span class="file-size" id="fileSize"></span>
+                        </div>
+                        <button class="remove-file" id="removeFile">✕</button>
+                    </div>
+                    <button class="analyze-btn" id="analyzeBtn" disabled>
+                        <span class="btn-text">Analyze RFP</span>
+                        <span class="btn-loader" style="display: none;"></span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Loading Section -->
+            <section class="loading-section" id="loadingSection" style="display: none;">
+                <div class="loading-card glass">
+                    <div class="loading-spinner"></div>
+                    <h2>Analyzing RFP...</h2>
+                    <p id="loadingStatus">Parsing document...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <!-- Recommendation Card -->
+                <div class="result-card recommendation-card glass" id="recommendationCard">
+                    <div class="card-header">
+                        <h2>Recommendation</h2>
+                        <span class="decision-badge" id="decisionBadge">BID</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="confidence-meter">
+                            <div class="confidence-circle" id="confidenceCircle">
+                                <svg viewBox="0 0 100 100">
+                                    <circle class="bg-circle" cx="50" cy="50" r="45" />
+                                    <circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="45" />
+                                </svg>
+                                <div class="confidence-value">
+                                    <span class="big-number" id="confidenceScore">0</span>
+                                    <span class="percent">%</span>
+                                </div>
+                            </div>
+                            <span class="confidence-label">Confidence</span>
+                        </div>
+                        <div class="executive-summary">
+                            <h3>Executive Summary</h3>
+                            <p id="executiveSummary"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compliance Summary -->
+                <div class="result-card compliance-card glass">
+                    <div class="card-header">
+                        <h2>Compliance Summary</h2>
+                        <span class="compliance-badge" id="complianceBadge">COMPLIANT</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="compliance-stats">
+                            <div class="stat compliant">
+                                <span class="stat-icon">✅</span>
+                                <span class="stat-value" id="compliantCount">0</span>
+                                <span class="stat-label">Compliant</span>
+                            </div>
+                            <div class="stat partial">
+                                <span class="stat-icon">◐</span>
+                                <span class="stat-value" id="partialCount">0</span>
+                                <span class="stat-label">Partial</span>
+                            </div>
+                            <div class="stat non-compliant">
+                                <span class="stat-icon">❌</span>
+                                <span class="stat-value" id="nonCompliantCount">0</span>
+                                <span class="stat-label">Non-Compliant</span>
+                            </div>
+                            <div class="stat unknown">
+                                <span class="stat-icon">❓</span>
+                                <span class="stat-value" id="unknownCount">0</span>
+                                <span class="stat-label">Unknown</span>
+                            </div>
+                        </div>
+                        <div class="requirements-bar">
+                            <div class="requirements-fill compliant" id="compliantBar"></div>
+                            <div class="requirements-fill partial" id="partialBar"></div>
+                            <div class="requirements-fill non-compliant" id="nonCompliantBar"></div>
+                            <div class="requirements-fill unknown" id="unknownBar"></div>
+                        </div>
+                        <div class="mandatory-status">
+                            <span id="mandatoryIcon">✓</span>
+                            <span id="mandatoryText">Mandatory Requirements Met</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risks Section -->
+                <div class="result-card risks-card glass">
+                    <div class="card-header">
+                        <h2>Identified Risks</h2>
+                        <span class="risk-count" id="riskCount">0 risks</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="risks-list" id="risksList">
+                            <!-- Risks will be populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool Results -->
+                <div class="result-card tools-card glass">
+                    <div class="card-header">
+                        <h2>Detailed Analysis</h2>
+                        <button class="expand-btn" id="expandToolsBtn">
+                            <span>Show Details</span>
+                            <svg width="16" height="16" viewBox="0 0 16 16">
+                                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" fill="none" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="card-body tools-body" id="toolsBody" style="display: none;">
+                        <table class="tools-table">
+                            <thead>
+                                <tr>
+                                    <th>Tool</th>
+                                    <th>Requirement</th>
+                                    <th>Status</th>
+                                    <th>Confidence</th>
+                                </tr>
+                            </thead>
+                            <tbody id="toolsTableBody">
+                                <!-- Tool results will be populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="result-actions">
+                    <button class="action-btn secondary" id="newAnalysisBtn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10L10 4L16 10M10 4V16" stroke="currentColor" stroke-width="2"
+                                transform="rotate(180 10 10)" />
+                        </svg>
+                        New Analysis
+                    </button>
+                    <button class="action-btn primary" id="downloadReportBtn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 3V13M10 13L6 9M10 13L14 9M4 17H16" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                        Download Report
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>RFP Decision Support Agent v1.0 • AI-Powered Compliance Analysis</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>

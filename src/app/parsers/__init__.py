@@ -4,7 +4,6 @@ from .pypdf_parser import PyPDFParser
 from .docx_parser import DocxParser
 from .text_normalizer import TextNormalizer
 from .language_validator import LanguageValidator
-from .document_parser_factory import DocumentParserFactory
 
 __all__ = [
     'UnifiedParser',
@@ -12,6 +11,5 @@ __all__ = [
     'PyPDFParser',
     'DocxParser',
     'TextNormalizer',
-    'LanguageValidator',
-    'DocumentParserFactory'
+    'LanguageValidator'
 ]

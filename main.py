@@ -12,7 +12,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from config.settings import settings
 from src.app.core.logging_config import setup_logging, logger
@@ -84,10 +85,31 @@ app.include_router(knowledge_router)
 app.include_router(recommendation_router)
 
 
-# Root endpoint
+# Serve frontend static files
+FRONTEND_DIR = Path(__file__).parent / "frontend"
+if FRONTEND_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
+
+
+# Root endpoint - Serve frontend
 @app.get("/")
 async def root():
-    """Root endpoint with basic info."""
+    """Serve the frontend UI."""
+    frontend_path = FRONTEND_DIR / "index.html"
+    if frontend_path.exists():
+        return FileResponse(frontend_path)
+    return {
+        "name": "RFP Bid Decision Agent",
+        "version": "1.0.0",
+        "status": "running",
+        "docs": "/docs"
+    }
+
+
+# API info endpoint
+@app.get("/api")
+async def api_info():
+    """API information endpoint."""
     return {
         "name": "RFP Bid Decision Agent",
         "version": "1.0.0",
@@ -104,3 +126,4 @@ if __name__ == "__main__":
         port=8000,
         reload=not settings.is_production
     )
+
