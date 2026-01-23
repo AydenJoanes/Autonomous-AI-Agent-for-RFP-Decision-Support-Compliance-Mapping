@@ -364,7 +364,8 @@ class JustificationGenerator:
         self, 
         compliance_summary: ComplianceSummary, 
         decision: Dict, 
-        risks: List[RiskItem]
+        risks: List[RiskItem],
+        synthesis_report=None  # Optional synthesis report from LLM
     ) -> Tuple[str, str]:
         """
         Generate justification and executive summary.
@@ -373,6 +374,7 @@ class JustificationGenerator:
             compliance_summary: Aggregated compliance data
             decision: Decision dictionary from DecisionEngine
             risks: List of identified risks
+            synthesis_report: Optional synthesis report from evidence synthesizer
             
         Returns:
             Tuple of (justification_text, executive_summary_text)
@@ -386,6 +388,27 @@ class JustificationGenerator:
         
         # Build context prompt
         context_prompt = self._build_context_prompt(compliance_summary, decision, risks)
+        
+        # Append synthesis findings if available
+        if synthesis_report:
+            synthesis_section = f"""
+
+### Evidence Synthesis
+**Overall Assessment:** {synthesis_report.overall_assessment}
+
+**Key Strengths:**
+{chr(10).join(f"- {s}" for s in synthesis_report.key_strengths)}
+
+**Key Gaps:**
+{chr(10).join(f"- {g}" for g in synthesis_report.key_gaps)}
+
+**Conflicts Identified:**
+{chr(10).join(f"- {c}" for c in synthesis_report.conflicts_identified) if synthesis_report.conflicts_identified else "None"}
+
+**Recommended Mitigations:**
+{chr(10).join(f"- {m}" for m in synthesis_report.recommended_mitigations)}
+"""
+            context_prompt += synthesis_section
         
         # Generate Justification
         justification = self.generate_justification(

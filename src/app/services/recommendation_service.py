@@ -25,10 +25,21 @@ from src.app.services.tool_executor import ToolExecutorService
 from src.app.services.decision_engine import DecisionEngine
 from src.app.services.justification_generator import JustificationGenerator
 from src.app.strategies.compliance_strategy import aggregate_compliance
-from src.app.agent.tools import RFPParserTool, RequirementProcessorTool
+
 from src.app.services.reflection_engine import ReflectionEngine
 from src.app.services.clarification_generator import ClarificationGenerator
 from src.app.services.phase6_orchestrator import Phase6Orchestrator
+
+# LLM Services
+try:
+    from src.app.services.llm_config import get_llm_config
+    from src.app.services.llm_requirement_extractor import LLMRequirementExtractor
+    from src.app.services.requirement_validator import RequirementValidator
+    from src.app.services.evidence_synthesizer import EvidenceSynthesizer
+    LLM_AVAILABLE = True
+except ImportError as e:
+    logger.warning(f"LLM services not available: {e}")
+    LLM_AVAILABLE = False
 
 
 class RecommendationService:
@@ -42,11 +53,26 @@ class RecommendationService:
         self._tool_executor = ToolExecutorService()
         self._decision_engine = DecisionEngine()
         self._justification_generator = JustificationGenerator()
+        from src.app.agent.tools import RFPParserTool, RequirementProcessorTool
         self._rfp_parser = RFPParserTool()
         self._requirement_processor = RequirementProcessorTool()
         self._reflection_engine = ReflectionEngine()
         self._clarification_generator = ClarificationGenerator()
         self._phase6_orchestrator = Phase6Orchestrator()
+        
+        # Initialize LLM services if available
+        if LLM_AVAILABLE:
+            try:
+                self._llm_config = get_llm_config()
+                self._llm_extractor = LLMRequirementExtractor()
+                self._requirement_validator = RequirementValidator()
+                self._evidence_synthesizer = EvidenceSynthesizer()
+                logger.info("[SERVICE] LLM services initialized")
+            except Exception as e:
+                logger.warning(f"[SERVICE] LLM services initialization failed: {e}")
+                self._llm_config = None
+        else:
+            self._llm_config = None
         
         logger.info("[SERVICE] RecommendationService initialized with all dependencies")
 
@@ -81,22 +107,59 @@ class RecommendationService:
         except Exception as e:
             logger.error(f"[SERVICE] RFP parsing failed: {e}")
             raise RuntimeError(f"Failed to parse RFP document: {e}")
-        
-        # Step 4: Extract requirements
-        try:
-            requirements = self._requirement_processor._run(markdown_text)
-        except Exception as e:
-            logger.error(f"[SERVICE] Requirement extraction failed: {e}")
-            requirements = []  # Graceful degradation
-        
-        # Step 5: Build metadata
+        # Step 3.5: Build initial metadata
         metadata = RFPMetadata(
             filename=os.path.basename(file_path),
             file_path=file_path,
             processed_date=datetime.now(timezone.utc),
             word_count=len(markdown_text.split()) if markdown_text else 0,
-            requirement_count=len(requirements)
+            requirement_count=0
         )
+        
+        # Step 4: Extract requirements
+        logger.info(f"DEBUG: LLM_AVAILABLE={LLM_AVAILABLE}")
+        if self._llm_config:
+            logger.info(f"DEBUG: Enable LLM Extraction={self._llm_config.enable_llm_extraction}")
+        logger.info(f"DEBUG: Markdown text length={len(markdown_text) if markdown_text else 0}")
+
+        try:
+            # Try LLM extraction first if available
+            if LLM_AVAILABLE and self._llm_config and self._llm_config.enable_llm_extraction:
+                try:
+                    logger.info("[SERVICE] Using LLM requirement extraction")
+                    # Create parser-specific metadata
+                    from src.app.models.parser import RFPMetadata as ParserMetadata
+                    parser_meta = ParserMetadata(
+                        filename=metadata.filename,
+                        file_path=metadata.file_path,
+                        file_size=os.path.getsize(file_path),
+                        page_count=0  # Parser doesn't return page count yet
+                    )
+                    requirements = self._llm_extractor.extract_requirements_with_llm(markdown_text, parser_meta)
+                except Exception as llm_error:
+                    logger.warning(f"[SERVICE] LLM extraction failed, falling back to pattern-based: {llm_error}")
+                    requirements = self._requirement_processor._run(markdown_text)
+            else:
+                # Use pattern-based extraction
+                requirements = self._requirement_processor._run(markdown_text)
+            
+            # Validate requirements if LLM validation is enabled
+            if LLM_AVAILABLE and self._llm_config and self._llm_config.enable_llm_validation and requirements:
+                try:
+                    logger.info("[SERVICE] Validating requirements with LLM")
+                    original_count = len(requirements)
+                    requirements = self._requirement_validator.validate_requirements(requirements)
+                    logger.info(f"[SERVICE] Validation: {original_count} → {len(requirements)} requirements")
+                except Exception as val_error:
+                    logger.warning(f"[SERVICE] Requirement validation failed: {val_error}")
+                    # Continue with unvalidated requirements
+                    
+        except Exception as e:
+            logger.error(f"[SERVICE] Requirement extraction failed: {e}")
+            requirements = []  # Graceful degradation
+        
+        # Step 5: Update metadata
+        metadata.requirement_count = len(requirements)
         
         logger.info(f"[SERVICE] Parsed RFP: {metadata.word_count} words, {metadata.requirement_count} requirements")
         
@@ -301,13 +364,24 @@ class RecommendationService:
             risks = self._tool_executor.extract_risks_from_results(tool_results)
             logger.info(f"[SERVICE] Extracted {len(risks)} risks")
             
-            # Step 5: Generate decision
-            decision = self._decision_engine.generate_decision(compliance_summary, risks)
+            # Step 4.5: Synthesize evidence (if LLM enabled)
+            synthesis_report = None
+            if LLM_AVAILABLE and self._llm_config and self._llm_config.enable_llm_synthesis:
+                try:
+                    logger.info("[SERVICE] Synthesizing evidence with LLM")
+                    synthesis_report = self._evidence_synthesizer.synthesize_evidence(tool_results, requirements)
+                    logger.info(f"[SERVICE] Synthesis: {synthesis_report.overall_assessment}")
+                except Exception as synth_error:
+                    logger.warning(f"[SERVICE] Evidence synthesis failed: {synth_error}")
+                    synthesis_report = None
+            
+            # Step 5: Generate decision (with synthesis if available)
+            decision = self._decision_engine.generate_decision(compliance_summary, risks, synthesis_report)
             logger.info(f"[SERVICE] Decision: {decision['recommendation']} (confidence: {decision['confidence_score']})")
             
-            # Step 6: Generate justification
+            # Step 6: Generate justification (with synthesis if available)
             justification, executive_summary = self._justification_generator.generate(
-                compliance_summary, decision, risks
+                compliance_summary, decision, risks, synthesis_report
             )
             
             # Step 6.5: Generate Clarification Questions (Phase 6)
@@ -338,7 +412,8 @@ class RecommendationService:
             # This applies reflection, ensures clarifications, and generates embedding
             # WITHOUT modifying Phase 5 logic
             try:
-                recommendation = self._phase6_orchestrator.orchestrate(recommendation)
+                # Pass synthesis report for enhanced reflection
+                recommendation = self._phase6_orchestrator.orchestrate(recommendation, synthesis_report)
             except Exception as e:
                 # Orchestration is optional - failure must not block response
                 logger.error(f"[SERVICE] Phase 6 orchestration failed (non-blocking): {e}")

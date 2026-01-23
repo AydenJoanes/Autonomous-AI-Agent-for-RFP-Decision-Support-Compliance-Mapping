@@ -16,7 +16,7 @@ app.add_middleware(
 )
 
 # Register routers
-app.include_router(health_router, prefix="/api/v1/recommendation", tags=["Health"])
+app.include_router(health_router, prefix="/api/v1", tags=["Health"])
 app.include_router(recommendation_router, prefix="/api/v1/recommendation", tags=["Recommendation"])
 app.include_router(outcome_router, prefix="/api/v1/outcomes", tags=["Outcomes"])
 

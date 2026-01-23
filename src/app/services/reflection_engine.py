@@ -14,12 +14,13 @@ class ReflectionEngine:
     This analysis is appended to the recommendation as 'reflection_notes'.
     """
 
-    def reflect(self, recommendation: Recommendation) -> Dict[str, Any]:
+    def reflect(self, recommendation: Recommendation, synthesis_report=None) -> Dict[str, Any]:
         """
-        Perform deterministic reflection on a generated recommendation.
+        Perform reflection on a generated recommendation, with optional LLM enhancement.
 
         Args:
             recommendation: The complete recommendation object
+            synthesis_report: Optional synthesis report from evidence synthesizer
 
         Returns:
             Dictionary of reflection notes/signals
@@ -32,12 +33,92 @@ class ReflectionEngine:
             "observations": []
         }
 
+        # Deterministic Checks (Base Layer)
         self._check_overconfidence(recommendation, reflection_data)
         self._check_uncertainty(recommendation, reflection_data)
         self._check_consistency(recommendation, reflection_data)
         
+        # LLM Enhanced Reflection (Cognitive Layer)
+        from src.app.services.llm_config import get_llm_config, LLM_AVAILABLE
+        from src.app.utils.llm_client import LLMClient
+        
+        if LLM_AVAILABLE:
+            config = get_llm_config()
+            if config.enable_llm_reflection:
+                try:
+                    logger.info("[REFLECTION] Performing deep reflection with LLM")
+                    client = LLMClient()
+                    self._reflect_with_llm(client, config, recommendation, synthesis_report, reflection_data)
+                except Exception as e:
+                    logger.warning(f"[REFLECTION] LLM reflection failed: {e}")
+
         logger.info(f"[REFLECTION] Completed with {len(reflection_data['flags'])} flags")
         return reflection_data
+
+    def _reflect_with_llm(self, client, config, rec, synthesis, data: Dict[str, Any]):
+        """Use LLM to find subtle inconsistencies and bias."""
+        
+        # Prepare context
+        verdict = rec.recommendation.value
+        score = rec.confidence_score
+        
+        risks_text = "\n".join([f"- {r.severity}: {r.description}" for r in rec.risks])
+        
+        synthesis_text = "No synthesis report available."
+        if synthesis:
+            synthesis_text = f"""
+            Overall Assessment: {synthesis.overall_assessment}
+            Conflicts: {', '.join(synthesis.conflicts_identified) or 'None'}
+            Gaps: {', '.join(synthesis.key_gaps) or 'None'}
+            """
+            
+        prompt = f"""
+        Act as a critical reviewer (Devil's Advocate) for this RFP Bid Decision.
+        Analyze the decision for logical fallacies, cognitive bias, or missed risks.
+
+        Decision: {verdict}
+        Confidence Score: {score}/100
+        
+        Identified Risks:
+        {risks_text}
+        
+        Evidence Synthesis:
+        {synthesis_text}
+        
+        Tasks:
+        1. Identify any "Blind Spots" (what are we missing?)
+        2. Check for "Confirmation Bias" (ignoring contradictory evidence?)
+        3. Flag "Overconfidence" if score is high but risks are severe.
+        
+        Return JSON:
+        {{
+            "critique": [
+                {{
+                    "type": "BLIND_SPOT | BIAS | INCONSISTENCY",
+                    "observation": "Description of the issue"
+                }}
+            ]
+        }}
+        """
+        
+        response = client.call_llm_json(
+            prompt=prompt,
+            model=config.llm_reflection_model,
+            temperature=config.reflection_temperature
+        )
+        
+        if response and 'critique' in response:
+            for item in response['critique']:
+                flag_type = item.get('type', 'LLM_OBSERVATION')
+                obs = item.get('observation', '')
+                
+                # Add to reflection data
+                data["flags"].append(flag_type)
+                data["observations"].append(f"[AI Critique] {obs}")
+                
+                # Penalize consistency score for verified biases
+                if flag_type in ['BIAS', 'INCONSISTENCY']:
+                    data["consistency_score"] -= 0.1
 
     def _check_overconfidence(self, rec: Recommendation, data: Dict[str, Any]):
         """Check for high confidence despite significant risks."""

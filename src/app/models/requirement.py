@@ -5,27 +5,34 @@ from uuid import UUID, uuid4
 
 class RequirementType(str, Enum):
     """
-    MANDATORY: Eligibility requirements (certifications, compliance, legal)
-    TECHNICAL: Technology and skill requirements (languages, frameworks, platforms)
-    PREFERRED: Nice-to-have features (bonus, not required)
-    TIMELINE: Delivery schedule and milestones
-    BUDGET: Financial constraints and limits
-    OTHER: Items that don't fit above (use sparingly)
+    Core requirement types.
     """
-    MANDATORY = "MANDATORY"
-    TECHNICAL = "TECHNICAL"
-    PREFERRED = "PREFERRED"
+    CERTIFICATION = "CERTIFICATION"
+    TECHNOLOGY = "TECHNOLOGY"
+    EXPERIENCE = "EXPERIENCE"
     TIMELINE = "TIMELINE"
     BUDGET = "BUDGET"
+    TEAM = "TEAM"
+    GEOGRAPHIC = "GEOGRAPHIC"
+    MANDATORY = "MANDATORY" # Legacy/Fallback
+    TECHNICAL = "TECHNICAL" # Legacy/Fallback
+    PREFERRED = "PREFERRED" # Legacy/Fallback
     OTHER = "OTHER"
 
 class Requirement(BaseModel):
     id: Optional[UUID] = Field(default_factory=uuid4)
-    text: str = Field(..., description="Requirement description")
+    text: str = Field(..., description="Requirement description (original text)")
     type: RequirementType = Field(..., description="Type of requirement")
-    category: str = Field(..., description="Subcategory like 'certification', 'cloud'")
-    priority: int = Field(..., description="1-10 scale", ge=1, le=10)
+    
+    # New fields for LLM extraction
+    extracted_value: Optional[str] = Field(None, description="Specific checkable value")
+    is_mandatory: bool = Field(True, description="Whether this is a must-have")
+    
+    # Legacy/Computed fields (made optional)
+    category: Optional[str] = Field(None, description="Subcategory")
+    priority: int = Field(5, description="1-10 scale", ge=1, le=10)
     source_section: Optional[str] = Field(None, description="Where found in RFP")
+    
     embedding: Optional[List[float]] = Field(None, description="1536 dimensions for OpenAI")
     confidence: Optional[float] = Field(None, description="LLM classification confidence", ge=0.0, le=1.0)
     metadata: Optional[Dict] = Field(None, description="Additional context")

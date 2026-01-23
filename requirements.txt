@@ -37,6 +37,7 @@ langchain-core==0.3.0
 
 openai>=1.40.0,<2.0.0         # OpenAI API client
 tiktoken>=0.7.0               # OpenAI tokenizer
+tenacity>=8.0.0               # Retry logic for LLM calls
 
 # ------------------------------------------------------------------------------
 # Embeddings & ML (Optional - comment out if not using embeddings)

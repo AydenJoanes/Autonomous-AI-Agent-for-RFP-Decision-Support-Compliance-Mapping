@@ -31,16 +31,20 @@ class RequirementProcessorTool(BaseTool):
         
         try:
             # Step 1: Extract raw requirements
+            logger.info(f"[EXTRACT] Starting extraction on {len(rfp_markdown)} characters of text")
+            logger.debug(f"[EXTRACT] Text sample: {rfp_markdown[:200]}...")
+
             raw_requirements = self._extract_raw_requirements_regex(rfp_markdown)
             if not raw_requirements:
-                logger.warning("[EXTRACT] No requirements found via regex")
+                logger.warning("[EXTRACT] No requirements found via regex. Text might be malformed or empty.")
                 return []
                 
-            logger.info(f"[EXTRACT] Found {len(raw_requirements)} raw requirements")
+            logger.info(f"[EXTRACT] Found {len(raw_requirements)} raw candidate sentences via regex")
+            logger.debug(f"[EXTRACT] Sample candidates: {raw_requirements[:3]}")
             
             # Step 2: Classify requirements (LLM)
             classified_data = self._classify_requirements_llm(raw_requirements)
-            logger.info(f"[CLASSIFY] Classified {len(classified_data)} requirements")
+            logger.info(f"[CLASSIFY] Processed {len(classified_data)} items from LLM")
             
             # Step 3: Validating objects first to filter valid texts
             valid_requirements = []
@@ -122,7 +126,7 @@ class RequirementProcessorTool(BaseTool):
         logger.info("[CLASSIFY] Starting LLM classification")
         
         # Batching for LLM to avoid context limits if too many
-        batch_size = 20 # Conservative for output JSON size
+        batch_size = 15 # Reduced for reliability
         all_classified = []
         
         from src.app.utils.embeddings import get_openai_client
@@ -130,6 +134,7 @@ class RequirementProcessorTool(BaseTool):
         
         for i in range(0, len(raw_reqs), batch_size):
             batch = raw_reqs[i:i+batch_size]
+            logger.info(f"[CLASSIFY] Starting Batch {i//batch_size + 1}/{(len(raw_reqs)-1)//batch_size + 1} (Items {i} to {i+len(batch)})")
             prompt = self._build_classification_prompt(batch)
             
             max_retries = 3
@@ -141,10 +146,12 @@ class RequirementProcessorTool(BaseTool):
                             {"role": "system", "content": "You are a precise RFP analyst. Classify the following requirements into structured JSON."},
                             {"role": "user", "content": prompt}
                         ],
-                        response_format={"type": "json_object"}
+                        response_format={"type": "json_object"},
+                        timeout=60 # Prevent infinite hanging
                     )
                     
                     content = response.choices[0].message.content
+                    logger.debug(f"[CLASSIFY] Raw LLM response: {content[:100]}...")
                     data = json.loads(content)
                     
                     if "requirements" in data:
