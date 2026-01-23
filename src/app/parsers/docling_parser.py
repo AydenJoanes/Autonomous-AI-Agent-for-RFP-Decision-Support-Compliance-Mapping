@@ -7,13 +7,12 @@ from datetime import datetime
 from loguru import logger
 
 try:
-    from docling.document_converter import DocumentConverter, InputFormat
-    from docling.datamodel.pipeline_options import PdfPipelineOptions, WordPipelineOptions
-    from docling.datamodel.base_models import InputFormat as DLInputFormat
+    from docling.document_converter import DocumentConverter
+    from docling.datamodel.pipeline_options import PdfPipelineOptions
     DOCLING_AVAILABLE = True
-except ImportError:
+except ImportError as e:
     DOCLING_AVAILABLE = False
-    logger.warning("Docling not available")
+    logger.warning(f"Docling not available: {e}")
 
 from src.app.parsers.base_parser import BaseParser
 from src.app.models.parsed_document import ParsedDocument
@@ -28,27 +27,16 @@ class DoclingParser(BaseParser):
             self.converter = None
             return
             
-        # Configure pipeline options
-        self.pdf_options = PdfPipelineOptions(
+        # Configure pipeline options for PDF
+        pdf_options = PdfPipelineOptions(
             do_ocr=True,
             do_table_structure=True
         )
-        self.word_options = WordPipelineOptions(
-            keep_table_structure=True
-        )
         
-        # Initialize converter
+        # Initialize converter (handles DOCX automatically in v2.x)
         self.converter = DocumentConverter(
-            allowed_formats=[
-                DLInputFormat.PDF,
-                DLInputFormat.DOCX,
-                DLInputFormat.PPTX,
-                DLInputFormat.HTML,
-                DLInputFormat.MD
-            ],
             format_options={
-                DLInputFormat.PDF: self.pdf_options,
-                DLInputFormat.DOCX: self.word_options
+                "pdf": pdf_options
             }
         )
 
