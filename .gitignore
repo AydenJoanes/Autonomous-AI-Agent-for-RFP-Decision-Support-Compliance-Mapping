@@ -138,7 +138,7 @@ dmypy.json
 Thumbs.db
 
 # Project specific
-data/sample_rfps/*.pdf
-data/sample_rfps/*.docx
+# data/sample_rfps/*.pdf
+# data/sample_rfps/*.docx
 data/knowledge_base/*.pdf
 *.db
