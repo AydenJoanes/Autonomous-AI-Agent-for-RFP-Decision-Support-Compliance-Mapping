@@ -416,39 +416,51 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
+    margin-bottom: 2rem; /* Increased spacing */
+    padding-bottom: 1.5rem; /* Increased spacing */
     border-bottom: 1px solid var(--border-glass);
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 1rem;
 }
 
 .card-header h2 {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
-}
-
-/* Decision Badge */
-.decision-badge {
-    padding: 0.375rem 1rem;
-    border-radius: 100px;
-    font-size: 0.875rem;
-    font-weight: 600;
+    color: var(--text-secondary); /* Muted title to make badge pop */
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
+/* Decision Badge */
+/* Decision Badge */
+.decision-badge {
+    padding: 0.75rem 2rem;
+    border-radius: 4px; /* Classic rectangular look with slight rounding */
+    font-size: 1.5rem; /* Larger */
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: 2px solid currentColor; /* Classic border style */
+    background: transparent; /* Clean background */
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
 .decision-badge.bid {
-    background: rgba(34, 197, 94, 0.2);
-    color: var(--success);
+    color: #4ade80; /* Bright Green */
+    border-color: #4ade80;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
 }
 
 .decision-badge.conditional_bid {
-    background: rgba(245, 158, 11, 0.2);
-    color: var(--warning);
+    color: #fbbf24; /* Amber */
+    border-color: #fbbf24;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
 }
 
 .decision-badge.no_bid {
-    background: rgba(239, 68, 68, 0.2);
-    color: var(--danger);
+    color: #f87171; /* Red */
+    border-color: #f87171;
+    text-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
 }
 
 /* Recommendation Card */

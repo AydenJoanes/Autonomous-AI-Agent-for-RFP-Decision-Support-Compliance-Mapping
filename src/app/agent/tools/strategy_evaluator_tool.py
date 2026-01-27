@@ -227,9 +227,12 @@ class StrategyEvaluatorTool(BaseTool):
             if industry_lower == pref_value or industry_lower in pref_value or pref_value in industry_lower:
                 # Higher priority = higher score
                 # Priority 10 = 1.0, Priority 1 = 0.5
+                # Higher priority = higher score
+                # Priority 10 = 1.0, Priority 1 = 0.5
                 return 0.5 + (priority / 10) * 0.5
         
-        return 0.3  # No match
+        # Default to 0.8 (COMPLIANT) - Assumption: Startup is agile and can handle "Other" industries
+        return 0.8
     
     def _calculate_technology_score(self, technologies: list, preferences_by_type: dict) -> float:
         """
@@ -281,7 +284,7 @@ class StrategyEvaluatorTool(BaseTool):
             if project_type_lower == pref_value or project_type_lower in pref_value or pref_value in project_type_lower:
                 return 0.5 + (priority / 10) * 0.5
         
-        return 0.3
+        return 0.8
     
     def _calculate_sector_score(self, client_sector: str, client_prefs: list) -> float:
         """
@@ -299,7 +302,7 @@ class StrategyEvaluatorTool(BaseTool):
             if sector_lower == pref_value or sector_lower in pref_value or pref_value in sector_lower:
                 return 0.5 + (priority / 10) * 0.5
         
-        return 0.4  # Slightly penalize non-matching sectors
+        return 0.8
     
     def _arun(self, rfp_context: str):
         raise NotImplementedError("Async not implemented")

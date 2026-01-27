@@ -33,7 +33,7 @@ class Requirement(BaseModel):
     priority: int = Field(5, description="1-10 scale", ge=1, le=10)
     source_section: Optional[str] = Field(None, description="Where found in RFP")
     
-    embedding: Optional[List[float]] = Field(None, description="1536 dimensions for OpenAI")
+    embedding: Optional[List[float]] = Field(None, description="1536 dimensions for OpenAI", exclude=True)
     confidence: Optional[float] = Field(None, description="LLM classification confidence", ge=0.0, le=1.0)
     metadata: Optional[Dict] = Field(None, description="Additional context")
 

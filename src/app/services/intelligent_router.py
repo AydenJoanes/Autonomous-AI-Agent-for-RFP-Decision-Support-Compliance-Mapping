@@ -122,6 +122,14 @@ class IntelligentRouter:
         extracted_value = requirement.extracted_value.lower()
         original_text = requirement.text.lower()
         
+        # SKIP Negative Constraints & Exclusions (prevent bogus UNKNOWNs)
+        if any(x in original_text for x in ["must not", "excluded", "out-of-scope", "boundary", "not include"]):
+             return "SKIP"
+
+        # SKIP "Backfill" and "Frequency" - these are not project durations or actionable requirements
+        if any(x in original_text for x in ["backfill", "frequency", "update", "retention"]):
+             return "SKIP"
+
         # CERTIFICATION type with known patterns
         if req_type == RequirementType.CERTIFICATION:
             return "certification_checker"
@@ -137,7 +145,7 @@ class IntelligentRouter:
         
         # TIMELINE type with duration
         if req_type == RequirementType.TIMELINE:
-            return "timeline_assessor"
+             return "timeline_assessor"
         
         # EXPERIENCE type
         if req_type == RequirementType.EXPERIENCE:

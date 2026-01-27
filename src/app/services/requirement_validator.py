@@ -13,34 +13,30 @@ from src.app.services.llm_config import get_llm_config
 
 
 # System prompt for validation
-VALIDATION_SYSTEM_PROMPT = """You are aggressively validating extracted RFP requirements. BE STRICT - filter out anything questionable.
+VALIDATION_SYSTEM_PROMPT = """You are validating extracted RFP requirements.
 
-For each requirement, determine if it should be KEPT or REMOVED:
+Your goal is to KEEP genuine constraints and capabilities while removing noise.
 
 AUTOMATICALLY MARK AS INVALID (is_valid: false):
-- Generic phrases: "must demonstrate", "ensure compliance", "maintain security"
-- System features: anything about what the system/platform "must do"
-- Process requirements: documentation, submission, reporting procedures
-- Vague values: "experience", "capability", "expertise" without specific domain
-- No specific named value that can be looked up in a database
+-   Generic marketing fluff ("world class", "state of the art")
+-   Vague "must" statements with no measurable outcome (e.g. "must be good")
+-   Boilerplate legal headers not relevant to the solution
 
-MARK AS VALID (is_valid: true) ONLY IF:
-- Has a SPECIFIC NAMED VALUE: ISO 27001, AWS, Healthcare, $500k, 12 months
-- Can be verified against: certification database, tech stack, project portfolio
-- Is a VENDOR qualification, not a system/deliverable feature
+MARK AS VALID (is_valid: true) IF:
+-   It describes a SCOPE BOUNDARY (Included/Excluded)
+-   It defines an ENGAGEMENT MODEL (Fixed bid, Time & Materials, Managed Service, etc.)
+-   It specifies DELIVERABLES (Reports, Dashboards, Documentation)
+-   It mandates a STANDARD or CERTIFICATION (ISO, HIPAA)
+-   It requires specific TECHNOLOGY or INFRASTRUCTURE (AWS, Azure, Python)
+-   It specifies TIMELINE or BUDGET
+-   It describes DATA HANDLING or SECURITY constraints
 
 VALIDATION RULES:
-1. IS_VALID: Can this requirement be verified with a simple database lookup?
-   - Valid: "ISO 27001", "Azure experience", "Healthcare analytics"
-   - Invalid: "robust analytics", "compliance-aware", "organizational maturity"
-
-2. EXTRACTED_VALUE_VALID: Is the value specific enough?
-   - Valid: "ISO 27001", "Azure", "Healthcare analytics", "$2M", "12 months"
-   - Invalid: "security", "cloud", "experience", "compliance"
-
-3. IF INVALID: Set is_valid to false with reason
-
-BE AGGRESSIVE: When in doubt, mark as INVALID. Better to have 5 good requirements than 50 noisy ones.
+1.  **Scope/Process/Engagement**: THESE ARE VALID. Do not filter them out just because they aren't a "database lookup".
+    -   Valid: "Fixed price only", "No managed services", "Weekly reports required"
+2.  **Specific Values**: Prefer specific values, but accept clear constraints.
+    -   Valid: "Aggregated data only" (Clear constraint)
+    -   Invalid: "Ensuring data quality" (Vague goal)
 
 Return JSON: {"validations": [{"index": 0, "is_valid": true/false, "reason": "...", "confidence": 0.9}]}"""
 

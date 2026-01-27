@@ -47,7 +47,7 @@ app = FastAPI(
 if not settings.is_production:
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=["http://localhost:8000", "http://127.0.0.1:8000", "*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -76,13 +76,17 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 
 # Import and include routers
+# Import and include routers
 from src.app.api.routes.health import router as health_router
-from src.app.api.routes.knowledge import router as knowledge_router
 from src.app.api.routes.recommendation import router as recommendation_router
+from src.app.api.routes.outcomes import router as outcome_router
+# Knowledge router might not be used by UI yet, but keeping hygiene
+from src.app.api.routes.knowledge import router as knowledge_router
 
-app.include_router(health_router)
-app.include_router(knowledge_router)
-app.include_router(recommendation_router)
+app.include_router(health_router, prefix="/api/v1", tags=["Health"])
+app.include_router(recommendation_router, prefix="/api/v1/recommendation", tags=["Recommendation"])
+app.include_router(outcome_router, prefix="/api/v1/outcomes", tags=["Outcomes"])
+app.include_router(knowledge_router, prefix="/api/v1/knowledge", tags=["Knowledge"])
 
 
 # Serve frontend static files

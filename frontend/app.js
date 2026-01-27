@@ -3,10 +3,10 @@
  */
 
 // Configuration
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = ''; // Relative path to current origin
 const API_ENDPOINTS = {
-    health: '/health',
-    analyze: '/upload-analyze'
+    health: '/api/v1/health',
+    analyze: '/api/v1/recommendation/upload-analyze'
 };
 
 // State
