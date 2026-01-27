@@ -2,9 +2,13 @@
 
 An intelligent, autonomous AI agent designed to streamline the Request for Proposal (RFP) process. This system leverages Large Language Models (LLMs), Vector Search, and Agentic workflows to analyze RFP documents, extract requirements, map them to company capabilities, and provide data-driven bid/no-bid decisions.
 
+**Crucially, this agent features a "Continuous Learning" loop (Phase 6), allowing it to record real-world outcomes, reflect on its decisions, and improve future recommendations via vector-based memory.**
+
 ![Status](https://img.shields.io/badge/Status-Development-blue)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-green)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109%2B-teal)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14%2B-blue)
+![pgvector](https://img.shields.io/badge/pgvector-Enabled-orange)
 
 ## 🚀 Key Features
 
@@ -14,40 +18,49 @@ An intelligent, autonomous AI agent designed to streamline the Request for Propo
 *   **Requirement Analysis Engine**:
     *   **Automated Extraction**: Identifies potential requirements using regex heuristics and NLP.
     *   **AI Classification**: Uses GPT-4o-mini to categorize requirements (Mandatory, Technical, Timeline, Budget) and assign priority scores (1-10).
-    *   **Semantic Understanding**: Generates 1536-dimensional embeddings (OpenAI `text-embedding-3-small`) for deep semantic search.
 *   **Knowledge Base Integration**:
-    *   Vector-based retrieval of company capabilities (Tech Stack, Certifications, Project Portfolio).
+    *   Vector-based retrieval of company capabilities (Tech Stack, Certifications, Project Portfolio) using `pgvector`.
     *   Strategic alignment checking against company preferences.
 *   **Agentic Decision Support**:
     *   Calculates compliance scores and fit gaps.
-    *   Provides actionable Bid/No-Bid recommendations with reasoning.
+    *   Provides actionable Bid/No-Bid recommendations with reasoning and confidence scores.
+*   **Continuous Learning (Phase 6)**:
+    *   **Outcome Recording**: Record real-world "Win/Loss" outcomes for recommendations.
+    *   **Reflection Engine**: The agent reflects on its logic after a decision is finalized, identifying potential biases or missed risks.
+    *   **Memory Embedding**: Decisions are embedded and stored to inform future similarity searches (RAG on past decisions).
 
 ## 🏗️ Architecture
 
 The system follows a modular architecture:
 
 1.  **Ingestion Layer**: `RFPParserTool` converts raw documents into clean Markdown.
-2.  **Processing Layer**: `RequirementProcessorTool` transforms text into structured `Requirement` objects with metadata and embeddings.
-3.  **Knowledge Layer**: PostgreSQL + `pgvector` stores the Company Knowledge Base (Projects, Certs, Tech) and historical RFP data.
-4.  **Reasoning Layer**: The Agent Orchestrator (LangGraph/LangChain) plans execution, queries the KB, and synthesizes the final report.
+2.  **Processing Layer**: `RequirementProcessorTool` transforms text into structured `Requirement` objects with metadata.
+3.  **Knowledge Layer**: PostgreSQL + `pgvector` stores the Company Knowledge Base and historical RFP decisions (Memory).
+4.  **Reasoning Layer**: The Agent Orchestrator plans execution, queries the KB, and synthesizes the final report.
+5.  **Learning Layer (Phase 6)**: `Phase6Orchestrator` handles post-decision reflection and outcome recording to close the feedback loop.
 
 ## 📂 Project Structure
 
 ```bash
 rfp-bid-agent/
 ├── config/                  # Configuration settings (Env vars)
-├── data/
-│   └── knowledge_base/      # JSON source files for Company capabilities
+├── data/                    # JSON source files for Knowledge Base
+├── docs/                    # Project documentation (Phase details, etc.)
+├── frontend/                # Simple HTML/JS frontend for testing
+├── migrations/              # Alembic database migrations
 ├── scripts/                 # Utility scripts (DB setup, Data loading, verification)
+│   ├── init_db.py           # Initializes DB tables
+│   ├── load_knowledge_base.py # Loads company data into Vector DB
+│   └── verify_high_confi.py # End-to-end verification script
 ├── src/
 │   └── app/
 │       ├── agent/           # Agent Logic & Tools
-│       │   └── tools/       # RFPParserTool, RequirementProcessorTool
-│       ├── api/             # FastAPI Routes (Health, etc.)
+│       ├── api/
+│       │   └── routes/      # FastAPI Routes (Health, Recommendation, Outcomes)
 │       ├── database/        # SQLAlchemy Models & Connection logic
 │       ├── models/          # Pydantic schema definitions
-│       ├── services/        # Core services (e.g., DocumentParserFactory)
-│       └── utils/           # Shared utilities (Embeddings, Logging)
+│       ├── services/        # Core services (RecommendationService, Phase6Orchestrator)
+│       └── strategies/      # Compliance & Scoring strategies
 ├── tests/                   # Automated test suites
 └── main.py                  # Application entry point
 ```
@@ -56,7 +69,7 @@ rfp-bid-agent/
 
 ### Prerequisites
 *   Python 3.10 or higher
-*   PostgreSQL 14+ (with `pgvector` extension support)
+*   PostgreSQL 14+ (with `pgvector` extension installed)
 *   OpenAI API Key
 
 ### 1. Clone & Install
@@ -95,17 +108,6 @@ python scripts/setup_database.py
 python scripts/load_knowledge_base.py
 ```
 
-### 4. Verification
-Run the verification scripts to ensure everything is working:
-
-```bash
-# Verify Phase 2 (DB & Data)
-python scripts/verify_phase2.py
-
-# Check Agent Tools
-python tests/test_rfp_tools.py
-```
-
 ## 📖 Usage
 
 ### Running the API
@@ -113,24 +115,26 @@ Start the FastAPI backend:
 ```bash
 python main.py
 ```
-Health check available at: `http://localhost:8000/health`
+*   **API Docs**: `http://localhost:8000/docs`
+*   **Frontend**: `http://localhost:8000`
+*   **Health Check**: `http://localhost:8000/api/v1/health`
+
+### Key Endpoints
+
+1.  **Analyze RFP**: `POST /api/v1/recommendation/analyze`
+    *   Upload an RFP file (PDF/DOCX) to get a comprehensive Bid/No-Bid analysis.
+2.  **Record Outcome**: `POST /api/v1/outcomes/record`
+    *   Submit the real-world result (WON/LOST) for a past recommendation ID. This triggers the learning loop.
 
 ### Using the Tools (Programmatic)
-You can import and use the tools directly in your scripts:
 
 ```python
-from src.app.agent.tools.rfp_parser_tool import RFPParserTool
-from src.app.agent.tools.requirement_processor_tool import RequirementProcessorTool
+from src.app.services.recommendation_service import RecommendationService
 
-# 1. Parse an RFP
-parser = RFPParserTool()
-text = parser._run("path/to/rfp.pdf")
-
-# 2. Process Requirements
-processor = RequirementProcessorTool()
-requirements = processor._run(text)
-
-print(f"Found {len(requirements)} requirements")
+service = RecommendationService()
+# Run analysis on a file
+result = await service.analyze_rfp_file("path/to/rfp.docx")
+print(result.decision) # "BID" or "NO_BID"
 ```
 
 ## 🧪 Testing
@@ -146,6 +150,3 @@ pytest tests/
 3.  Commit your changes (`git commit -m 'feat: Add amazing feature'`).
 4.  Push to the branch.
 5.  Open a Pull Request.
-
-## 📄 License
-[Add License Information]
