@@ -129,17 +129,18 @@ class KnowledgeQueryTool(BaseTool):
                 })
 
             # Logic
-            if success_count >= 3:
+            if success_count >= 2:
                 compliance_level = ComplianceLevel.COMPLIANT
                 # Avg similarity of successful matches
                 avg_sim = sum(1.0 - p.get('distance', 1.0) for p in successful_projects) / success_count
                 confidence = float(f"{avg_sim:.2f}")
             
-            elif 1 <= success_count <= 2:
-                # Found 1-2 successful projects
-                compliance_level = ComplianceLevel.PARTIAL
-                confidence = 0.6
+            elif success_count == 1:
+                # Found 1 successful project
+                compliance_level = ComplianceLevel.COMPLIANT  # Still compliant for a startup
+                confidence = 0.8  # Slightly lower confidence
                 
+
             elif similar_count > 0 and success_count == 0:
                 # Found similar projects but NONE were successful
                 compliance_level = ComplianceLevel.WARNING

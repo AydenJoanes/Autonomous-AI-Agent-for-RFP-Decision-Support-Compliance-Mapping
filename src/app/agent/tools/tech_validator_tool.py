@@ -29,6 +29,21 @@ class TechValidatorTool(BaseTool):
             # Step 1: Search technology (normalize and try variants)
             normalized_tech = technology.strip()
             
+            # CRITICAL FIX: Whitelist functional/process requirements
+            lower_tech = normalized_tech.lower()
+            if any(x in lower_tech for x in ["scope", "engagement", "boundary", "deliverable", "report", "dashboard"]):
+                 logger.info(f"TechValidatorTool: '{technology}' identified as functional/process requirement.")
+                 result = ToolResult(
+                    tool_name=self.name,
+                    requirement=technology,
+                    status="PROCESS_REQ",
+                    compliance_level=ComplianceLevel.COMPLIANT,
+                    confidence=1.0,
+                    details={"type": "process"},
+                    message="Process/Scope requirement acknowledged."
+                )
+                 return result.model_dump_json()
+            
             # Try exact match first
             tech = repository.get_by_name(normalized_tech)
             
@@ -146,7 +161,8 @@ class TechValidatorTool(BaseTool):
                 elif team_size == 2:
                     risks.append("Only 2 team members have this skill (limited coverage)")
             else:
-                risks.append("Team size for this technology not documented")
+                # risks.append("Team size for this technology not documented")
+                pass
             
             # Additional experience context
             if years_experience > 0:

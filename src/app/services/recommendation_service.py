@@ -174,22 +174,14 @@ class RecommendationService:
             logger.error(f"[SERVICE] Requirement extraction failed: {e}")
             requirements = []  # Graceful degradation
         
-        # Step 4.25: Apply hard limit on requirements (Fix 3: Post-extraction filter)
-        MAX_REQUIREMENTS = 50
-        if requirements and len(requirements) > MAX_REQUIREMENTS:
-            logger.warning(f"[SERVICE] Too many requirements ({len(requirements)}), applying hard limit of {MAX_REQUIREMENTS}")
-            # Prioritize by type: CERTIFICATION > TECHNOLOGY > EXPERIENCE > TIMELINE > BUDGET > TEAM
-            priority_order = {
-                RequirementType.CERTIFICATION: 1,
-                RequirementType.TECHNOLOGY: 2,
-                RequirementType.EXPERIENCE: 3,
-                RequirementType.TIMELINE: 4,
-                RequirementType.BUDGET: 5,
-                RequirementType.TEAM: 6,
-            }
-            # Sort by priority and take top N
-            requirements = sorted(requirements, key=lambda r: (priority_order.get(r.type, 99), -r.priority))[:MAX_REQUIREMENTS]
-            logger.info(f"[SERVICE] After filtering: {len(requirements)} requirements")
+        # Step 4.25: Apply hard limit - REMOVED per user requirement
+        # MAX_REQUIREMENTS = 50 limit removed to allow full extraction
+        # if requirements and len(requirements) > MAX_REQUIREMENTS:
+        #     logger.warning(f"[SERVICE] Too many requirements ({len(requirements)}), applying hard limit of {MAX_REQUIREMENTS}")
+        #     ...
+        #     requirements = sorted(requirements, key=lambda r: (priority_order.get(r.type, 99), -r.priority))[:MAX_REQUIREMENTS]
+        
+        logger.info(f"[SERVICE] Processing {len(requirements)} requirements (No Limit)")
         
         # Step 4.5: Generate embeddings for requirements
         if requirements and LLM_AVAILABLE:

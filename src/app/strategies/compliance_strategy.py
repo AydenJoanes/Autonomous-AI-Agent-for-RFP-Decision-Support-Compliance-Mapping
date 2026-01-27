@@ -198,7 +198,17 @@ def aggregate_compliance(tool_results: List[ToolResult], mandatory_tools: Option
     elif counts[ComplianceLevel.WARNING] > 0:
         overall = ComplianceLevel.WARNING
     elif (counts[ComplianceLevel.COMPLIANT] + counts[ComplianceLevel.PARTIAL]) == total_count:
-        overall = ComplianceLevel.PARTIAL
+        # If majority are COMPLIANT, overall should be COMPLIANT
+        if counts[ComplianceLevel.COMPLIANT] >= counts[ComplianceLevel.PARTIAL]:
+            overall = ComplianceLevel.COMPLIANT
+        else:
+            overall = ComplianceLevel.PARTIAL
+    elif (counts[ComplianceLevel.COMPLIANT] + counts[ComplianceLevel.PARTIAL]) > 0:
+        # Mixed bag with some unknowns
+        if counts[ComplianceLevel.COMPLIANT] >= (total_count / 2):
+            overall = ComplianceLevel.COMPLIANT
+        else:
+            overall = ComplianceLevel.PARTIAL
     elif counts[ComplianceLevel.UNKNOWN] > (total_count / 2):
         overall = ComplianceLevel.UNKNOWN
     else:

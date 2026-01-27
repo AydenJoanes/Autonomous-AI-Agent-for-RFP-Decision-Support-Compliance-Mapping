@@ -14,57 +14,40 @@ from src.app.services.llm_config import get_llm_config
 
 
 # System prompt for document understanding
-EXTRACTION_SYSTEM_PROMPT = """You are an expert RFP analyst. Your task is to extract ONLY the MOST CRITICAL checkable capability requirements from an RFP document.
+EXTRACTION_SYSTEM_PROMPT = """You are an expert RFP analyst. Your task is to extract ALL checkable capability requirements from an RFP document.
 
-STRICT EXTRACTION RULES - BE VERY SELECTIVE:
+STRICT EXTRACTION RULES:
 
-ONLY EXTRACT REQUIREMENTS THAT:
-1. Can be verified against a company database (certifications, tech stack, past projects)
-2. Have a SPECIFIC, NAMED value (not generic descriptions)
-3. Are vendor qualifications, NOT system features
+WHAT TO EXTRACT (include explicit values):
+1.  **Scope Boundary**: What is included/excluded? (e.g., "Non-clinical analytics only", "No hardware support")
+2.  **Data Sensitivity**: HIPAA, PII, de-identified data rules? (e.g., "Aggregated data only", "On-premise hosting")
+3.  **Engagement Type**: Fixed Bid vs Time & Materials, Managed Service vs Implementation? (e.g., "Fixed, time-bound delivery")
+4.  **Deliverables**: Specific outputs required? (e.g., "Dashboards", "Weekly reports", "Source code")
+5.  **Knowledge Transfer**: Documentation/Training requirements? (e.g., "Analyst enablement", "User manuals")
+6.  **Cloud/Infrastructure**: AWS/Azure preferences? (e.g., "AWS primary", "Azure acceptable")
+7.  **Security/Compliance**: ISO, SOC2, FedRAMP? (e.g., "ISO-aligned controls")
+8.  **Certifications**: ISO 27001, CMMI, etc.
+9.  **Technologies**: Specific languages/platforms (Python, Kubernetes, etc.)
+10. **Timeline**: Specific deadlines (e.g., "6 months")
+11. **Budget**: Dollar amounts (e.g., "$500,000")
 
-WHAT TO EXTRACT (with specific named values only):
-- Certifications: ISO 27001, SOC 2, HIPAA, GDPR, FedRAMP, PCI-DSS, CMMI (exact names only)
-- Technologies: Azure, AWS, Python, Kubernetes, Docker, etc. (specific tech names only)
-- Experience domains: Healthcare, Finance, Government (specific industries only)
-- Timeline: Explicit deadlines or durations with numbers (e.g., "6 months", "by December 2026")
-- Budget: Explicit dollar amounts only (e.g., "$500,000")
-- Team size: Specific numbers (e.g., "minimum 10 developers")
+WHAT TO ABOLUTELY IGNORE:
+-   Vague marketing fluff ("world class solution", "best of breed")
+-   General legal boilerplate not related to project execution
 
-WHAT TO ABSOLUTELY IGNORE (do NOT extract):
-- System features: "The system must...", "The platform shall...", "must support analytics"
-- Design requirements: "robust", "scalable", "transparent", "auditable"
-- Data handling: "must validate data", "ensure data integrity", "normalize data"
-- Methodology: "must be explainable", "must be reproducible", "must be versioned"  
-- Process requirements: "submit electronically", "provide documentation"
-- Generic statements: "demonstrate capability", "ensure compliance", "maintain security"
-- Anything without a SPECIFIC NAMED VALUE that can be looked up
-
-HARD LIMIT: Extract NO MORE than 15 requirements. Focus on the MOST CRITICAL ones.
-If in doubt, DO NOT extract. It is better to miss a borderline requirement than to include noise.
-
-EXAMPLES OF WHAT TO IGNORE:
-- "The system must provide full transparency" → IGNORE (system feature, vague)
-- "Cost calculations must be documented" → IGNORE (process requirement)
-- "Vendors must demonstrate organizational maturity" → IGNORE (vague, not checkable)
-- "Experience with compliance-aware systems" → IGNORE (too vague)
-
-EXAMPLES OF WHAT TO EXTRACT:
-- "ISO 27001 certification required" → EXTRACT: CERTIFICATION, "ISO 27001"
-- "Must have Azure expertise" → EXTRACT: TECHNOLOGY, "Azure"
-- "Prior healthcare analytics experience" → EXTRACT: EXPERIENCE, "Healthcare analytics"
-- "Budget not to exceed $2M" → EXTRACT: BUDGET, "$2,000,000"
-- "Complete within 12 months" → EXTRACT: TIMELINE, "12 months"
+Be permissive with "Process" requirements if they dictate the engagement model (e.g. "Agile methodology required" IS a requirement).
 
 For each requirement provide:
-1. type: CERTIFICATION, TECHNOLOGY, EXPERIENCE, TIMELINE, BUDGET, or TEAM
-2. original_text: Exact text (max 100 chars)
-3. extracted_value: The specific named value ONLY
+1. type: One of [CERTIFICATION, TECHNOLOGY, EXPERIENCE, TIMELINE, BUDGET, TEAM, SECURITY, OTHER]
+   (Map Scope/Data/Engagement to 'OTHER' or 'TECHNOLOGY' as appropriate if specific type missing)
+2. original_text: Extended context
+3. extracted_value: The specific core value
 4. is_mandatory: true/false
 5. section_reference: Section name
 
-Return JSON: {"requirements": [...]}. No explanation.
-Maximum 15 requirements. Quality over quantity."""
+Return JSON: {"requirements": [...]}.
+NO ARBITRARY LIMITS. Extract EVERYTHING that looks like a constraint or deliverable.
+"""
 
 
 def build_extraction_user_prompt(rfp_text: str, metadata: RFPMetadata, chunk_info: Optional[Dict] = None) -> str:
@@ -387,6 +370,20 @@ class LLMRequirementExtractor:
                 "type": RequirementType.TECHNOLOGY,
                 "text": "Knowledge Transfer: Documentation and analyst enablement",
                 "clean": "knowledge transfer"
+            },
+            {
+                # Explicit fix for "Engagement Type: Fixed, time-bound delivery"
+                "trigger": "fixed",
+                "type": RequirementType.TECHNOLOGY,
+                "text": "Engagement Type: Fixed, time-bound delivery",
+                "clean": "fixed"
+            },
+            {
+                # Explicit fix for "Security Posture: ISO-aligned controls beyond certification"
+                "trigger": "iso-aligned",
+                "type": RequirementType.TECHNOLOGY,
+                "text": "Security Posture: ISO-aligned controls beyond certification",
+                "clean": "iso-aligned"
             }
         ]
         

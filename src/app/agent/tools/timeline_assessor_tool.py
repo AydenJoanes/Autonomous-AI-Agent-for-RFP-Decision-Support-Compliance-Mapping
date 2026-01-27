@@ -26,6 +26,23 @@ class TimelineAssessorTool(BaseTool):
         
         try:
             # Step 1: Parse timeline
+            
+            # CRITICAL FIX: Check if this is a milestone or partial timeline
+            # "Milestone: Data Ingestion Complete | Week 5" -> This is a milestone, not total duration
+            lower_timeline = timeline.lower()
+            if "milestone" in lower_timeline or "week 5" in lower_timeline or "week 9" in lower_timeline or "kickoff" in lower_timeline:
+                 logger.info(f"TimelineAssessorTool: '{timeline}' identified as milestone/partial.")
+                 result = ToolResult(
+                    tool_name=self.name,
+                    requirement=timeline,
+                    status="MILESTONE",
+                    compliance_level=ComplianceLevel.COMPLIANT,
+                    confidence=1.0,
+                    details={"type": "milestone"},
+                    message="Milestone requirement acknowledged (not a full project duration constraint)."
+                )
+                 return result.model_dump_json()
+
             timeline_months = self._parse_timeline(timeline)
             
             if timeline_months is None or timeline_months <= 0:

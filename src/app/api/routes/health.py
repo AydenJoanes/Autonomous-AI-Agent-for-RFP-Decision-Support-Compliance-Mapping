@@ -30,7 +30,7 @@ async def health_check() -> Dict[str, Any]:
     }
 
 
-@router.get("/health/detailed")
+@router.get("/detailed")
 async def detailed_health_check() -> Dict[str, Any]:
     """
     Detailed health check with component status.
